@@ -1,0 +1,97 @@
+@font-face {
+  font-family: "Oswald";
+  src: url("/assets/fonts/oswald-regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Oswald";
+  src: url("/assets/fonts/oswald-bold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("/assets/fonts/cormorant-garamond-regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("/assets/fonts/cormorant-garamond-bold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("/assets/fonts/cormorant-garamond-bold-italic.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+}
+
+body {
+  font-family: "Oswald", "Arial Narrow", Arial, sans-serif;
+}
+
+h1,
+h2,
+h3,
+.main-nav,
+.menu-button,
+.stats,
+.stats strong,
+.stats span,
+.vision-text,
+.feature-grid b,
+.catalogue-grid b,
+.pillar-grid b {
+  font-family: "Oswald", "Arial Narrow", Arial, sans-serif;
+}
+
+.eyebrow,
+.button,
+.footer-brand,
+.solution-grid p,
+.domain-grid h3,
+.domain-grid p,
+.site-footer p,
+.contact-section input,
+.contact-section select,
+.contact-section textarea,
+.candidate-application input,
+.candidate-application textarea {
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+.eyebrow {
+  font-weight: 700;
+  font-style: italic;
+}
+
+.button,
+.footer-brand {
+  font-weight: 700;
+}
+
+.solution-grid p,
+.domain-grid p,
+.site-footer p {
+  font-size: 18px;
+}
+
+.site-footer .footer-contact-link {
+  margin: 0;
+  color: #fff;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 18px !important;
+  line-height: 1.55;
+}

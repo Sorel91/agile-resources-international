@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-labelledby="title desc">
+  <title id="title">Agile Resources International</title>
+  <desc id="desc">Emblème circulaire doré et nom Agile Resources International en blanc</desc>
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f0c31e"/>
+      <stop offset="0.52" stop-color="#d9a900"/>
+      <stop offset="1" stop-color="#a97700"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke="url(#gold)" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="130" cy="150" r="91" stroke-width="17"/>
+    <path d="M58 225 C88 150 132 101 214 88 C174 113 133 150 91 230" stroke-width="27"/>
+    <path d="M65 92 C96 57 139 48 183 66" stroke-width="8" opacity=".72"/>
+  </g>
+  <g fill="#fff" font-family="'Nimbus Sans Narrow','Arial Narrow',Arial,sans-serif" font-weight="700">
+    <text x="256" y="93" font-size="72" letter-spacing="1">AGILE</text>
+    <text x="256" y="174" font-size="72" letter-spacing="1">RESOURCES</text>
+    <text x="258" y="249" font-size="52" letter-spacing="6">INTERNATIONAL</text>
+  </g>
+</svg>
