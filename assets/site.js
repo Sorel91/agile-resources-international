@@ -272,3 +272,75 @@ menuButton?.addEventListener("click", () => {
   menuButton.setAttribute("aria-expanded", String(open));
   menuButton.textContent = open ? "×" : "☰";
 });
+
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const revealGroups = [
+  ["main section > .eyebrow, main section > h1, main section > h2, main section > .title-rule, main section > .small-rule", "reveal-up"],
+  [".home-hero > div > *, .industry-hero > div > *, .about-hero > div > *, .enterprise-cover-content > *, .candidate-intro > *", "reveal-up"],
+  [".home-hero > img, .industry-hero > img, .about-media > img, .contact-process > img, .candidate-network > img", "reveal-image"],
+  [".solution-grid article, .domain-grid article, .enterprise-card-grid article, .enterprise-method-grid article, .candidate-method-grid article, .pillar-grid article, .feature-grid article, .catalogue-grid article", "reveal-card"],
+  [".candidate-collage img", "reveal-image"],
+  [".cta-section > *, .candidate-cta > *, .contact-launch > *", "reveal-up"],
+];
+
+const revealElements = [];
+revealGroups.forEach(([selector, animationClass]) => {
+  document.querySelectorAll(selector).forEach((element, index) => {
+    if (element.classList.contains("reveal-ready")) return;
+    element.classList.add("reveal-ready", animationClass);
+    element.style.setProperty("--reveal-delay", `${Math.min(index % 4, 3) * 90}ms`);
+    revealElements.push(element);
+  });
+});
+
+if (reducedMotion || !("IntersectionObserver" in window)) {
+  revealElements.forEach((element) => element.classList.add("is-visible"));
+} else {
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-visible");
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+  revealElements.forEach((element) => revealObserver.observe(element));
+}
+
+const animateCounter = (element) => {
+  const original = element.textContent.trim();
+  const target = Number.parseInt(original, 10);
+  if (!Number.isFinite(target)) return;
+  const suffix = original.includes("%") ? "%" : "";
+  if (reducedMotion) {
+    element.textContent = `${target}${suffix}`;
+    return;
+  }
+  const duration = 950;
+  let startedAt;
+  const tick = (time) => {
+    startedAt ??= time;
+    const progress = Math.min((time - startedAt) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    element.textContent = `${Math.round(target * eased)}${suffix}`;
+    if (progress < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+};
+
+const counters = document.querySelectorAll(".stats strong");
+if (counters.length) {
+  if (reducedMotion || !("IntersectionObserver" in window)) {
+    counters.forEach(animateCounter);
+  } else {
+    const counterObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || entry.target.dataset.animated === "true") return;
+        entry.target.dataset.animated = "true";
+        animateCounter(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.55 });
+    counters.forEach((counter) => counterObserver.observe(counter));
+  }
+}
