@@ -167,17 +167,58 @@ const steps = (items) => `<div class="feature-grid">${items.map(([n,t,d])=>`<art
 
 const enterprises = () => `
   <main>
-    ${detailHero("Espace Entreprises", "Les talents stratégiques dont votre organisation a besoin", "Confiez-nous vos besoins en recrutement, mobilité ou conseil. Notre équipe construit une réponse ciblée, confidentielle et adaptée à vos marchés.", "enterprise-hero")}
-    <section class="section rich-page"><p class="eyebrow">Notre méthode</p><h2>Un accompagnement construit autour de vos enjeux</h2><span class="title-rule"></span>${steps([["01","Cadrage du besoin","Un consultant dédié analyse votre organisation, votre secteur, vos délais et les compétences indispensables."],["02","Recherche ciblée","Nos réseaux internationaux et notre approche directe mobilisent rapidement les profils les plus pertinents."],["03","Sélection sécurisée","Nous évaluons les compétences, la motivation, l’adéquation culturelle et accompagnons chaque étape jusqu’à l’intégration."]])}</section>
-    <section class="band"><div><p class="eyebrow">Solutions entreprises</p><h2>Recrutement, mobilité et conseil</h2></div><ul><li>Recherche de cadres, spécialistes et dirigeants</li><li>Recrutement international et mobilité</li><li>Évaluation et présélection des candidats</li><li>Conseil en organisation et capital humain</li></ul></section>
+    <section class="enterprise-cover">
+      <div class="enterprise-cover-content">
+        <p class="eyebrow">Acquisition de talents</p>
+        <h1>Identifiez les<br>talents qui<br>feront la<br>différence</h1>
+        <p>ARI simplifie vos recrutements stratégiques en identifiant rapidement des profils qualifiés, expérimentés et adaptés à vos exigences. De l’expertise technique au leadership, nous vous aidons à renforcer vos équipes là où l’impact compte.</p>
+        <a class="button" href="/contact?type=entreprise">Confier un mandat</a>
+      </div>
+    </section>
+    <section class="section enterprise-solutions">
+      <p class="eyebrow">Notre Expertise</p>
+      <h2>Solutions sur mesure</h2>
+      <span class="title-rule"></span>
+      <p class="section-lead">Grâce à notre réseau international, nous mettons en relation les entreprises les plus exigeantes avec des dirigeants et experts hautement qualifiés.</p>
+      <div class="enterprise-card-grid">
+        <article><div class="enterprise-card-head"><span><img src="${A}icon-enterprises.png" alt=""></span><img src="${A}solution-enterprises.jpg" alt="Exploitation minière"></div><h3>Recherche exécutive</h3><p>Identification et sélection de dirigeants, cadres et experts stratégiques capables d’accompagner vos transformations et de créer une valeur durable.</p></article>
+        <article><div class="enterprise-card-head"><span><img src="${A}icon-candidates.png" alt=""></span><img src="${A}solution-candidates.jpg" alt="Professionnelle en entreprise"></div><h3>Réseau d’excellence</h3><p>Mobilisation rapide de profils hautement qualifiés grâce à notre réseau international, afin de répondre efficacement à vos enjeux de recrutement et aux pénuries de compétences.</p></article>
+        <article><div class="enterprise-card-head"><span><img src="${A}icon-advice.png" alt=""></span><img src="${A}solution-advice.jpg" alt="Échange avec un consultant"></div><h3>Performance et alignement</h3><p>Nous optimisons votre capital humain en alignant vos talents, votre organisation et vos objectifs stratégiques pour soutenir une croissance durable.</p></article>
+      </div>
+    </section>
+    <section class="enterprise-method">
+      <p class="eyebrow">Notre méthode</p><h2>Trois étapes vers l’excellence</h2>
+      <div class="enterprise-method-grid">
+        <article><b>1.</b><h3>Analyse des exigences</h3><p>Nous définissons avec précision vos exigences techniques, opérationnelles et culturelles afin d’identifier le profil le plus adapté à votre organisation.</p></article>
+        <article><b>2.</b><h3>Identification des talents</h3><p>Grâce à notre réseau international et à notre accès privilégié à des profils qualifiés, nous identifions les experts répondant précisément à vos besoins.</p></article>
+        <article><b>3.</b><h3>Intégration et suivi</h3><p>Nous accompagnons chaque étape de l’intégration et de l’alignement contractuel afin de garantir une prise de fonction fluide et une efficacité opérationnelle immédiate.</p></article>
+      </div>
+    </section>
   </main>
-  ${cta({title:"Parlons de votre prochain recrutement", text:"Décrivez votre besoin à nos consultants. Vous recevrez une première orientation confidentielle et concrète.", button:"Déposer un besoin"})}`;
+  ${cta({title:"Renforcez vos équipes avec des experts qualifiés, prêts à contribuer à vos ambitions.", text:"Votre prochain talent stratégique est peut-être déjà identifié.", button:"Confier un mandat"})}`;
 
 const candidates = () => `
   <main>
-    ${detailHero("Espace Candidats", "Donnez une dimension internationale à votre carrière", "Déposez votre profil et échangez avec nos consultants sur les opportunités qui correspondent réellement à votre expérience et à vos ambitions.", "candidate-hero")}
-    <section class="section rich-page"><p class="eyebrow">Votre parcours</p><h2>Un suivi humain à chaque étape</h2><span class="title-rule"></span>${steps([["01","Échange confidentiel","Nous prenons le temps de comprendre votre parcours, vos compétences et vos objectifs professionnels."],["02","Opportunités ciblées","Votre profil est présenté uniquement pour des missions cohérentes avec vos attentes et avec votre accord."],["03","Préparation et intégration","Nous vous accompagnons pendant les entretiens, la mobilité éventuelle et votre prise de poste."]])}</section>
-    <section class="band"><div><p class="eyebrow">Profils recherchés</p><h2>Des expertises pour les secteurs d’avenir</h2></div><ul><li>Technologie, données et cybersécurité</li><li>Ingénierie, industrie et opérations minières</li><li>Finance, risques et fonctions dirigeantes</li><li>Gestion de projets et transformation</li></ul></section>
+    <section class="candidate-intro">
+      <h1>Votre expertise, de nouvelles<br>perspectives</h1>
+      <p>ARI vous accompagne dans votre évolution professionnelle en vous connectant à des opportunités adaptées à vos compétences, votre expérience et vos ambitions.</p>
+      <a class="button" href="#candidature">Déposer mon dossier</a>
+    </section>
+    <section class="candidate-collage" aria-label="Professionnels accompagnés par ARI">
+      <img src="${A}candidate-work.jpg" alt="Professionnelle au travail">
+      <img src="${A}candidate-success.jpg" alt="Professionnel célébrant une réussite">
+      <img src="${A}candidate-mobile.jpg" alt="Professionnelle consultant une opportunité">
+    </section>
+    <section class="candidate-network">
+      <div><h2>Un réseau au service de vos ambitions</h2><p>ARI met en relation des talents qualifiés avec des entreprises à la recherche d’expertises spécifiques. Nous prenons le temps de comprendre votre parcours, vos compétences et vos ambitions afin d’identifier les opportunités qui correspondent réellement à votre profil. De la sélection des opportunités à la mise en relation avec les recruteurs, jusqu’à votre prise de fonction, nous vous accompagnons pour vous permettre d’aborder chaque nouvelle étape de votre carrière avec confiance.</p><p>Notre rôle : révéler votre potentiel, créer les bonnes connexions et vous ouvrir les portes d’opportunités qui correspondent à vos ambitions.</p><a class="button" href="#candidature">Explorer les opportunités</a></div>
+      <img src="${A}candidate-guidance.jpg" alt="Accompagnement professionnel personnalisé">
+    </section>
+    <section class="section candidate-method"><p class="eyebrow">Notre méthode</p><span class="small-rule"></span><div class="candidate-method-grid">
+      <article><div><span><img src="${A}icon-technology.png" alt=""></span><h3>Évaluation</h3></div><p>Une analyse approfondie de votre expertise, de votre parcours professionnel et de vos ambitions afin d’identifier les opportunités les plus adaptées à votre profil.</p></article>
+      <article><div><span><img src="${A}icon-industry.png" alt=""></span><h3>Mise en relation ciblée</h3></div><p>Nous présentons votre profil de manière confidentielle auprès d’entreprises et de décideurs à la recherche de compétences correspondant précisément à vos expertises.</p></article>
+      <article><div><span><img src="${A}icon-finance.png" alt=""></span><h3>Transition et suivi</h3></div><p>Nous vous accompagnons à chaque étape de votre parcours, de la mise en relation jusqu’à votre prise de fonction, afin de faciliter une transition professionnelle sereine et réussie.</p></article>
+    </div></section>
+    <section class="candidate-cta"><div><h2>Prêt à faire évoluer votre carrière ?</h2><h3>Votre prochaine opportunité commence ici.</h3><p>Partagez votre profil avec ARI et laissez-nous identifier les opportunités qui correspondent à votre expertise et à vos ambitions professionnelles.</p></div><a class="button" href="#candidature">Déposer mon dossier</a></section>
     <section class="candidate-application" id="candidature">
       <div class="application-intro">
         <p class="eyebrow">Votre candidature</p>
@@ -216,7 +257,7 @@ const catalogue = () => {
 
 const contact = () => {
   const type = new URLSearchParams(window.location.search).get("type") || "";
-  return `<main>${detailHero("Nous contacter", "Parlons de vos prochains enjeux", "Décrivez votre besoin. Un consultant ARI vous répondra avec une première orientation confidentielle et concrète.", "contact-hero")}<section class="contact-section"><form action="/contact.php" method="post"><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off"><label>Nature de la demande<select name="request_type" required><option value="">Sélectionner</option><option value="entreprise"${type==="entreprise"?" selected":""}>Besoin d’une entreprise</option><option value="candidat"${type==="candidat"?" selected":""}>Candidature</option><option value="catalogue">Information sur nos services</option><option value="autre">Autre demande</option></select></label><label>Nom et prénom<input name="name" required autocomplete="name"></label><label>Adresse e-mail<input name="email" type="email" required autocomplete="email"></label><label>Organisation<input name="company" autocomplete="organization"></label><label>Téléphone<input name="phone" type="tel" autocomplete="tel"></label><label>Votre message<textarea name="message" rows="7" required></textarea></label><label class="consent"><input name="consent" type="checkbox" value="yes" required> J’accepte que mes informations soient utilisées afin de répondre à ma demande.</label><button class="button" type="submit">Envoyer la demande</button></form><aside><h3>Agile Resources International</h3><p>Paris · New York · Abidjan</p><p><a href="mailto:contact@agileresources-intl.com">contact@agileresources-intl.com</a></p><p>Accompagnement RH 24/7</p></aside></section></main>`;
+  return `<main><section class="contact-process"><div><h1>Identification à<br>l’échelle internationale</h1><span class="contact-globe">◎</span><p>Que vous soyez un directeur des ressources humaines confronté à des pénuries de compétences critiques, ou un cadre dirigeant en quête d’une nouvelle opportunité d’envergure, nous mobilisons notre réseau mondial pour vous apporter une réactivité opérationnelle inédite.</p></div><img src="${A}contact-guidance.jpg" alt="Consultante accompagnant un professionnel"></section><section class="process-line"><p class="eyebrow">Notre Processus</p><strong>Comprendre vos besoins → Identifier les talents → Évaluer les candidats → Présenter une sélection de profils</strong><span>↓</span><b>Placement réussi</b></section><section class="contact-launch"><div><h2>Lancer Vos<br>Recherches</h2><p>Notre équipe s’engage à analyser votre besoin de recrutement ou votre profil sous 24 heures ouvrées. Remplissez ce formulaire pour être mis en relation directe avec un consultant expert de votre secteur d’activité.</p></div><form action="/contact.php" method="post"><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off"><input type="hidden" name="request_type" value="${type === "candidat" ? "candidat" : "entreprise"}"><label>Nom complet et entreprise*<input name="name" required autocomplete="name"></label><label>Adresse e-mail professionnelle*<input name="email" type="email" required autocomplete="email"></label><label>Numéro de téléphone direct<input name="phone" type="tel" autocomplete="tel"></label><label>Description de votre besoin en capital humain*<textarea name="message" rows="4" required></textarea></label><label class="consent"><input name="consent" type="checkbox" value="yes" required> J’accepte que mes informations soient utilisées afin de répondre à ma demande.</label><button class="button" type="submit">Envoyer Ma Demande</button></form></section></main>`;
 };
 
 const pages = {"/":home,"/industries":industries,"/entreprises":enterprises,"/candidats":candidates,"/catalogue":catalogue,"/a-propos":about,"/contact":contact};
