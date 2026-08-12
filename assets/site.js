@@ -279,6 +279,8 @@ const revealGroups = [
   ["main section > .eyebrow, main section > h1, main section > h2, main section > .title-rule, main section > .small-rule", "reveal-up"],
   [".home-hero > div > *, .industry-hero > div > *, .about-hero > div > *, .enterprise-cover-content > *, .candidate-intro > *", "reveal-up"],
   [".home-hero > img, .industry-hero > img, .about-media > img, .contact-process > img, .candidate-network > img", "reveal-image"],
+  [".full-photo", "reveal-wide-image"],
+  [".enterprise-cover", "reveal-cover"],
   [".solution-grid article, .domain-grid article, .enterprise-card-grid article, .enterprise-method-grid article, .candidate-method-grid article, .pillar-grid article, .feature-grid article, .catalogue-grid article", "reveal-card"],
   [".candidate-collage img", "reveal-image"],
   [".cta-section > *, .candidate-cta > *, .contact-launch > *", "reveal-up"],
