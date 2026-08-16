@@ -21,7 +21,7 @@
 .reveal-up{opacity:0;transform:translateY(28px);filter:blur(3px)}
 .reveal-card{opacity:0;transform:translateY(34px) scale(.985);filter:blur(3px)}
 .reveal-image{opacity:0;transform:scale(1.035);filter:blur(4px)}
-.reveal-wide-image{opacity:0;transform:translateY(24px) scale(1.025);filter:blur(4px);transform-origin:center}
+.reveal-wide-image{opacity:0;transform:translateY(70px) scale(1.075);filter:blur(7px);transform-origin:center;transition-duration:1.15s}
 .enterprise-cover.reveal-cover::before{opacity:0;transform:scale(1.065)}
 .enterprise-cover.reveal-cover.is-visible::before{opacity:1;transform:scale(1)}
 .reveal-ready.is-visible{opacity:1;transform:none;filter:none}
