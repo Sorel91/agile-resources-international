@@ -1,0 +1,39 @@
+{
+  "fonts": {
+    "h1": "oswald",
+    "h2": "oswald",
+    "h3": "oswald",
+    "body": "cormorant"
+  },
+  "sizes": {
+    "home_h1_desktop": 82,
+    "home_h1_mobile": 47,
+    "industries_h1_desktop": 77,
+    "industries_h1_mobile": 47,
+    "about_h1_desktop": 78,
+    "about_h1_mobile": 47,
+    "enterprise_h1_desktop": 72,
+    "enterprise_h1_mobile": 43,
+    "candidates_h1_desktop": 64,
+    "candidates_h1_mobile": 42,
+    "contact_h1_desktop": 66,
+    "contact_h1_mobile": 43,
+    "h2_desktop": 74,
+    "h2_mobile": 45,
+    "h3_desktop": 23,
+    "h3_mobile": 21,
+    "body_desktop": 17,
+    "body_mobile": 16
+  },
+  "images": {},
+  "enabled": {
+    "font_h1": false,
+    "font_h2": false,
+    "font_h3": false,
+    "font_body": false,
+    "size_h1": false,
+    "size_h2": false,
+    "size_h3": false,
+    "size_body": false
+  }
+}

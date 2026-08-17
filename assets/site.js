@@ -265,6 +265,45 @@ const render = pages[path] || (() => `<main>${detailHero("Erreur 404", "Cette pa
 document.getElementById("app").innerHTML = `${header(path)}${render()}${footer()}`;
 document.title = `${path === "/" ? "Agile Resources International" : navItems.find(([p])=>p===path)?.[1] || "Page introuvable"} — ARI`;
 
+const adminImages = window.ARI_ADMIN_SETTINGS?.images || {};
+const pageImageSlots = {
+  "/": {
+    ".home-hero > img": "home_hero",
+    ".solution-grid article:nth-child(1) .card-media > img": "home_enterprises",
+    ".solution-grid article:nth-child(2) .card-media > img": "home_candidates",
+    ".solution-grid article:nth-child(3) .card-media > img": "home_advice",
+    ".full-photo": "home_team",
+  },
+  "/industries": {
+    ".industry-hero > img": "industries_hero",
+    ".full-photo": "industries_quarry",
+  },
+  "/a-propos": {
+    ".about-media > img": "about_office",
+    ".vision-section > img": "about_vision",
+  },
+  "/entreprises": {
+    ".enterprise-card-grid article:nth-child(1) .enterprise-card-head > img": "enterprise_card_1",
+    ".enterprise-card-grid article:nth-child(2) .enterprise-card-head > img": "enterprise_card_2",
+    ".enterprise-card-grid article:nth-child(3) .enterprise-card-head > img": "enterprise_card_3",
+  },
+  "/candidats": {
+    ".candidate-collage img:nth-child(1)": "candidate_1",
+    ".candidate-collage img:nth-child(2)": "candidate_2",
+    ".candidate-collage img:nth-child(3)": "candidate_3",
+    ".candidate-network > img": "candidate_guidance",
+  },
+  "/contact": {
+    ".contact-process > img": "contact_guidance",
+  },
+};
+
+Object.entries(pageImageSlots[path] || {}).forEach(([selector, slot]) => {
+  const replacement = adminImages[slot];
+  const image = document.querySelector(selector);
+  if (replacement && image) image.src = replacement;
+});
+
 const menuButton = document.querySelector(".menu-button");
 const nav = document.querySelector(".main-nav");
 menuButton?.addEventListener("click", () => {
