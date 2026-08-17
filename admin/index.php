@@ -55,6 +55,72 @@ if (!$hasCredentials && $_SERVER['REQUEST_METHOD'] === 'POST' && (string)($_POST
     }
 }
 
+if ($hasCredentials && $_SERVER['REQUEST_METHOD'] === 'POST' && (string)($_POST['action'] ?? '') === 'send_reset_code') {
+    if (!ari_valid_csrf((string)($_POST['csrf'] ?? ''))) {
+        $error = 'La session a expiré. Rechargez la page.';
+    } elseif ((int)($_SESSION['reset_sent_at'] ?? 0) > time() - 60) {
+        $error = 'Un code vient déjà d’être envoyé. Vérifiez la boîte de réception.';
+    } else {
+        $code = (string)random_int(10000000, 99999999);
+        if (ari_send_password_reset_code($code)) {
+            $_SESSION['reset_code_hash'] = hash('sha256', $code);
+            $_SESSION['reset_code_expires'] = time() + 900;
+            $_SESSION['reset_sent_at'] = time();
+            $_SESSION['reset_failures'] = 0;
+            $notice = 'Un code de réinitialisation a été envoyé à contact@agileresources-intl.com.';
+        } else {
+            $error = 'Le code n’a pas pu être envoyé. Vérifiez que l’envoi d’e-mails PHP est actif sur Hostinger.';
+        }
+    }
+}
+
+if ($hasCredentials && $_SERVER['REQUEST_METHOD'] === 'POST' && (string)($_POST['action'] ?? '') === 'cancel_reset') {
+    if (ari_valid_csrf((string)($_POST['csrf'] ?? ''))) {
+        unset($_SESSION['reset_code_hash'], $_SESSION['reset_code_expires'], $_SESSION['reset_sent_at'], $_SESSION['reset_failures']);
+    }
+}
+
+if ($hasCredentials && $_SERVER['REQUEST_METHOD'] === 'POST' && (string)($_POST['action'] ?? '') === 'reset_password') {
+    $code = trim((string)($_POST['reset_code'] ?? ''));
+    $password = (string)($_POST['password'] ?? '');
+    $confirmation = (string)($_POST['password_confirmation'] ?? '');
+    $expectedCode = (string)($_SESSION['reset_code_hash'] ?? '');
+    if (!ari_valid_csrf((string)($_POST['csrf'] ?? ''))) {
+        $error = 'La session a expiré. Rechargez la page.';
+    } elseif ((int)($_SESSION['reset_code_expires'] ?? 0) < time() || $expectedCode === '') {
+        $error = 'Le code a expiré. Demandez un nouveau code.';
+        unset($_SESSION['reset_code_hash'], $_SESSION['reset_code_expires'], $_SESSION['reset_failures']);
+    } elseif (!hash_equals($expectedCode, hash('sha256', $code))) {
+        $failures = (int)($_SESSION['reset_failures'] ?? 0) + 1;
+        $_SESSION['reset_failures'] = $failures;
+        if ($failures >= 5) {
+            unset($_SESSION['reset_code_hash'], $_SESSION['reset_code_expires'], $_SESSION['reset_failures']);
+            $error = 'Trop de codes incorrects. Demandez un nouveau code.';
+        } else {
+            $error = 'Le code temporaire est incorrect.';
+        }
+    } elseif (strlen($password) < 12) {
+        $error = 'Le mot de passe doit contenir au moins 12 caractères.';
+    } elseif ($password !== $confirmation) {
+        $error = 'Les deux mots de passe ne correspondent pas.';
+    } elseif (!ari_save_password($password)) {
+        $error = 'Le nouveau mot de passe n’a pas pu être enregistré sur le serveur.';
+    } else {
+        unset(
+            $_SESSION['reset_code_hash'],
+            $_SESSION['reset_code_expires'],
+            $_SESSION['reset_sent_at'],
+            $_SESSION['reset_failures'],
+            $_SESSION['login_failures'],
+            $_SESSION['login_locked_until']
+        );
+        session_regenerate_id(true);
+        $_SESSION['ari_admin'] = true;
+        header('Location: /admin/', true, 303);
+        exit;
+    }
+}
+
 if ($hasCredentials && $_SERVER['REQUEST_METHOD'] === 'POST' && (string)($_POST['action'] ?? '') === 'login') {
     $lockedUntil = (int)($_SESSION['login_locked_until'] ?? 0);
     if ($lockedUntil > time()) {
@@ -112,12 +178,32 @@ if (!ari_is_authenticated()):
           <button class="button" type="submit">Activer le back-office</button>
         </form>
       <?php endif; ?>
+    <?php elseif (!empty($_SESSION['reset_code_hash']) && (int)($_SESSION['reset_code_expires'] ?? 0) >= time()): ?>
+      <p class="muted">Saisissez le code reçu par e-mail, puis choisissez un nouveau mot de passe.</p>
+      <form method="post" autocomplete="off">
+        <input type="hidden" name="action" value="reset_password">
+        <input type="hidden" name="csrf" value="<?= ari_escape(ari_csrf_token()) ?>">
+        <p class="field"><label for="reset_code">Code reçu par e-mail</label><input id="reset_code" name="reset_code" inputmode="numeric" pattern="[0-9]{8}" maxlength="8" required autofocus></p>
+        <p class="field"><label for="password">Nouveau mot de passe</label><input id="password" name="password" type="password" minlength="12" required autocomplete="new-password"></p>
+        <p class="field"><label for="password_confirmation">Confirmer le mot de passe</label><input id="password_confirmation" name="password_confirmation" type="password" minlength="12" required autocomplete="new-password"></p>
+        <button class="button" type="submit">Réinitialiser le mot de passe</button>
+      </form>
+      <form class="login-secondary-action" method="post">
+        <input type="hidden" name="action" value="cancel_reset">
+        <input type="hidden" name="csrf" value="<?= ari_escape(ari_csrf_token()) ?>">
+        <button class="text-button" type="submit">Retour à la connexion</button>
+      </form>
     <?php else: ?>
       <form method="post" autocomplete="off">
         <input type="hidden" name="action" value="login">
         <input type="hidden" name="csrf" value="<?= ari_escape(ari_csrf_token()) ?>">
         <p class="field"><label for="password">Mot de passe</label><input id="password" name="password" type="password" required autofocus autocomplete="current-password"></p>
         <button class="button" type="submit">Se connecter</button>
+      </form>
+      <form class="login-secondary-action" method="post">
+        <input type="hidden" name="action" value="send_reset_code">
+        <input type="hidden" name="csrf" value="<?= ari_escape(ari_csrf_token()) ?>">
+        <button class="text-button" type="submit">Mot de passe oublié ?</button>
       </form>
     <?php endif; ?>
   </main>

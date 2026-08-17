@@ -146,6 +146,17 @@ function ari_send_setup_code(string $code): bool {
     return @mail('contact@agileresources-intl.com', $subject, $message, implode("\r\n", $headers));
 }
 
+function ari_send_password_reset_code(string $code): bool {
+    $subject = 'Code de réinitialisation du back-office ARI';
+    $message = "Une demande de réinitialisation du mot de passe du back-office ARI a été effectuée.\n\nVotre code temporaire est : {$code}\n\nCe code expire dans 15 minutes. Si vous n’êtes pas à l’origine de cette demande, ignorez cet e-mail.";
+    $headers = [
+        'From: Agile Resources International <contact@agileresources-intl.com>',
+        'Content-Type: text/plain; charset=UTF-8',
+        'X-Mailer: PHP/' . PHP_VERSION,
+    ];
+    return @mail('contact@agileresources-intl.com', $subject, $message, implode("\r\n", $headers));
+}
+
 function ari_csrf_token(): string {
     if (empty($_SESSION['csrf'])) {
         $_SESSION['csrf'] = bin2hex(random_bytes(24));
