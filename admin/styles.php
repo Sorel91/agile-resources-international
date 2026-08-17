@@ -28,12 +28,12 @@ $h3Font = ari_css_font($fonts, $fontSettings, 'h3', 'oswald');
 $bodyFont = ari_css_font($fonts, $fontSettings, 'body', 'cormorant');
 
 $pageTitles = [
-    '.home-hero h1' => ['home_h1_desktop', 'home_h1_mobile', 82, 47],
-    '.industry-hero h1' => ['industries_h1_desktop', 'industries_h1_mobile', 77, 47],
-    '.about-hero h1' => ['about_h1_desktop', 'about_h1_mobile', 78, 47],
-    '.enterprise-cover h1' => ['enterprise_h1_desktop', 'enterprise_h1_mobile', 72, 43],
-    '.candidate-intro h1' => ['candidates_h1_desktop', 'candidates_h1_mobile', 64, 42],
-    '.contact-process h1' => ['contact_h1_desktop', 'contact_h1_mobile', 66, 43],
+    '.home-hero h1' => ['home_h1_desktop', 'home_h1_mobile', 82, 42],
+    '.industry-hero h1' => ['industries_h1_desktop', 'industries_h1_mobile', 77, 42],
+    '.about-hero h1' => ['about_h1_desktop', 'about_h1_mobile', 78, 42],
+    '.enterprise-cover h1' => ['enterprise_h1_desktop', 'enterprise_h1_mobile', 72, 40],
+    '.candidate-intro h1' => ['candidates_h1_desktop', 'candidates_h1_mobile', 64, 40],
+    '.contact-process h1' => ['contact_h1_desktop', 'contact_h1_mobile', 66, 40],
 ];
 
 echo "/* Réglages générés par le back-office ARI. */\n";
@@ -52,7 +52,7 @@ if (!empty($enabled['size_h1'])) {
 }
 
 $h2Desktop = ari_css_size($sizes, 'h2_desktop', 74, 28, 110);
-$h2Mobile = ari_css_size($sizes, 'h2_mobile', 45, 24, 72);
+$h2Mobile = ari_css_size($sizes, 'h2_mobile', 39, 24, 72);
 $h3Desktop = ari_css_size($sizes, 'h3_desktop', 23, 16, 60);
 $h3Mobile = ari_css_size($sizes, 'h3_mobile', 21, 15, 46);
 $bodyDesktop = ari_css_size($sizes, 'body_desktop', 17, 13, 32);

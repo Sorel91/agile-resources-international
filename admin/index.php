@@ -99,7 +99,7 @@ if (!ari_is_authenticated()):
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
   <title>Administration — ARI</title>
-  <link rel="stylesheet" href="/admin/admin.css">
+  <link rel="stylesheet" href="/admin/admin.css?v=20260817-22">
 </head>
 <body class="login-shell">
   <main class="login-card">
@@ -216,18 +216,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (string)($_POST['action'] ?? '') ==
                 $error .= ($error ? ' ' : '') . 'Le format de « ' . $meta['label'] . ' » n’est pas accepté.';
                 continue;
             }
-            if (!is_dir(ARI_UPLOAD_DIR) && !@mkdir(ARI_UPLOAD_DIR, 0755, true)) {
-                $error .= ($error ? ' ' : '') . 'Le dossier des images ne peut pas être créé.';
-                continue;
-            }
-            $filename = $slot . '-' . gmdate('Ymd-His') . '-' . bin2hex(random_bytes(4)) . '.' . $extensions[$mime];
-            $destination = ARI_UPLOAD_DIR . '/' . $filename;
-            if (!@move_uploaded_file((string)$upload['tmp_name'], $destination)) {
+            $filename = ari_store_uploaded_image($upload, $slot, $mime);
+            if ($filename === '') {
                 $error .= ($error ? ' ' : '') . 'L’image « ' . $meta['label'] . ' » n’a pas pu être enregistrée.';
                 continue;
             }
-            @chmod($destination, 0644);
-            $newSettings['images'][$slot] = '/uploads/site/' . $filename;
+            $newSettings['images'][$slot] = '/admin/image.php?file=' . rawurlencode($filename);
         }
 
         $newPassword = (string)($_POST['new_password'] ?? '');
@@ -274,7 +268,7 @@ foreach ($photoSlots as $slot => $meta) {
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
   <title>Administration — ARI</title>
-  <link rel="stylesheet" href="/admin/admin.css">
+  <link rel="stylesheet" href="/admin/admin.css?v=20260817-22">
 </head>
 <body>
   <header class="topbar">
@@ -329,7 +323,7 @@ foreach ($photoSlots as $slot => $meta) {
 
       <section class="panel">
         <h2>Photos des pages</h2>
-        <p class="muted">Formats acceptés : JPG, PNG et WebP, 8 Mo maximum par image.</p>
+        <p class="muted">Formats acceptés : JPG, PNG et WebP, 8 Mo maximum. Les grandes images sont automatiquement redimensionnées et converties en WebP lorsque le serveur le permet.</p>
         <?php foreach ($photosByPage as $page => $items): ?>
           <h3 class="photo-page"><?= ari_escape($page) ?></h3>
           <div class="photos">

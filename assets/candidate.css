@@ -95,4 +95,9 @@
   .candidate-application button {
     width: 100%;
   }
+
+  .candidate-application .file-field {
+    min-height: 92px;
+    align-content: center;
+  }
 }

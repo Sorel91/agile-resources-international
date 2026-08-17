@@ -20,8 +20,8 @@ const header = (path) => `
     <a class="header-logo" href="/" aria-label="Agile Resources International — Accueil">
       <img src="${A}logo-ari.png" alt="Agile Resources International">
     </a>
-    <button class="menu-button" type="button" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
-    <nav class="main-nav" aria-label="Navigation principale">
+    <button class="menu-button" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-navigation">☰</button>
+    <nav class="main-nav" id="main-navigation" aria-label="Navigation principale">
       ${navItems.map(([href, label]) => `<a href="${href}"${path === href ? ' class="active" aria-current="page"' : ""}>${label}</a>`).join("")}
     </nav>
   </header>`;
@@ -62,12 +62,12 @@ const home = () => `
     <section class="home-hero two-columns">
       <div>
         <p class="eyebrow">Agile Resources International</p>
-        <h1>Acquisition<br>stratégique de<br>talents<br>internationaux</h1>
+        <h1>Acquisition <br>stratégique de <br>talents <br>internationaux</h1>
         <span class="title-rule"></span>
         <p>Agile Resources International met à votre disposition un réseau mondial de professionnels hautement qualifiés. Nous accompagnons les organisations exigeantes dans l’identification, l’évaluation et le recrutement de profils stratégiques, avec une approche agile, discrète et orientée résultats.</p>
         <a class="button" href="#solutions">Découvrir nos solutions</a>
       </div>
-      <img src="${A}mine.jpg" alt="Site minier vu du ciel">
+      <img src="${A}mine.webp" alt="Site minier vu du ciel" fetchpriority="high" decoding="async">
     </section>
 
     <section class="section solutions" id="solutions">
@@ -77,30 +77,30 @@ const home = () => `
       <p>Nous concevons des solutions adaptées à vos enjeux afin d’optimiser la gestion de votre capital humain, de sécuriser la mobilité internationale et de favoriser l’intégration durable de vos collaborateurs.</p>
       <div class="solution-grid">
         <article>
-          <div class="card-media"><span><img src="${A}icon-enterprises.png" alt=""></span><img src="${A}solution-enterprises.jpg" alt="Mine et industrie"></div>
+          <div class="card-media"><span><img src="${A}icon-enterprises.png" alt="" loading="lazy"></span><img src="${A}solution-enterprises.webp" alt="Mine et industrie" loading="lazy" decoding="async"></div>
           <h3>Entreprises</h3>
           <p>Nous accompagnons les entreprises dans la recherche, la sélection et le recrutement de profils qualifiés, de spécialistes et de dirigeants. Grâce à une approche personnalisée, nous identifions les compétences les plus adaptées à vos objectifs et vous aidons à constituer des équipes performantes, en France comme à l’international.</p>
         </article>
         <article>
-          <div class="card-media"><span><img src="${A}icon-candidates.png" alt=""></span><img src="${A}solution-candidates.jpg" alt="Professionnelle préparant sa carrière"></div>
+          <div class="card-media"><span><img src="${A}icon-candidates.png" alt="" loading="lazy"></span><img src="${A}solution-candidates.webp" alt="Professionnelle préparant sa carrière" loading="lazy" decoding="async"></div>
           <h3>Candidats</h3>
           <p>Nous accompagnons les professionnels dans leur évolution en leur donnant accès à des opportunités de carrière correspondant à leurs compétences et à leurs ambitions. De la préparation de leur candidature à leur intégration, nous assurons un suivi personnalisé à chaque étape de leur parcours.</p>
         </article>
         <article>
-          <div class="card-media"><span><img src="${A}icon-advice.png" alt=""></span><img src="${A}solution-advice.jpg" alt="Consultants en réunion"></div>
+          <div class="card-media"><span><img src="${A}icon-advice.png" alt="" loading="lazy"></span><img src="${A}solution-advice.webp" alt="Consultants en réunion" loading="lazy" decoding="async"></div>
           <h3>Conseil</h3>
           <p>Nous conseillons les entreprises dans leurs projets de recrutement, de mobilité internationale et de développement organisationnel. Notre accompagnement permet de sécuriser vos recrutements, d’optimiser vos processus et de mettre en place des solutions durables favorisant votre croissance.</p>
         </article>
       </div>
     </section>
-    <img class="full-photo" src="${A}team.jpg" alt="Équipe en réunion">
+    <img class="full-photo" src="${A}team.webp" alt="Équipe en réunion" loading="lazy" decoding="async">
   </main>
   ${cta({title:"Prêt à optimiser vos équipes ?", text:"Contactez nos consultants pour concevoir une stratégie d’embauche adaptée à vos ambitions professionnelles.", button:"Nous contacter"})}`;
 
 const industries = () => `
   <main>
     <section class="industry-hero two-columns">
-      <img src="${A}worker.jpg" alt="Professionnel de l’industrie">
+      <img src="${A}worker.webp" alt="Professionnel de l’industrie" fetchpriority="high" decoding="async">
       <div>
         <h1>Une expertise dédiée aux talents rares</h1>
         <span class="title-rule"></span>
@@ -110,7 +110,7 @@ const industries = () => `
           <div><strong>15</strong><span>Secteurs d’excellence</span></div>
           <div><strong>100%</strong><span>Talents qualifiés</span></div>
         </div>
-        <img class="africa-map" src="${A}africa-map.png" alt="Carte de l’Afrique">
+        <img class="africa-map" src="${A}africa-map.png" alt="Carte de l’Afrique" loading="lazy" decoding="async">
       </div>
     </section>
     <section class="section domains" id="domains">
@@ -123,7 +123,7 @@ const industries = () => `
       </div>
       <a class="button centered-button" href="/catalogue">Parmi de nombreux autres services</a>
     </section>
-    <img class="full-photo" src="${A}quarry.jpg" alt="Carrière minière">
+    <img class="full-photo" src="${A}quarry.webp" alt="Carrière minière" loading="lazy" decoding="async">
   </main>
   ${cta({text:"Prenez contact avec nos bureaux de Paris ou de Genève pour analyser vos enjeux de recrutement et concevoir une stratégie de sourcing sur mesure adaptée à votre industrie."})}`;
 
@@ -138,21 +138,21 @@ const about = () => `
         <p>Nous combinons la force d’un réseau international à l’attention personnalisée d’une structure à taille humaine, sans jamais transiger sur l’excellence.</p>
       </div>
       <div class="about-media">
-        <img src="${A}office.jpg" alt="Collaborateurs au bureau">
+        <img src="${A}office.webp" alt="Collaborateurs au bureau" fetchpriority="high" decoding="async">
         <a class="button" href="#engagements">Nos engagements</a>
       </div>
     </section>
     <section class="section pillar-section" id="engagements">
       <h2>Les piliers de notre excellence</h2>
       <div class="pillar-grid">
-        <article><b>1</b><h3>Exigence opérationnelle</h3><img src="${A}pillar-excellence.png" alt=""><p>Chaque recrutement fait l’objet d’un alignement stratégique rigoureux pour garantir l’adéquation parfaite avec vos ambitions de croissance globale.</p></article>
-        <article><b>2</b><h3>Agilité internationale</h3><img src="${A}pillar-agility.png?v=2" alt=""><p>Une approche agile et réactive, capable de mobiliser des compétences rares à travers les frontières géographiques en un temps record.</p></article>
-        <article><b>3</b><h3>Éthique &amp; transparence</h3><img src="${A}pillar-ethics.png?v=2" alt=""><p>Une approche humaine et transparente, unissant nos équipes multiculturelles autour du respect absolu de chaque parcours professionnel.</p></article>
+        <article><b>1</b><h3>Exigence opérationnelle</h3><img src="${A}pillar-excellence.png" alt="" loading="lazy"><p>Chaque recrutement fait l’objet d’un alignement stratégique rigoureux pour garantir l’adéquation parfaite avec vos ambitions de croissance globale.</p></article>
+        <article><b>2</b><h3>Agilité internationale</h3><img src="${A}pillar-agility.png?v=2" alt="" loading="lazy"><p>Une approche agile et réactive, capable de mobiliser des compétences rares à travers les frontières géographiques en un temps record.</p></article>
+        <article><b>3</b><h3>Éthique &amp; transparence</h3><img src="${A}pillar-ethics.png?v=2" alt="" loading="lazy"><p>Une approche humaine et transparente, unissant nos équipes multiculturelles autour du respect absolu de chaque parcours professionnel.</p></article>
       </div>
     </section>
     <section class="section vision-section">
       <p class="eyebrow vision-label">Notre Vision</p>
-      <img src="${A}about-vision.png" alt="Croissance des secteurs minier, technologique et des services en Afrique">
+      <img src="${A}about-vision.webp" alt="Croissance des secteurs minier, technologique et des services en Afrique" loading="lazy" decoding="async">
       <p class="vision-text">Des solutions stratégiques en ressources humaines, en formation et en opérations pour soutenir une croissance durable dans les secteurs minier, technologique et des services en Afrique.</p>
     </section>
   </main>
@@ -170,7 +170,7 @@ const enterprises = () => `
     <section class="enterprise-cover">
       <div class="enterprise-cover-content">
         <p class="eyebrow">Acquisition de talents</p>
-        <h1>Identifiez les<br>talents qui<br>feront la<br>différence</h1>
+        <h1>Identifiez les <br>talents qui <br>feront la <br>différence</h1>
         <p>ARI simplifie vos recrutements stratégiques en identifiant rapidement des profils qualifiés, expérimentés et adaptés à vos exigences. De l’expertise technique au leadership, nous vous aidons à renforcer vos équipes là où l’impact compte.</p>
         <a class="button" href="/contact?type=entreprise">Confier un mandat</a>
       </div>
@@ -181,9 +181,9 @@ const enterprises = () => `
       <span class="title-rule"></span>
       <p class="section-lead">Grâce à notre réseau international, nous mettons en relation les entreprises les plus exigeantes avec des dirigeants et experts hautement qualifiés.</p>
       <div class="enterprise-card-grid">
-        <article><div class="enterprise-card-head"><span><img src="${A}icon-enterprises.png" alt=""></span><img src="${A}solution-enterprises.jpg" alt="Exploitation minière"></div><h3>Recherche exécutive</h3><p>Identification et sélection de dirigeants, cadres et experts stratégiques capables d’accompagner vos transformations et de créer une valeur durable.</p></article>
-        <article><div class="enterprise-card-head"><span><img src="${A}icon-candidates.png" alt=""></span><img src="${A}solution-candidates.jpg" alt="Professionnelle en entreprise"></div><h3>Réseau d’excellence</h3><p>Mobilisation rapide de profils hautement qualifiés grâce à notre réseau international, afin de répondre efficacement à vos enjeux de recrutement et aux pénuries de compétences.</p></article>
-        <article><div class="enterprise-card-head"><span><img src="${A}icon-advice.png" alt=""></span><img src="${A}solution-advice.jpg" alt="Échange avec un consultant"></div><h3>Performance et alignement</h3><p>Nous optimisons votre capital humain en alignant vos talents, votre organisation et vos objectifs stratégiques pour soutenir une croissance durable.</p></article>
+        <article><div class="enterprise-card-head"><span><img src="${A}icon-enterprises.png" alt="" loading="lazy"></span><img src="${A}solution-enterprises.webp" alt="Exploitation minière" loading="lazy" decoding="async"></div><h3>Recherche exécutive</h3><p>Identification et sélection de dirigeants, cadres et experts stratégiques capables d’accompagner vos transformations et de créer une valeur durable.</p></article>
+        <article><div class="enterprise-card-head"><span><img src="${A}icon-candidates.png" alt="" loading="lazy"></span><img src="${A}solution-candidates.webp" alt="Professionnelle en entreprise" loading="lazy" decoding="async"></div><h3>Réseau d’excellence</h3><p>Mobilisation rapide de profils hautement qualifiés grâce à notre réseau international, afin de répondre efficacement à vos enjeux de recrutement et aux pénuries de compétences.</p></article>
+        <article><div class="enterprise-card-head"><span><img src="${A}icon-advice.png" alt="" loading="lazy"></span><img src="${A}solution-advice.webp" alt="Échange avec un consultant" loading="lazy" decoding="async"></div><h3>Performance et alignement</h3><p>Nous optimisons votre capital humain en alignant vos talents, votre organisation et vos objectifs stratégiques pour soutenir une croissance durable.</p></article>
       </div>
     </section>
     <section class="enterprise-method">
@@ -200,18 +200,18 @@ const enterprises = () => `
 const candidates = () => `
   <main>
     <section class="candidate-intro">
-      <h1>Votre expertise, de nouvelles<br>perspectives</h1>
+      <h1>Votre expertise, de nouvelles <br>perspectives</h1>
       <p>ARI vous accompagne dans votre évolution professionnelle en vous connectant à des opportunités adaptées à vos compétences, votre expérience et vos ambitions.</p>
       <a class="button" href="#candidature">Déposer mon dossier</a>
     </section>
     <section class="candidate-collage" aria-label="Professionnels accompagnés par ARI">
-      <img src="${A}candidate-work.jpg" alt="Professionnelle au travail">
-      <img src="${A}candidate-success.jpg" alt="Professionnel célébrant une réussite">
-      <img src="${A}candidate-mobile.jpg" alt="Professionnelle consultant une opportunité">
+      <img src="${A}candidate-work.webp" alt="Professionnelle au travail" loading="lazy" decoding="async">
+      <img src="${A}candidate-success.webp" alt="Professionnel célébrant une réussite" loading="lazy" decoding="async">
+      <img src="${A}candidate-mobile.webp" alt="Professionnelle consultant une opportunité" loading="lazy" decoding="async">
     </section>
     <section class="candidate-network">
       <div><h2>Un réseau au service de vos ambitions</h2><p>ARI met en relation des talents qualifiés avec des entreprises à la recherche d’expertises spécifiques. Nous prenons le temps de comprendre votre parcours, vos compétences et vos ambitions afin d’identifier les opportunités qui correspondent réellement à votre profil. De la sélection des opportunités à la mise en relation avec les recruteurs, jusqu’à votre prise de fonction, nous vous accompagnons pour vous permettre d’aborder chaque nouvelle étape de votre carrière avec confiance.</p><p>Notre rôle : révéler votre potentiel, créer les bonnes connexions et vous ouvrir les portes d’opportunités qui correspondent à vos ambitions.</p><a class="button" href="#candidature">Explorer les opportunités</a></div>
-      <img src="${A}candidate-guidance.jpg" alt="Accompagnement professionnel personnalisé">
+      <img src="${A}candidate-guidance.webp" alt="Accompagnement professionnel personnalisé" loading="lazy" decoding="async">
     </section>
     <section class="section candidate-method"><p class="eyebrow">Notre méthode</p><span class="small-rule"></span><div class="candidate-method-grid">
       <article><div><span><img src="${A}icon-technology.png" alt=""></span><h3>Évaluation</h3></div><p>Une analyse approfondie de votre expertise, de votre parcours professionnel et de vos ambitions afin d’identifier les opportunités les plus adaptées à votre profil.</p></article>
@@ -256,7 +256,7 @@ const catalogue = () => {
 };
 
 const contact = () => {
-  return `<main><section class="contact-process"><div><h1>Identification à<br>l’échelle internationale</h1><span class="contact-globe">◎</span><p>Que vous soyez un directeur des ressources humaines confronté à des pénuries de compétences critiques, ou un cadre dirigeant en quête d’une nouvelle opportunité d’envergure, nous mobilisons notre réseau mondial pour vous apporter une réactivité opérationnelle inédite.</p></div><img src="${A}contact-guidance.jpg" alt="Consultante accompagnant un professionnel"></section><section class="process-line"><p class="eyebrow">Notre Processus</p><strong>Comprendre vos besoins → Identifier les talents → Évaluer les candidats → Présenter une sélection de profils</strong><span>↓</span><b>Placement réussi</b></section><section class="contact-launch"><div><h2>Lancer Vos<br>Recherches</h2><p>Notre équipe s’engage à analyser votre besoin de recrutement ou votre profil sous 24 heures ouvrées. Remplissez ce formulaire pour être mis en relation directe avec un consultant expert de votre secteur d’activité.</p></div><form action="/contact.php" method="post"><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off"><input type="hidden" name="request_type" value="entreprise"><label>Nom complet et entreprise*<input name="name" required autocomplete="name"></label><label>Adresse e-mail professionnelle*<input name="email" type="email" required autocomplete="email"></label><label>Numéro de téléphone direct<input name="phone" type="tel" autocomplete="tel"></label><label>Description de votre besoin en capital humain*<textarea name="message" rows="4" required></textarea></label><label class="consent"><input name="consent" type="checkbox" value="yes" required> J’accepte que mes informations soient utilisées afin de répondre à ma demande.</label><button class="button" type="submit">Envoyer Ma Demande</button></form></section></main>`;
+  return `<main><section class="contact-process"><div><h1>Identification à <br>l’échelle internationale</h1><span class="contact-globe">◎</span><p>Que vous soyez un directeur des ressources humaines confronté à des pénuries de compétences critiques, ou un cadre dirigeant en quête d’une nouvelle opportunité d’envergure, nous mobilisons notre réseau mondial pour vous apporter une réactivité opérationnelle inédite.</p></div><img src="${A}contact-guidance.webp" alt="Consultante accompagnant un professionnel" fetchpriority="high" decoding="async"></section><section class="process-line"><p class="eyebrow">Notre Processus</p><ol class="process-steps"><li>Comprendre vos besoins</li><li>Identifier les talents</li><li>Évaluer les candidats</li><li>Présenter une sélection</li></ol><span>↓</span><b>Placement réussi</b></section><section class="contact-launch"><div><h2>Lancer Vos<br>Recherches</h2><p>Notre équipe s’engage à analyser votre besoin de recrutement ou votre profil sous 24 heures ouvrées. Remplissez ce formulaire pour être mis en relation directe avec un consultant expert de votre secteur d’activité.</p></div><form action="/contact.php" method="post"><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off"><input type="hidden" name="request_type" value="entreprise"><label>Nom complet et entreprise*<input name="name" required autocomplete="name"></label><label>Adresse e-mail professionnelle*<input name="email" type="email" required autocomplete="email"></label><label>Numéro de téléphone direct<input name="phone" type="tel" autocomplete="tel"></label><label>Description de votre besoin en capital humain*<textarea name="message" rows="4" required></textarea></label><label class="consent"><input name="consent" type="checkbox" value="yes" required> J’accepte que mes informations soient utilisées afin de répondre à ma demande.</label><button class="button" type="submit">Envoyer Ma Demande</button></form></section></main>`;
 };
 
 const pages = {"/":home,"/industries":industries,"/entreprises":enterprises,"/candidats":candidates,"/catalogue":catalogue,"/a-propos":about,"/contact":contact};
@@ -309,7 +309,27 @@ const nav = document.querySelector(".main-nav");
 menuButton?.addEventListener("click", () => {
   const open = nav.classList.toggle("open");
   menuButton.setAttribute("aria-expanded", String(open));
+  menuButton.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
   menuButton.textContent = open ? "×" : "☰";
+  document.body.classList.toggle("menu-open", open);
+});
+
+const closeMenu = () => {
+  nav?.classList.remove("open");
+  menuButton?.setAttribute("aria-expanded", "false");
+  menuButton?.setAttribute("aria-label", "Ouvrir le menu");
+  if (menuButton) menuButton.textContent = "☰";
+  document.body.classList.remove("menu-open");
+};
+nav?.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
+nav?.addEventListener("click", (event) => {
+  if (event.target === nav) closeMenu();
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") closeMenu();
+});
+window.addEventListener("resize", () => {
+  if (window.innerWidth > 1100) closeMenu();
 });
 
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
