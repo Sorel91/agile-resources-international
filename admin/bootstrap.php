@@ -16,8 +16,10 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 const ARI_DATA_DIR = __DIR__ . '/data';
 const ARI_SETTINGS_FILE = ARI_DATA_DIR . '/settings.json';
 const ARI_DEFAULT_SETTINGS_FILE = ARI_DATA_DIR . '/settings.default.json';
-const ARI_LOCAL_CREDENTIALS_FILE = ARI_DATA_DIR . '/credentials.local.php';
 const ARI_UPLOAD_DIR = __DIR__ . '/../uploads/site';
+define('ARI_PRIVATE_DIR', dirname(__DIR__, 2) . '/ari-private');
+define('ARI_LOCAL_CREDENTIALS_FILE', ARI_PRIVATE_DIR . '/credentials.php');
+define('ARI_LEGACY_CREDENTIALS_FILE', ARI_DATA_DIR . '/credentials.local.php');
 
 function ari_font_options(): array {
     return [
@@ -105,11 +107,16 @@ function ari_save_settings(array $settings): bool {
 }
 
 function ari_credentials(): array {
-    if (!is_file(ARI_LOCAL_CREDENTIALS_FILE)) {
-        return [];
+    foreach ([ARI_LOCAL_CREDENTIALS_FILE, ARI_LEGACY_CREDENTIALS_FILE] as $path) {
+        if (!is_file($path)) {
+            continue;
+        }
+        $credentials = require $path;
+        if (is_array($credentials)) {
+            return $credentials;
+        }
     }
-    $credentials = require ARI_LOCAL_CREDENTIALS_FILE;
-    return is_array($credentials) ? $credentials : [];
+    return [];
 }
 
 function ari_has_credentials(): bool {
@@ -125,7 +132,11 @@ function ari_verify_password(string $password): bool {
         return false;
     }
     $actual = hash_pbkdf2('sha256', $password, $salt, 210000, 64, false);
-    return hash_equals($expected, $actual);
+    $valid = hash_equals($expected, $actual);
+    if ($valid && !is_file(ARI_LOCAL_CREDENTIALS_FILE)) {
+        ari_save_password($password);
+    }
+    return $valid;
 }
 
 function ari_save_password(string $password): bool {
@@ -135,20 +146,9 @@ function ari_save_password(string $password): bool {
     return ari_atomic_write(ARI_LOCAL_CREDENTIALS_FILE, $php);
 }
 
-function ari_send_setup_code(string $code): bool {
-    $subject = 'Code de création du back-office ARI';
-    $message = "Votre code temporaire pour créer le mot de passe du back-office ARI est : {$code}\n\nCe code expire dans 15 minutes.";
-    $headers = [
-        'From: Agile Resources International <contact@agileresources-intl.com>',
-        'Content-Type: text/plain; charset=UTF-8',
-        'X-Mailer: PHP/' . PHP_VERSION,
-    ];
-    return @mail('contact@agileresources-intl.com', $subject, $message, implode("\r\n", $headers));
-}
-
-function ari_send_password_reset_code(string $code): bool {
-    $subject = 'Code de réinitialisation du back-office ARI';
-    $message = "Une demande de réinitialisation du mot de passe du back-office ARI a été effectuée.\n\nVotre code temporaire est : {$code}\n\nCe code expire dans 15 minutes. Si vous n’êtes pas à l’origine de cette demande, ignorez cet e-mail.";
+function ari_send_login_code(string $code): bool {
+    $subject = 'Code de connexion au back-office ARI';
+    $message = "Une demande de connexion au back-office ARI a été effectuée.\n\nVotre code temporaire est : {$code}\n\nCe code permet une seule connexion et expire dans 15 minutes. Si vous n’êtes pas à l’origine de cette demande, ignorez cet e-mail.";
     $headers = [
         'From: Agile Resources International <contact@agileresources-intl.com>',
         'Content-Type: text/plain; charset=UTF-8',
