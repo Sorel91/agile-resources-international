@@ -182,7 +182,7 @@ html,body{max-width:100%;overflow-x:clip}
 .candidate-collage{gap:4px;justify-content:center}
 .candidate-collage img{object-position:50% 42%}
 .candidate-collage img:nth-child(1){object-position:50% 40%}
-.candidate-collage img:nth-child(2){object-position:50% 44%}
+.candidate-collage img:nth-child(2){object-position:25% 44%}
 .candidate-collage img:nth-child(3){object-position:52% 40%}
 .candidate-network>img{object-position:50% 48%}
 
