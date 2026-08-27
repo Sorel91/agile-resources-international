@@ -180,14 +180,14 @@ html,body{max-width:100%;overflow-x:clip}
 
 /* Cadrage précis des photos de l’Espace Candidats. */
 .candidate-collage{gap:4px;justify-content:center}
-.candidate-collage img{object-position:50% 42%}
-.candidate-collage img:nth-child(1){object-position:50% 40%}
-.candidate-collage img:nth-child(2){object-position:25% 44%}
-.candidate-collage img:nth-child(3){object-position:52% 40%}
-.candidate-network>img{object-position:50% 48%}
+.candidate-collage img{object-position:center center}
+.candidate-collage img:nth-child(1){object-position:44% 46%}
+.candidate-collage img:nth-child(2){object-position:25% 43%}
+.candidate-collage img:nth-child(3){object-position:72% 42%}
+.candidate-network>img{object-position:46% 50%}
 
 @media(max-width:650px){
   .candidate-collage{grid-auto-columns:calc(100% - 44px);scroll-padding-inline:22px;gap:12px}
-  .candidate-collage img{width:100%;object-position:50% 40%}
-  .candidate-network>img{object-position:50% 46%}
+  .candidate-collage img{width:100%}
+  .candidate-network>img{object-position:46% 50%}
 }
