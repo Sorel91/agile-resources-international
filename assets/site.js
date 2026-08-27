@@ -278,7 +278,48 @@ const catalogue = () => {
 };
 
 const contact = () => {
-  return `<main><section class="contact-process"><div><h1>Identification à <br>l’échelle internationale</h1><span class="contact-globe">◎</span><p>Que vous soyez un directeur des ressources humaines confronté à des pénuries de compétences critiques, ou un cadre dirigeant en quête d’une nouvelle opportunité d’envergure, nous mobilisons notre réseau mondial pour vous apporter une réactivité opérationnelle inédite.</p></div><img src="${A}contact-guidance.webp" alt="Consultante accompagnant un professionnel" fetchpriority="high" decoding="async"></section><section class="process-line"><p class="eyebrow">Notre Processus</p><ol class="process-steps"><li>Comprendre vos besoins</li><li>Identifier les talents</li><li>Évaluer les candidats</li><li>Présenter une sélection</li></ol><span>↓</span><b>Placement réussi</b></section><section class="contact-launch"><div><h2>Lancer Vos<br>Recherches</h2><p>Notre équipe s’engage à analyser votre besoin de recrutement ou votre profil sous 24 heures ouvrées. Remplissez ce formulaire pour être mis en relation directe avec un consultant expert de votre secteur d’activité.</p></div><form action="/contact.php" method="post"><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off"><input type="hidden" name="request_type" value="entreprise"><label>Nom complet et entreprise*<input name="name" required autocomplete="name"></label><label>Adresse e-mail professionnelle*<input name="email" type="email" required autocomplete="email"></label><label>Numéro de téléphone direct<input name="phone" type="tel" autocomplete="tel"></label><label>Description de votre besoin en capital humain*<textarea name="message" rows="4" required></textarea></label><label class="consent"><input name="consent" type="checkbox" value="yes" required> J’accepte que mes informations soient utilisées afin de répondre à ma demande.</label><button class="button" type="submit">Envoyer Ma Demande</button></form></section></main>`;
+  return `<main class="contact-page">
+    <section class="contact-process">
+      <div class="contact-process-copy">
+        <h1>Identification à <br>l’échelle internationale</h1>
+        <div class="contact-globe-row" aria-hidden="true">
+          <span></span>
+          <svg class="contact-globe" viewBox="0 0 120 120" role="img">
+            <circle cx="60" cy="60" r="48"></circle>
+            <ellipse cx="60" cy="60" rx="22" ry="48"></ellipse>
+            <path d="M12 60h96M20 38h80M20 82h80"></path>
+          </svg>
+          <span></span>
+        </div>
+        <p>Que vous soyez un directeur des ressources humaines confronté à des pénuries de compétences critiques, ou un cadre dirigeant en quête d’une nouvelle opportunité d’envergure, nous mobilisons notre réseau mondial pour vous apporter une réactivité opérationnelle inédite.</p>
+      </div>
+      <img src="${A}contact-guidance.webp" alt="Consultante accompagnant un professionnel" fetchpriority="high" decoding="async">
+    </section>
+
+    <section class="process-line">
+      <div class="process-heading"><p class="eyebrow">Notre Processus</p><span></span></div>
+      <ol class="process-steps"><li>Comprendre vos besoins</li><li>Identifier les talents</li><li>Évaluer les candidats</li><li>Présenter une sélection</li></ol>
+      <div class="process-success"><span aria-hidden="true">↓</span><b>Placement réussi</b></div>
+      <p class="process-promise">Réactivité garantie</p>
+    </section>
+
+    <section class="contact-launch">
+      <div class="contact-launch-copy">
+        <h2>Lancer Vos<br>Recherches</h2>
+        <p>Notre équipe s’engage à analyser votre besoin de recrutement ou votre profil sous 24 heures ouvrées. Remplissez ce formulaire pour être mis en relation directe avec un consultant expert de votre secteur d’activité.</p>
+      </div>
+      <form id="contact-form" action="/contact.php" method="post">
+        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off">
+        <input type="hidden" name="request_type" value="entreprise">
+        <label>Nom complet et entreprise*<input name="name" required autocomplete="name"></label>
+        <label>Adresse e-mail professionnelle*<input name="email" type="email" required autocomplete="email"></label>
+        <label>Numéro de téléphone direct<input name="phone" type="tel" autocomplete="tel"></label>
+        <label>Description de votre besoin en capital humain*<textarea name="message" rows="4" required></textarea></label>
+        <label class="consent"><input name="consent" type="checkbox" value="yes" required> J’accepte que mes informations soient utilisées afin de répondre à ma demande.</label>
+      </form>
+      <button class="button contact-submit" type="submit" form="contact-form">Envoyer Ma Demande</button>
+    </section>
+  </main>`;
 };
 
 const pages = {"/":home,"/industries":industries,"/entreprises":enterprises,"/candidats":candidates,"/catalogue":catalogue,"/a-propos":about,"/contact":contact};

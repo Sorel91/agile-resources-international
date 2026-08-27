@@ -133,6 +133,7 @@ window.ARI_TRANSLATIONS_EN = {
   "Évaluer les candidats": "Assess candidates",
   "Présenter une sélection": "Present a shortlist",
   "Placement réussi": "Successful placement",
+  "Réactivité garantie": "Responsiveness guaranteed",
   "Lancer Vos": "Start Your",
   "Recherches": "Search",
   "Notre équipe s’engage à analyser votre besoin de recrutement ou votre profil sous 24 heures ouvrées. Remplissez ce formulaire pour être mis en relation directe avec un consultant expert de votre secteur d’activité.": "Our team will assess your recruitment need or professional profile within one business day. Complete this form to be connected directly with a consultant specialising in your sector.",
