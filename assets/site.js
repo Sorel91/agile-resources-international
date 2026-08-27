@@ -1,6 +1,24 @@
 const A = "/assets/";
 
-const navItems = [
+const rawPath = window.location.pathname.replace(/\/+$/, "") || "/";
+const language = rawPath === "/en" || rawPath.startsWith("/en/") ? "en" : "fr";
+const isEnglish = language === "en";
+const routePath = isEnglish ? (rawPath.slice(3) || "/") : rawPath;
+const localPath = (target) => {
+  if (!isEnglish || !target.startsWith("/")) return target;
+  if (target === "/") return "/en";
+  return `/en${target}`;
+};
+
+const navItems = isEnglish ? [
+  ["/", "Home"],
+  ["/industries", "Industries"],
+  ["/entreprises", "For Companies"],
+  ["/candidats", "For Candidates"],
+  ["/catalogue", "Our Services"],
+  ["/a-propos", "About Us"],
+  ["/contact", "Contact Us"],
+] : [
   ["/", "Accueil"],
   ["/industries", "Les Industries"],
   ["/entreprises", "Espace Entreprises"],
@@ -11,18 +29,22 @@ const navItems = [
 ];
 
 const cleanPath = () => {
-  const path = window.location.pathname.replace(/\/+$/, "");
-  return path || "/";
+  return routePath;
 };
 
 const header = (path) => `
   <header class="site-header">
-    <a class="header-logo" href="/" aria-label="Agile Resources International — Accueil">
-      <img src="${A}logo-ari.png" alt="Agile Resources International">
+    <a class="header-logo" href="${localPath("/")}" aria-label="Agile Resources International — ${isEnglish ? "Home" : "Accueil"}">
+      <img src="${A}logo-ari.webp" alt="Agile Resources International">
     </a>
-    <button class="menu-button" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-navigation">☰</button>
-    <nav class="main-nav" id="main-navigation" aria-label="Navigation principale">
-      ${navItems.map(([href, label]) => `<a href="${href}"${path === href ? ' class="active" aria-current="page"' : ""}>${label}</a>`).join("")}
+    <div class="language-switcher" aria-label="${isEnglish ? "Choose language" : "Choisir la langue"}">
+      <a href="${path === "/" ? "/" : path}" lang="fr"${!isEnglish ? ' class="active" aria-current="true"' : ""}>FR</a>
+      <span aria-hidden="true">|</span>
+      <a href="${path === "/" ? "/en" : `/en${path}`}" lang="en"${isEnglish ? ' class="active" aria-current="true"' : ""}>EN</a>
+    </div>
+    <button class="menu-button" type="button" aria-label="${isEnglish ? "Open menu" : "Ouvrir le menu"}" aria-expanded="false" aria-controls="main-navigation">☰</button>
+    <nav class="main-nav" id="main-navigation" aria-label="${isEnglish ? "Main navigation" : "Navigation principale"}">
+      ${navItems.map(([href, label]) => `<a href="${localPath(href)}"${path === href ? ' class="active" aria-current="page"' : ""}>${label}</a>`).join("")}
     </nav>
   </header>`;
 
@@ -30,31 +52,31 @@ const footer = () => `
   <footer class="site-footer">
     <div class="footer-intro">
       <span class="footer-rule"></span>
-      <a class="footer-brand" href="/">Agile Resources<br>International (ARI)</a>
-      <p>Votre partenaire de confiance pour un sourcing<br>efficace, agile et international.</p>
+      <a class="footer-brand" href="${localPath("/")}">Agile Resources<br>International (ARI)</a>
+      <p>${isEnglish ? "Your trusted partner for efficient, agile<br>and international talent sourcing." : "Votre partenaire de confiance pour un sourcing<br>efficace, agile et international."}</p>
     </div>
     <div>
-      <h4>NAVIGATION</h4>
-      ${navItems.slice(0, 6).map(([href, label]) => `<a href="${href}">${label.toUpperCase()}</a>`).join("")}
+      <h4>${isEnglish ? "NAVIGATION" : "NAVIGATION"}</h4>
+      ${navItems.slice(0, 6).map(([href, label]) => `<a href="${localPath(href)}">${label.toUpperCase()}</a>`).join("")}
     </div>
     <div>
-      <h4>NOUS CONTACTER</h4>
-      <a class="footer-contact-link" href="/contact">contact@agileresources-intl.com</a>
-      <p>Paris · New York · Abidjan<br>Accompagnement RH 24/7</p>
+      <h4>${isEnglish ? "CONTACT US" : "NOUS CONTACTER"}</h4>
+      <a class="footer-contact-link" href="${localPath("/contact")}">contact@agileresources-intl.com</a>
+      <p>Paris · New York · Abidjan<br>${isEnglish ? "HR support 24/7" : "Accompagnement RH 24/7"}</p>
     </div>
     <div class="footer-bottom">
       <small>© 2026 Agile Resources International (ARI)</small>
-      <small>ACQUISITION STRATÉGIQUE DE TALENTS INTERNATIONAUX</small>
+      <small>${isEnglish ? "STRATEGIC INTERNATIONAL TALENT ACQUISITION" : "ACQUISITION STRATÉGIQUE DE TALENTS INTERNATIONAUX"}</small>
     </div>
   </footer>`;
 
-const cta = ({title = "Prêt à sécuriser vos talents ?", text, button = "Contacter un expert"} = {}) => `
+const cta = ({title = isEnglish ? "Ready to secure the right talent?" : "Prêt à sécuriser vos talents ?", text, button = isEnglish ? "Contact an expert" : "Contacter un expert"} = {}) => `
   <section class="cta-section">
     <div>
       <h2>${title}</h2>
-      <p>${text || "Prenez contact avec nos consultants pour concevoir une stratégie de sourcing adaptée à vos ambitions."}</p>
+      <p>${text || (isEnglish ? "Contact our consultants to design a sourcing strategy tailored to your ambitions." : "Prenez contact avec nos consultants pour concevoir une stratégie de sourcing adaptée à vos ambitions.")}</p>
     </div>
-    <a class="button" href="/contact">${button}</a>
+    <a class="button" href="${localPath("/contact")}">${button}</a>
   </section>`;
 
 const home = () => `
@@ -263,7 +285,49 @@ const pages = {"/":home,"/industries":industries,"/entreprises":enterprises,"/ca
 const path = cleanPath();
 const render = pages[path] || (() => `<main>${detailHero("Erreur 404", "Cette page n’existe pas", "La page demandée est introuvable.")}<section class="section"><a class="button" href="/">Retour à l’accueil</a></section></main>`);
 document.getElementById("app").innerHTML = `${header(path)}${render()}${footer()}`;
-document.title = `${path === "/" ? "Agile Resources International" : navItems.find(([p])=>p===path)?.[1] || "Page introuvable"} — ARI`;
+document.documentElement.lang = language;
+
+if (isEnglish) {
+  const translations = window.ARI_TRANSLATIONS_EN || {};
+  const walker = document.createTreeWalker(document.getElementById("app"), NodeFilter.SHOW_TEXT);
+  const textNodes = [];
+  while (walker.nextNode()) textNodes.push(walker.currentNode);
+  textNodes.forEach((node) => {
+    const original = node.nodeValue.trim();
+    if (!Object.prototype.hasOwnProperty.call(translations, original)) return;
+    node.nodeValue = node.nodeValue.replace(original, translations[original]);
+  });
+
+  document.querySelectorAll("[alt], [placeholder], [title], [aria-label]").forEach((element) => {
+    ["alt", "placeholder", "title", "aria-label"].forEach((attribute) => {
+      const original = element.getAttribute(attribute);
+      if (original && Object.prototype.hasOwnProperty.call(translations, original)) {
+        element.setAttribute(attribute, translations[original]);
+      }
+    });
+  });
+
+  document.querySelectorAll('a[href^="/"]').forEach((link) => {
+    const target = link.getAttribute("href");
+    if (!target || link.closest(".language-switcher") || target.startsWith("/en") || target.startsWith("/admin")) return;
+    link.setAttribute("href", target === "/" ? "/en" : `/en${target}`);
+  });
+
+  document.querySelectorAll('form[action="/contact.php"]').forEach((form) => {
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "lang";
+    input.value = "en";
+    form.appendChild(input);
+  });
+}
+
+const notFoundTitle = isEnglish ? "Page not found" : "Page introuvable";
+document.title = `${path === "/" ? "Agile Resources International" : navItems.find(([p])=>p===path)?.[1] || notFoundTitle} — ARI`;
+document.querySelector('meta[name="description"]')?.setAttribute("content", isEnglish
+  ? "Agile Resources International — strategic international talent acquisition."
+  : "Agile Resources International — acquisition stratégique de talents internationaux."
+);
 
 const adminImages = window.ARI_ADMIN_SETTINGS?.images || {};
 const pageImageSlots = {
@@ -309,7 +373,7 @@ const nav = document.querySelector(".main-nav");
 menuButton?.addEventListener("click", () => {
   const open = nav.classList.toggle("open");
   menuButton.setAttribute("aria-expanded", String(open));
-  menuButton.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
+  menuButton.setAttribute("aria-label", open ? (isEnglish ? "Close menu" : "Fermer le menu") : (isEnglish ? "Open menu" : "Ouvrir le menu"));
   menuButton.textContent = open ? "×" : "☰";
   document.body.classList.toggle("menu-open", open);
 });
@@ -317,7 +381,7 @@ menuButton?.addEventListener("click", () => {
 const closeMenu = () => {
   nav?.classList.remove("open");
   menuButton?.setAttribute("aria-expanded", "false");
-  menuButton?.setAttribute("aria-label", "Ouvrir le menu");
+  menuButton?.setAttribute("aria-label", isEnglish ? "Open menu" : "Ouvrir le menu");
   if (menuButton) menuButton.textContent = "☰";
   document.body.classList.remove("menu-open");
 };

@@ -99,11 +99,11 @@ if (!ari_is_authenticated()):
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
   <title>Administration — ARI</title>
-  <link rel="stylesheet" href="/admin/admin.css?v=20260817-22">
+  <link rel="stylesheet" href="/admin/admin.css?v=20260827-23">
 </head>
 <body class="login-shell">
   <main class="login-card">
-    <img src="/assets/logo-ari.png" alt="Agile Resources International">
+    <img src="/assets/logo-ari.webp" alt="Agile Resources International">
     <h1>Administration du site</h1>
     <?php if ($notice !== ''): ?><p class="notice"><?= ari_escape($notice) ?></p><?php endif; ?>
     <?php if ($error !== ''): ?><p class="notice error"><?= ari_escape($error) ?></p><?php endif; ?>
@@ -268,11 +268,11 @@ foreach ($photoSlots as $slot => $meta) {
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
   <title>Administration — ARI</title>
-  <link rel="stylesheet" href="/admin/admin.css?v=20260817-22">
+  <link rel="stylesheet" href="/admin/admin.css?v=20260827-23">
 </head>
 <body>
   <header class="topbar">
-    <img src="/assets/logo-ari.png" alt="ARI">
+    <img src="/assets/logo-ari.webp" alt="ARI">
     <strong>Administration du site</strong>
     <nav><a href="/" target="_blank" rel="noopener">Voir le site</a><a href="/admin/logout.php">Déconnexion</a></nav>
   </header>
