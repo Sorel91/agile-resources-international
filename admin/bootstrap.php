@@ -44,6 +44,7 @@ function ari_photo_slots(): array {
         'industries_quarry' => ['page' => 'Industries', 'label' => 'Grande photo de la carrière', 'default' => '/assets/quarry.webp'],
         'about_office' => ['page' => 'À propos', 'label' => 'Photo des collaborateurs', 'default' => '/assets/office.webp'],
         'about_vision' => ['page' => 'À propos', 'label' => 'Illustration Notre Vision', 'default' => '/assets/about-vision.webp'],
+        'president_portrait' => ['page' => 'Le mot du président', 'label' => 'Portrait d’Alpha Touré', 'default' => '/assets/alpha-toure-president.webp'],
         'enterprise_hero' => ['page' => 'Entreprises', 'label' => 'Grande image de couverture', 'default' => '/assets/enterprise-hero.jpg'],
         'enterprise_card_1' => ['page' => 'Entreprises', 'label' => 'Carte Recherche exécutive', 'default' => '/assets/solution-enterprises.webp'],
         'enterprise_card_2' => ['page' => 'Entreprises', 'label' => 'Carte Réseau d’excellence', 'default' => '/assets/solution-candidates.webp'],

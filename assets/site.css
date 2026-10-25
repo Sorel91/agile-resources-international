@@ -186,6 +186,53 @@ html,body{max-width:100%;overflow-x:clip}
 .candidate-collage img:nth-child(3){object-position:72% 42%}
 .candidate-network>img{object-position:46% 50%}
 
+/* Messages de la direction et accès direct depuis À propos. */
+.about-navigation{position:relative}
+.about-navigation summary{display:flex;align-items:center;gap:7px;min-height:44px;padding:10px 0;border-bottom:3px solid transparent;list-style:none;cursor:pointer;color:var(--navy);font-size:14px;font-weight:700;white-space:nowrap}
+.about-navigation summary::-webkit-details-marker{display:none}
+.about-navigation.active summary,.about-navigation[open] summary{border-bottom-color:var(--gold)}
+.about-navigation summary:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+.about-navigation summary span{transition:transform .2s}
+.about-navigation[open] summary span{transform:rotate(180deg)}
+.about-submenu{position:absolute;right:0;top:100%;min-width:235px;padding:10px 18px;background:#fff;border:1px solid #e3e6ed;box-shadow:0 12px 28px rgba(29,48,99,.13)}
+.main-nav .about-submenu a{display:flex;align-items:center;min-height:46px;padding:10px 0;white-space:normal;color:var(--navy);border-bottom:1px solid #e3e6ed}
+.main-nav .about-submenu a:last-child{border-bottom:0}
+.main-nav .about-submenu a:hover,.main-nav .about-submenu a[aria-current]{color:var(--gold)}
+.president-entry-link{display:inline-flex;gap:14px;color:var(--navy);text-underline-offset:5px;line-height:1.6;margin:4px 0 12px}
+.president-page{max-width:1260px;margin:auto;padding:36px 5vw 80px}
+.president-breadcrumb{display:flex;gap:12px;align-items:center;font:14px/1.6 Arial,sans-serif;color:#727c91;margin-bottom:34px}
+.president-breadcrumb a{color:#59657c;text-underline-offset:4px}
+.president-heading .eyebrow{margin-bottom:14px}
+.president-heading h1{font-size:clamp(2.6rem,4.5vw,4.1rem);line-height:1.12;margin-bottom:0}
+.president-heading .title-rule{margin:26px 0 42px}
+.president-layout{display:grid;grid-template-columns:minmax(260px,.8fr) minmax(0,1.4fr);gap:clamp(32px,5vw,72px);align-items:start}
+.president-portrait{margin:0;position:sticky;top:30px}
+.president-portrait img{width:100%;height:auto;border-radius:3px;box-shadow:0 12px 32px rgba(29,48,99,.1)}
+.president-portrait figcaption{display:grid;gap:6px;padding:22px 0 0;border-bottom:2px solid var(--gold);padding-bottom:20px}
+.president-portrait strong,.president-signature strong{font:600 25px/1.2 "Oswald",Arial,sans-serif;color:var(--navy)}
+.president-portrait figcaption span{font:16px/1.5 Arial,sans-serif;color:#6a7180}
+.president-message p{font-size:20px;line-height:1.75;margin:0 0 26px}
+.president-message .president-lead{color:var(--navy);font-weight:600}
+.president-signature{display:grid;gap:10px;margin-top:38px;padding-top:24px;border-top:1px solid #e3e6ed}
+.president-signature span{font:14px/1.6 Arial,sans-serif;color:#626d83}
+@media(max-width:1100px){
+  .about-navigation{width:100%}
+  .about-navigation summary{color:#fff;min-height:52px;font-size:17px;border-bottom:1px solid rgba(255,255,255,.14);justify-content:space-between}
+  .about-submenu{position:static;min-width:0;padding:0 0 0 20px;background:transparent;border:0;box-shadow:none}
+  .main-nav .about-submenu a{color:#fff;border-bottom-color:rgba(255,255,255,.14);font-size:16px}
+  .main-nav .about-submenu a:hover,.main-nav .about-submenu a[aria-current]{color:#e1bc67}
+  .president-portrait{position:static}
+}
+@media(max-width:760px){
+  .president-page{padding:26px 22px 48px}
+  .president-breadcrumb{margin-bottom:24px}
+  .president-heading h1{font-size:2.6rem}
+  .president-heading .title-rule{margin-bottom:30px}
+  .president-layout{grid-template-columns:1fr;gap:32px}
+  .president-portrait{max-width:360px;width:100%;margin:auto}
+  .president-message p{font-size:19px;line-height:1.7;margin-bottom:24px}
+}
+
 @media(max-width:650px){
   .candidate-collage{grid-auto-columns:calc(100% - 44px);scroll-padding-inline:22px;gap:12px}
   .candidate-collage img{width:100%}
