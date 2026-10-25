@@ -45,11 +45,12 @@ const header = (path) => `
     <button class="menu-button" type="button" aria-label="${isEnglish ? "Open menu" : "Ouvrir le menu"}" aria-expanded="false" aria-controls="main-navigation">☰</button>
     <nav class="main-nav" id="main-navigation" aria-label="${isEnglish ? "Main navigation" : "Navigation principale"}">
       ${navItems.map(([href, label]) => href === "/a-propos" ? `
-        <details class="about-navigation${path === href || path === '/mot-du-president' ? ' active' : ''}">
+        <details class="about-navigation${[href, '/mot-du-president', '/mot-du-directeur-general'].includes(path) ? ' active' : ''}">
           <summary>${label}<span aria-hidden="true">⌄</span></summary>
           <div class="about-submenu">
             <a href="${localPath(href)}"${path === href ? ' aria-current="page"' : ''}>${isEnglish ? 'About ARI' : 'Présentation d’ARI'}</a>
             <a href="${localPath('/mot-du-president')}"${path === '/mot-du-president' ? ' aria-current="page"' : ''}>${isEnglish ? 'A word from the President' : 'Le mot du président'}</a>
+            <a href="${localPath('/mot-du-directeur-general')}"${path === '/mot-du-directeur-general' ? ' aria-current="page"' : ''}>${isEnglish ? 'A word from the Managing Director' : 'Le mot du directeur général'}</a>
           </div>
         </details>` : `<a href="${localPath(href)}"${path === href ? ' class="active" aria-current="page"' : ""}>${label}</a>`).join("")}
     </nav>
@@ -66,6 +67,7 @@ const footer = () => `
       <h4>${isEnglish ? "NAVIGATION" : "NAVIGATION"}</h4>
       ${navItems.slice(0, 6).map(([href, label]) => `<a href="${localPath(href)}">${label.toUpperCase()}</a>`).join("")}
       <a href="${localPath('/mot-du-president')}">${isEnglish ? 'A WORD FROM THE PRESIDENT' : 'LE MOT DU PRÉSIDENT'}</a>
+      <a href="${localPath('/mot-du-directeur-general')}">${isEnglish ? 'A WORD FROM THE MANAGING DIRECTOR' : 'LE MOT DU DIRECTEUR GÉNÉRAL'}</a>
     </div>
     <div>
       <h4>${isEnglish ? "CONTACT US" : "NOUS CONTACTER"}</h4>
@@ -165,6 +167,7 @@ const about = () => `
         <span class="title-rule"></span>
         <p>Née de la volonté d’offrir une véritable alternative aux cabinets de recrutement traditionnels, ARI accompagne les organisations d’envergure dans la gestion de leur capital humain avec agilité et réactivité.</p>
         <a class="president-entry-link" href="${localPath('/mot-du-president')}">${isEnglish ? 'Read a word from our President' : 'Lire le mot du président'} <span aria-hidden="true">→</span></a>
+        <br><a class="president-entry-link" href="${localPath('/mot-du-directeur-general')}">${isEnglish ? 'Read a word from our Managing Director' : 'Lire le mot du directeur général'} <span aria-hidden="true">→</span></a>
         <p class="eyebrow engagement-label">Nos engagements</p>
         <p>Nous combinons la force d’un réseau international à l’attention personnalisée d’une structure à taille humaine, sans jamais transiger sur l’excellence.</p>
       </div>
@@ -216,6 +219,45 @@ const president = () => {
       <article class="president-message" aria-label="${isEnglish ? 'Message from Alpha Touré' : 'Message d’Alpha Touré'}">
         ${paragraphs.map((text, index) => `<p${index === 0 ? ' class="president-lead"' : ''}>${text}</p>`).join('')}
         <footer class="president-signature"><strong>Alpha Touré</strong><span>${isEnglish ? 'President · Agile Resources International' : 'Président · Agile Resources International'}</span></footer>
+      </article>
+    </div>
+  </main>${cta()}`;
+};
+
+const managingDirector = () => {
+  const title = isEnglish ? 'A word from the Managing Director' : 'Le mot du directeur général';
+  const role = isEnglish ? 'Managing Director' : 'Directeur général';
+  const pillars = isEnglish ? ['Trust', 'Professionalism', 'Expertise'] : ['La confiance', 'Le professionnalisme', 'La compétence'];
+  const commitments = isEnglish ? [
+    'Bringing highly qualified talent into your organisation',
+    'Improving the performance of your teams',
+    'Measurably reducing your operating costs',
+    'Strengthening stability within your organisation'
+  ] : [
+    'L’intégration de talents hautement qualifiés',
+    'Une performance accrue de vos équipes',
+    'Une réduction mesurable de vos coûts opérationnels',
+    'Une stabilité renforcée au sein de votre structure'
+  ];
+  return `<main class="president-page director-page">
+    <header class="president-heading">
+      <nav class="president-breadcrumb" aria-label="${isEnglish ? 'Breadcrumb' : 'Fil d’Ariane'}"><a href="${localPath('/')}">${isEnglish ? 'Home' : 'Accueil'}</a><span aria-hidden="true">/</span><a href="${localPath('/a-propos')}">${isEnglish ? 'About Us' : 'À propos'}</a></nav>
+      <p class="eyebrow">Agile Resources International</p>
+      <h1>${title}</h1><span class="title-rule"></span>
+    </header>
+    <div class="president-layout">
+      <figure class="president-portrait director-portrait">
+        <img src="${A}youssouf-camara-dg.webp" alt="Youssouf Camara, ${role}" width="824" height="1024" fetchpriority="high" decoding="async">
+        <figcaption><strong>Youssouf Camara</strong><span>${role}</span></figcaption>
+      </figure>
+      <article class="president-message" aria-label="${isEnglish ? 'Message from Youssouf Camara' : 'Message de Youssouf Camara'}">
+        <p class="president-lead">${isEnglish ? 'ARI is driven by an unwavering commitment to excellence. We provide your organisation with tailored HR support, fully adapted to your structure, challenges and ambitions. Our approach rests on three fundamental pillars:' : 'ARI cultive une obsession pour l’excellence. Nous apportons à votre organisation un accompagnement RH sur mesure, entièrement adapté à votre structure, vos enjeux et vos ambitions. Notre approche repose sur trois piliers fondamentaux :'}</p>
+        <ul class="director-principles">${pillars.map(text => `<li><strong>${text}</strong></li>`).join('')}</ul>
+        <p>${isEnglish ? 'These pillars form the foundation of a lasting and effective partnership, essential for any business seeking to safeguard its development and strengthen its human capital.' : 'Ces piliers constituent la base d’une collaboration durable et performante, essentielle à toute entreprise souhaitant sécuriser son évolution et renforcer son capital humain.'}</p>
+        <p>${isEnglish ? 'Our commitment is clear: to create tangible value within your organisation. This means:' : 'Notre engagement est clair : créer une valeur tangible au sein de votre organisation. Cela se traduit par :'}</p>
+        <ul class="director-commitments">${commitments.map(text => `<li><strong>${text}</strong></li>`).join('')}</ul>
+        <p>${isEnglish ? 'We are confident that ARI’s solutions will exceed your expectations and contribute directly to your company’s growth, resilience and competitiveness.' : 'Nous sommes convaincus que les solutions d’ARI dépasseront vos attentes et contribueront directement à la croissance, la solidité et la compétitivité de votre entreprise.'}</p>
+        <footer class="president-signature"><strong>Youssouf Camara</strong><span>${role} · Agile Resources International</span></footer>
       </article>
     </div>
   </main>${cta()}`;
@@ -363,7 +405,7 @@ const contact = () => {
   </main>`;
 };
 
-const pages = {"/":home,"/industries":industries,"/entreprises":enterprises,"/candidats":candidates,"/catalogue":catalogue,"/a-propos":about,"/mot-du-president":president,"/contact":contact};
+const pages = {"/":home,"/industries":industries,"/entreprises":enterprises,"/candidats":candidates,"/catalogue":catalogue,"/a-propos":about,"/mot-du-president":president,"/mot-du-directeur-general":managingDirector,"/contact":contact};
 const path = cleanPath();
 const render = pages[path] || (() => `<main>${detailHero("Erreur 404", "Cette page n’existe pas", "La page demandée est introuvable.")}<section class="section"><a class="button" href="/">Retour à l’accueil</a></section></main>`);
 document.getElementById("app").innerHTML = `${header(path)}${render()}${footer()}`;
@@ -405,7 +447,7 @@ if (isEnglish) {
 }
 
 const notFoundTitle = isEnglish ? "Page not found" : "Page introuvable";
-document.title = `${path === "/" ? "Agile Resources International" : path === "/mot-du-president" ? (isEnglish ? "A word from the President" : "Le mot du président") : navItems.find(([p])=>p===path)?.[1] || notFoundTitle} — ARI`;
+document.title = `${path === "/" ? "Agile Resources International" : path === "/mot-du-president" ? (isEnglish ? "A word from the President" : "Le mot du président") : path === "/mot-du-directeur-general" ? (isEnglish ? "A word from the Managing Director" : "Le mot du directeur général") : navItems.find(([p])=>p===path)?.[1] || notFoundTitle} — ARI`;
 document.querySelector('meta[name="description"]')?.setAttribute("content", isEnglish
   ? "Agile Resources International — strategic international talent acquisition."
   : "Agile Resources International — acquisition stratégique de talents internationaux."
@@ -413,6 +455,9 @@ document.querySelector('meta[name="description"]')?.setAttribute("content", isEn
 
 const adminImages = window.ARI_ADMIN_SETTINGS?.images || {};
 const pageImageSlots = {
+  "/mot-du-directeur-general": {
+    ".director-portrait > img": "director_portrait",
+  },
   "/mot-du-president": {
     ".president-portrait > img": "president_portrait",
   },

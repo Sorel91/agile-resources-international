@@ -215,6 +215,10 @@ html,body{max-width:100%;overflow-x:clip}
 .president-message .president-lead{color:var(--navy);font-weight:600}
 .president-signature{display:grid;gap:10px;margin-top:38px;padding-top:24px;border-top:1px solid #e3e6ed}
 .president-signature span{font:14px/1.6 Arial,sans-serif;color:#626d83}
+.director-principles,.director-commitments{margin:0 0 28px;padding-left:23px;font-size:20px;line-height:1.65}
+.director-principles li,.director-commitments li{padding-left:5px;margin:9px 0}
+.director-principles li::marker,.director-commitments li::marker{color:var(--gold)}
+.director-principles strong,.director-commitments strong{color:var(--navy);font-weight:600}
 @media(max-width:1100px){
   .about-navigation{width:100%}
   .about-navigation summary{color:#fff;min-height:52px;font-size:17px;border-bottom:1px solid rgba(255,255,255,.14);justify-content:space-between}
@@ -231,6 +235,7 @@ html,body{max-width:100%;overflow-x:clip}
   .president-layout{grid-template-columns:1fr;gap:32px}
   .president-portrait{max-width:360px;width:100%;margin:auto}
   .president-message p{font-size:19px;line-height:1.7;margin-bottom:24px}
+  .director-principles,.director-commitments{font-size:19px}
 }
 
 @media(max-width:650px){
