@@ -15,7 +15,7 @@ const navItems = isEnglish ? [
   ["/industries", "Industries"],
   ["/entreprises", "For Companies"],
   ["/candidats", "For Candidates"],
-  ["/catalogue", "Our Services"],
+  ["/catalogue", "Training"],
   ["/a-propos", "About Us"],
   ["/contact", "Contact Us"],
 ] : [
@@ -23,7 +23,7 @@ const navItems = isEnglish ? [
   ["/industries", "Les Industries"],
   ["/entreprises", "Espace Entreprises"],
   ["/candidats", "Espace Candidats"],
-  ["/catalogue", "Notre Catalogue"],
+  ["/catalogue", "Formations"],
   ["/a-propos", "À propos"],
   ["/contact", "Nous contacter"],
 ];
@@ -52,7 +52,7 @@ const header = (path) => `
             <a href="${localPath('/mot-du-president')}"${path === '/mot-du-president' ? ' aria-current="page"' : ''}>${isEnglish ? 'A word from the President' : 'Le mot du président'}</a>
             <a href="${localPath('/mot-du-directeur-general')}"${path === '/mot-du-directeur-general' ? ' aria-current="page"' : ''}>${isEnglish ? 'A word from the Managing Director' : 'Le mot du directeur général'}</a>
           </div>
-        </details>` : `<a href="${localPath(href)}"${path === href ? ' class="active" aria-current="page"' : ""}>${label}</a>`).join("")}
+        </details>` : `<a href="${localPath(href)}"${path === href || (href === '/catalogue' && path.startsWith('/catalogue/')) ? ' class="active"' : ""}${path === href ? ' aria-current="page"' : ''}>${label}</a>`).join("")}
     </nav>
   </header>`;
 
@@ -66,6 +66,7 @@ const footer = () => `
     <div>
       <h4>${isEnglish ? "NAVIGATION" : "NAVIGATION"}</h4>
       ${navItems.slice(0, 6).map(([href, label]) => `<a href="${localPath(href)}">${label.toUpperCase()}</a>`).join("")}
+      <a href="${localPath('/services')}">${isEnglish ? 'OUR SERVICES' : 'NOS SERVICES'}</a>
       <a href="${localPath('/mot-du-president')}">${isEnglish ? 'A WORD FROM THE PRESIDENT' : 'LE MOT DU PRÉSIDENT'}</a>
       <a href="${localPath('/mot-du-directeur-general')}">${isEnglish ? 'A WORD FROM THE MANAGING DIRECTOR' : 'LE MOT DU DIRECTEUR GÉNÉRAL'}</a>
     </div>
@@ -153,7 +154,7 @@ const industries = () => `
         <article><span class="domain-icon"><img src="${A}icon-industry.png" alt=""></span><h3>Ingénierie &amp; Industrie</h3><p>Recrutement de profils spécialisés en automatisation, robotique et gestion de projets industriels à l’échelle internationale.</p></article>
         <article><span class="domain-icon"><img src="${A}icon-finance.png" alt=""></span><h3>Finance &amp; Conseil</h3><p>Identification de cadres dirigeants et de spécialistes en gestion des risques pour sécuriser vos opérations financières à l’échelle mondiale.</p></article>
       </div>
-      <a class="button centered-button" href="/catalogue">Parmi de nombreux autres services</a>
+      <a class="button centered-button" href="${localPath('/services')}">Parmi de nombreux autres services</a>
     </section>
     <img class="full-photo" src="${A}quarry.webp" alt="Carrière minière" loading="lazy" decoding="async">
   </main>
@@ -348,7 +349,9 @@ const candidates = () => `
   </main>
   `;
 
-const catalogue = () => {
+const catalogue = () => window.ARITraining.catalogue(isEnglish, localPath);
+
+const services = () => {
   const services = [
     ["01","Recherche de cadres dirigeants","Identification et approche confidentielle de dirigeants et de cadres stratégiques."],
     ["02","Recrutement spécialisé","Sourcing et sélection de profils techniques rares adaptés à votre secteur."],
@@ -357,7 +360,7 @@ const catalogue = () => {
     ["05","Formation","Programmes ciblés pour développer durablement les compétences opérationnelles."],
     ["06","Solutions opérationnelles","Renforts et dispositifs sur mesure pour soutenir les projets de croissance."],
   ];
-  return `<main>${detailHero("Notre Catalogue", "Des expertises adaptées à chaque secteur", "Découvrez nos solutions de recrutement, de mobilité internationale, de conseil RH et d’accompagnement opérationnel.", "catalogue-hero")}<section class="section rich-page"><p class="eyebrow">Nos services</p><h2>Une réponse adaptée à chaque ambition</h2><span class="title-rule"></span><div class="catalogue-grid">${services.map(([n,t,d])=>`<article><b>${n}</b><h3>${t}</h3><p>${d}</p></article>`).join("")}</div></section></main>${cta({title:"Construisons votre solution", text:"Sélectionnez les expertises qui répondent à vos enjeux et échangez avec un consultant ARI.", button:"Demander une proposition"})}`;
+  return `<main>${detailHero(isEnglish ? "Our Services" : "Nos services", "Des expertises adaptées à chaque secteur", "Découvrez nos solutions de recrutement, de mobilité internationale, de conseil RH et d’accompagnement opérationnel.", "catalogue-hero")}<section class="section rich-page"><p class="eyebrow">Nos services</p><h2>Une réponse adaptée à chaque ambition</h2><span class="title-rule"></span><div class="catalogue-grid">${services.map(([n,t,d])=>`<article><b>${n}</b><h3>${t}</h3><p>${d}</p></article>`).join("")}</div></section></main>${cta({title:"Construisons votre solution", text:"Sélectionnez les expertises qui répondent à vos enjeux et échangez avec un consultant ARI.", button:"Demander une proposition"})}`;
 };
 
 const contact = () => {
@@ -405,9 +408,11 @@ const contact = () => {
   </main>`;
 };
 
-const pages = {"/":home,"/industries":industries,"/entreprises":enterprises,"/candidats":candidates,"/catalogue":catalogue,"/a-propos":about,"/mot-du-president":president,"/mot-du-directeur-general":managingDirector,"/contact":contact};
+const pages = {"/":home,"/industries":industries,"/entreprises":enterprises,"/candidats":candidates,"/catalogue":catalogue,"/services":services,"/a-propos":about,"/mot-du-president":president,"/mot-du-directeur-general":managingDirector,"/contact":contact};
 const path = cleanPath();
-const render = pages[path] || (() => `<main>${detailHero("Erreur 404", "Cette page n’existe pas", "La page demandée est introuvable.")}<section class="section"><a class="button" href="/">Retour à l’accueil</a></section></main>`);
+const trainingSlug = path.startsWith('/catalogue/') ? path.slice('/catalogue/'.length) : null;
+const trainingCourse = (window.ARI_TRAINING_COURSES || []).find(course => course.id === trainingSlug);
+const render = pages[path] || (trainingCourse ? () => window.ARITraining.detail(trainingSlug, isEnglish, localPath) : () => `<main>${detailHero("Erreur 404", "Cette page n’existe pas", "La page demandée est introuvable.")}<section class="section"><a class="button" href="/">Retour à l’accueil</a></section></main>`);
 document.getElementById("app").innerHTML = `${header(path)}${render()}${footer()}`;
 document.documentElement.lang = language;
 
@@ -447,14 +452,22 @@ if (isEnglish) {
 }
 
 const notFoundTitle = isEnglish ? "Page not found" : "Page introuvable";
-document.title = `${path === "/" ? "Agile Resources International" : path === "/mot-du-president" ? (isEnglish ? "A word from the President" : "Le mot du président") : path === "/mot-du-directeur-general" ? (isEnglish ? "A word from the Managing Director" : "Le mot du directeur général") : navItems.find(([p])=>p===path)?.[1] || notFoundTitle} — ARI`;
+document.title = `${path === "/" ? "Agile Resources International" : trainingCourse ? trainingCourse[isEnglish ? 'en' : 'fr'].title : path === "/services" ? (isEnglish ? 'Our Services' : 'Nos services') : path === "/mot-du-president" ? (isEnglish ? "A word from the President" : "Le mot du président") : path === "/mot-du-directeur-general" ? (isEnglish ? "A word from the Managing Director" : "Le mot du directeur général") : navItems.find(([p])=>p===path)?.[1] || notFoundTitle} — ARI`;
 document.querySelector('meta[name="description"]')?.setAttribute("content", isEnglish
   ? "Agile Resources International — strategic international talent acquisition."
   : "Agile Resources International — acquisition stratégique de talents internationaux."
 );
+if (trainingCourse || path === '/catalogue') {
+  document.querySelector('meta[name="description"]')?.setAttribute('content', trainingCourse
+    ? trainingCourse[isEnglish ? 'en' : 'fr'].description
+    : (isEnglish ? 'Explore ARI’s seven corporate training programmes for professionals, managers and leaders. Select programmes and request a tailored proposal.' : 'Découvrez les sept formations ARI pour cadres, managers et dirigeants. Explorez les programmes, composez votre sélection et demandez une proposition adaptée.'));
+}
 
 const adminImages = window.ARI_ADMIN_SETTINGS?.images || {};
 const pageImageSlots = {
+  "/catalogue": {
+    ".training-hero-visual > img": "training_hero",
+  },
   "/mot-du-directeur-general": {
     ".director-portrait > img": "director_portrait",
   },
@@ -497,6 +510,8 @@ Object.entries(pageImageSlots[path] || {}).forEach(([selector, slot]) => {
   const image = document.querySelector(selector);
   if (replacement && image) image.src = replacement;
 });
+
+window.ARITraining?.init(isEnglish);
 
 const menuButton = document.querySelector(".menu-button");
 const nav = document.querySelector(".main-nav");

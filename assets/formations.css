@@ -1,0 +1,143 @@
+/* Catalogue Formation — édition ARI : bleu profond, ivoire et lignes dorées. */
+.training-page{--training-cream:#f6f3ec;--training-line:#dedfdc;--training-muted:#596477;background:#fff;color:var(--navy);font-family:Arial,Helvetica,sans-serif;padding-bottom:35px}
+.training-page [hidden]{display:none!important}
+.training-page a{color:inherit}
+.training-page button,.training-page input,.training-page select,.training-page textarea{font:inherit}
+.training-page button,.training-page a,.training-page input,.training-page select,.training-page textarea{touch-action:manipulation}
+.training-page :focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+.training-page p{font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.7}
+.training-page .training-kicker{font:700 11px/1.6 Arial,Helvetica,sans-serif;letter-spacing:1.8px;text-transform:uppercase;color:#84621d;margin:0 0 15px}
+.training-page h1,.training-page h2,.training-page h3{font-family:"Oswald","Arial Narrow",Arial,sans-serif;font-weight:500;letter-spacing:0;line-height:1.15}
+.training-page h2{font-size:clamp(28px,3.2vw,40px)}
+.training-hero{max-width:1480px;margin:auto;display:grid;grid-template-columns:1fr 1fr;background:var(--training-cream);overflow:hidden}
+.training-hero-copy{padding:65px 36px 38px max(36px,6vw)}
+.training-page .training-hero h1{font-size:clamp(35px,3.7vw,57px);line-height:1.18;margin:0 0 25px}
+.training-hero h1 em{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400;line-height:1.12;color:#8c6926;font-size:1.15em}
+.training-hero-copy>p:not(.training-kicker){color:var(--training-muted);max-width:530px}
+.training-hero-actions{display:flex;gap:22px;flex-wrap:wrap;align-items:center;margin-top:30px}
+.training-page .training-primary{display:inline-flex;justify-content:center;align-items:center;gap:24px;min-height:52px;padding:16px 22px;background:var(--navy);color:#fff;border:1px solid var(--navy);border-radius:3px;font:600 13px/1.4 Arial,Helvetica,sans-serif;text-decoration:none;cursor:pointer}
+.training-primary:hover{background:#132349}
+.training-page .training-text-link{display:inline-flex;align-items:center;gap:10px;min-height:44px;font:600 13px/1.5 Arial,sans-serif;text-decoration:none;border-bottom:1px solid #b99b5d}
+.training-hero-facts{display:flex;gap:30px;flex-wrap:wrap;margin-top:48px;padding-top:24px;border-top:1px solid #d7d3ca}
+.training-hero-facts span{display:grid;gap:6px;font:11px/1.4 Arial,sans-serif;color:var(--training-muted)}
+.training-hero-facts strong{font:500 25px/1.1 "Oswald",Arial,sans-serif;color:var(--navy)}
+.training-hero-visual{position:relative;min-width:0;min-height:510px;display:flex;align-items:center;background:#eee6d8}
+.training-hero-visual img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;object-position:65% center}
+.training-visual-caption{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-between;gap:20px;padding:18px 24px;background:rgba(246,243,236,.9);font:11px/1.5 Arial,sans-serif;letter-spacing:.5px}
+.training-discovery,.training-catalogue,.training-approach,.training-project,.training-related,.training-detail-hero,.training-detail-content,.training-breadcrumb{max-width:1320px;margin:0 auto;padding-left:6vw;padding-right:6vw}
+.training-discovery{padding-top:58px;padding-bottom:54px;display:grid;grid-template-columns:1fr 1.1fr;gap:45px;border-bottom:1px solid var(--training-line)}
+.training-discovery h2{max-width:360px;margin-bottom:0}
+.training-needs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.training-needs button{display:flex;justify-content:space-between;align-items:center;text-align:left;gap:16px;padding:19px 17px;border:1px solid #dddcd6;border-radius:3px;background:#fff;color:var(--navy);font-size:13px;line-height:1.45;cursor:pointer}
+.training-needs button:hover{border-color:var(--gold);background:#faf7f0}
+.training-catalogue{padding-top:58px;padding-bottom:65px;scroll-margin-top:110px}
+.training-section-heading{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:34px}
+.training-section-heading h2{margin-bottom:0}
+.training-section-heading>a{white-space:nowrap}
+.training-filters{padding:22px;background:#f7f8fa;border:1px solid #e6e8ed;border-radius:5px}
+.training-audience-filters{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:22px}
+.training-audience-filters button{border:1px solid #d7dce5;border-radius:30px;background:white;color:var(--navy);padding:11px 18px;min-height:44px;font-size:13px;cursor:pointer}
+.training-audience-filters button[aria-pressed=true]{background:var(--navy);border-color:var(--navy);color:white}
+.training-search-row{display:grid;grid-template-columns:1.4fr 1fr auto;gap:20px;align-items:end}
+.training-search-row label{display:grid;gap:8px;font-size:11px;font-weight:700;color:#4f5b70}
+.training-search-row input,.training-search-row select{width:100%;min-width:0;height:46px;border:1px solid #cdd3de;border-radius:3px;background:#fff;color:var(--navy);padding:10px 12px;font-size:14px}
+.training-reset,.training-no-results button{min-height:46px;color:var(--navy);border:0;border-bottom:1px solid #b7a06b;background:transparent;padding:10px 2px;cursor:pointer;font-size:12px}
+.training-page .training-result-count{font-size:12px;color:var(--training-muted);margin:22px 0 18px}
+.training-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.training-card{min-width:0;border:1px solid #e0e2e7;border-radius:4px;overflow:hidden;display:flex;flex-direction:column;background:#fff;transition:box-shadow .2s,border-color .2s}
+.training-card:hover{border-color:#c6b07c;box-shadow:0 8px 26px rgba(29,48,99,.07)}
+.training-card-art{height:175px;position:relative;display:flex;justify-content:center;align-items:center;background:#f2ede3;text-decoration:none;overflow:hidden}
+.training-card--leaders .training-card-art{background:#e8edf4}
+.training-card-art>span:first-child{position:absolute;left:18px;top:18px;font:10px Arial,sans-serif;letter-spacing:2px;color:#6b644f}
+.training-card--leaders .training-card-art>span:first-child{color:#52617b}
+.training-motif{width:180px;height:140px;max-width:100%;color:#a98639;transition:transform .35s}
+.training-card--leaders .training-motif{color:#53698a}
+.training-card-art:hover .training-motif{transform:translateY(-4px)}
+.training-card-arrow{position:absolute;right:18px;bottom:15px;font-size:24px;color:var(--navy)}
+.training-card-body{padding:23px;display:flex;flex-direction:column;flex:1}
+.training-page .training-card-category{font:700 10px/1.5 Arial,sans-serif;color:#8a692d;letter-spacing:.7px;margin:0 0 12px}
+.training-page .training-card h3{font-size:25px;margin:0 0 14px;line-height:1.2}
+.training-card h3 a{text-decoration:none}
+.training-card h3 a:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+.training-page .training-card-benefit{font-size:13px;line-height:1.65;color:var(--training-muted);margin:0 0 21px}
+.training-audience{align-self:start;margin-top:auto;font:11px/1.4 Arial,sans-serif;padding:6px 9px;background:#f3f4f7;border-radius:3px;color:#536079}
+.training-card-actions{display:flex;flex-direction:column;align-items:start;gap:12px;border-top:1px solid #e7e8ec;padding-top:17px;margin-top:21px}
+.training-card-actions>a{font:600 12px/1.6 Arial,sans-serif;text-decoration:none;display:flex;justify-content:space-between;width:100%;gap:10px;min-height:30px}
+.training-card-actions button{min-height:38px;padding:8px 12px;font-size:11px;background:white;border:1px solid #cbd1de;border-radius:3px;color:var(--navy);cursor:pointer}
+.training-page [data-select-training][aria-pressed=true]{color:#fff;background:var(--navy);border-color:var(--navy)}
+.training-no-results{padding:42px;text-align:center;background:var(--training-cream)}
+.training-no-results h3{font-size:28px}
+.training-approach{padding-top:54px;padding-bottom:55px;background:var(--navy);color:#fff}
+.training-page .training-approach .training-kicker{color:#dfc58f}
+.training-approach>div{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start}
+.training-approach h2{color:#fff;margin:0}
+.training-approach>div>p{color:#e2e6ef;margin:0;font-size:14px}
+.training-approach ol{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:28px;padding:32px 0 0;margin:30px 0 0;border-top:1px solid #526080}
+.training-approach li{display:grid;grid-template-columns:auto 1fr;column-gap:15px;row-gap:8px}
+.training-approach li b{grid-row:span 2;color:#dfc58f;font:20px "Cormorant Garamond",Georgia,serif}
+.training-approach li strong{font:500 20px "Oswald",Arial,sans-serif}
+.training-approach li span{font:12px/1.5 Arial,sans-serif;color:#d4dbe9}
+.training-project{display:grid;grid-template-columns:.85fr 1.15fr;gap:55px;padding-top:65px;padding-bottom:65px;scroll-margin-top:100px}
+.training-selection{min-width:0;background:var(--training-cream);padding:30px;align-self:start;border-top:3px solid #b89a57}
+.training-selection-head{display:flex;justify-content:space-between;gap:15px;align-items:start}
+.training-selection h2{font-size:28px;margin:0 0 18px}
+.training-page .training-selection>p{font-size:13px;color:#596477}
+.training-selection-count{flex-shrink:0;display:grid;place-items:center;width:32px;height:32px;border:1px solid #b49b60;border-radius:50%;font-size:13px}
+.training-selected-list{padding:0;list-style:none;margin:18px 0}
+.training-selected-list li{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:14px 0;border-top:1px solid #dcd7ca;font-size:13px;line-height:1.5}
+.training-selected-list button{min-width:36px;min-height:36px;flex-shrink:0;background:transparent;border:1px solid #c8bea9;border-radius:50%;font-size:20px;color:var(--navy);cursor:pointer}
+.training-clear-selection{border:0;border-bottom:1px solid #a08a57;background:transparent;padding:10px 0;font-size:12px;color:var(--navy);cursor:pointer}
+.training-request{display:grid;gap:18px;min-width:0}
+.training-request h2{font-size:32px;margin:0 0 10px}
+.training-request .training-kicker{margin:0}
+.training-form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.training-request label{display:grid;gap:9px;font-size:12px;font-weight:600}
+.training-request input:not([type=checkbox]),.training-request textarea{width:100%;min-width:0;padding:13px;border:1px solid #cbd1db;border-radius:3px;background:#fff;color:var(--navy);font-size:16px}
+.training-request textarea{resize:vertical;min-height:110px}
+.training-page .training-form-note{font-size:11px;color:#596477;margin:0;line-height:1.6}
+.training-request .training-consent{grid-template-columns:22px 1fr;align-items:start;font-size:11px;line-height:1.6;font-weight:400}
+.training-consent input{width:19px;height:19px;margin:0;accent-color:var(--navy)}
+.training-request .training-primary{justify-self:start}
+.training-selection-float{position:fixed;right:24px;bottom:22px;z-index:45;display:flex;gap:16px;align-items:center;min-height:52px;padding:13px 20px;border:1px solid #c6ac6f;border-radius:4px;background:var(--navy);color:#fff!important;text-decoration:none;box-shadow:0 6px 22px #1d306333;font:600 12px Arial,sans-serif}
+.training-selection-float [data-selection-count]{border:1px solid #a9b3cc;border-radius:50%;min-width:24px;height:24px;display:grid;place-items:center}
+.training-breadcrumb{padding-top:32px;padding-bottom:28px;display:flex;gap:12px;align-items:center;color:#596477;font:12px/1.6 Arial,sans-serif}
+.training-detail-hero{display:grid;grid-template-columns:1.5fr .65fr;gap:50px;padding-top:25px;padding-bottom:55px;align-items:center;border-bottom:1px solid var(--training-line)}
+.training-page .training-detail-hero h1{font-size:clamp(35px,4.3vw,60px);line-height:1.14;margin:0 0 23px}
+.training-page .training-detail-benefit{font:italic 27px/1.2 "Cormorant Garamond",Georgia,serif;color:#8c6926}
+.training-detail-hero>div>p:not(.training-kicker):not(.training-detail-benefit){color:var(--training-muted)}
+.training-detail-art{min-height:260px;background:var(--training-cream);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:30px;border-radius:50% 50% 4px 4px}
+.training-detail-art .training-motif{width:220px;height:165px}
+.training-detail-art>span{font:10px Arial,sans-serif;letter-spacing:2px;color:#87734c}
+.training-detail-content{display:grid;grid-template-columns:.7fr 1.5fr;gap:65px;padding-top:50px;padding-bottom:40px;align-items:start}
+.training-facts{background:#f7f8fa;padding:25px;position:sticky;top:30px}
+.training-facts dt{font-size:12px;font-weight:700;margin:22px 0 7px}
+.training-facts dd{font:13px/1.65 Arial,sans-serif;margin:0;color:var(--training-muted)}
+.training-facts .training-text-link{font-size:11px;margin-top:15px}
+.training-programme h2{font-size:34px;margin:0 0 23px}
+.training-programme>p+h2{margin-top:42px}
+.training-programme>p{color:var(--training-muted)}
+.training-page .training-programme-note{font-size:13px;color:#667185}
+.training-modules{list-style:none;padding:0;margin:24px 0 35px}
+.training-modules li{display:grid;grid-template-columns:38px 1fr;gap:18px;border-top:1px solid var(--training-line);padding:24px 0 10px}
+.training-modules li>span{font:22px/1.4 "Cormorant Garamond",Georgia,serif;color:#a78536}
+.training-modules h3{font-size:24px;margin:0 0 10px}
+.training-modules p{font-size:14px;color:var(--training-muted);margin-top:0}
+.training-practice{background:var(--training-cream);border-left:3px solid var(--gold);padding:26px}
+.training-practice p{font-size:14px}
+.training-practice h3{font-size:22px;margin-bottom:8px}
+.training-related{padding-top:35px;padding-bottom:45px;border-top:1px solid var(--training-line)}
+.training-related .training-grid{grid-template-columns:1fr 1fr}
+@media(min-width:1500px){.training-discovery,.training-catalogue,.training-approach,.training-project,.training-related,.training-detail-hero,.training-detail-content,.training-breadcrumb{padding-left:70px;padding-right:70px}}
+@media(max-width:1000px){.training-hero{grid-template-columns:1.1fr .9fr}.training-hero-copy{padding:45px 25px 30px}.training-hero-actions{gap:15px}.training-hero-visual{min-height:520px}.training-grid{grid-template-columns:1fr 1fr}.training-discovery{gap:26px}.training-project{gap:30px;grid-template-columns:.85fr 1.15fr}.training-selection{padding:23px}.training-facts{position:static}.training-detail-content{gap:35px}}
+@media(max-width:760px){
+  .training-hero{grid-template-columns:1fr}.training-hero-copy{padding:37px 22px 30px}.training-page .training-hero h1{font-size:37px}.training-hero-copy>p:not(.training-kicker){font-size:14px}.training-hero-facts{gap:28px;margin-top:30px}.training-hero-visual{min-height:290px}.training-hero-visual img{object-position:center center}.training-visual-caption{font-size:10px;padding:14px 18px}
+  .training-discovery,.training-catalogue,.training-approach,.training-project,.training-related,.training-detail-hero,.training-detail-content,.training-breadcrumb{padding-left:22px;padding-right:22px}
+  .training-discovery{grid-template-columns:1fr;padding-top:36px;padding-bottom:35px;gap:23px}.training-discovery h2{max-width:none;font-size:30px}.training-needs{gap:8px}.training-needs button{font-size:12px;padding:16px 12px;min-height:64px}
+  .training-catalogue{padding-top:38px;padding-bottom:40px}.training-section-heading{align-items:start;flex-direction:column;gap:14px;margin-bottom:22px}.training-section-heading h2{font-size:30px}.training-filters{padding:16px}.training-audience-filters{gap:7px}.training-audience-filters button{font-size:11px;padding:10px 12px}.training-search-row{grid-template-columns:1fr;gap:14px}.training-reset{justify-self:start;min-height:40px}.training-grid{gap:16px}.training-card-art{height:145px}.training-card-body{padding:18px}.training-page .training-card h3{font-size:23px}.training-card-actions>a{font-size:11px}
+  .training-approach{padding-top:35px;padding-bottom:35px}.training-approach>div{grid-template-columns:1fr;gap:20px}.training-approach h2{font-size:30px}.training-approach ol{grid-template-columns:1fr;gap:24px;padding-top:25px}.training-approach li{grid-template-columns:30px 1fr}
+  .training-project{grid-template-columns:1fr;gap:36px;padding-top:40px;padding-bottom:35px}.training-request h2{font-size:30px}.training-form-row{gap:14px}.training-request .training-primary{justify-self:stretch}.training-selection-float{right:15px;bottom:15px;font-size:11px;min-height:48px;padding:11px 15px}
+  .training-detail-hero{grid-template-columns:1fr;gap:25px;padding-top:6px;padding-bottom:35px}.training-page .training-detail-hero h1{font-size:37px}.training-detail-art{min-height:190px;border-radius:4px;flex-direction:row;gap:20px}.training-detail-art .training-motif{height:145px}.training-detail-content{grid-template-columns:1fr;gap:35px;padding-top:30px}.training-facts dl{display:grid;grid-template-columns:1fr 1.5fr;gap:12px 20px}.training-facts dt,.training-facts dd{margin:0}.training-programme h2{font-size:30px}.training-related .training-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:520px){.training-grid,.training-related .training-grid{grid-template-columns:1fr}.training-card-art{height:170px}.training-card-actions{flex-direction:row;align-items:center;gap:10px}.training-card-actions>a{width:auto;flex:1}.training-card-actions button{flex-shrink:0}.training-form-row{grid-template-columns:1fr}.training-hero-actions .training-primary{width:100%}.training-detail-art{display:none}.training-page .training-card h3{font-size:26px}}
+@media(prefers-reduced-motion:reduce){.training-card,.training-motif{transition:none}.training-card-art:hover .training-motif{transform:none}}
+@media print{.site-header,.site-footer,.training-filters,.training-project,.training-selection-float,.training-needs,.training-hero-actions,.training-card-actions{display:none!important}.training-grid{grid-template-columns:1fr 1fr}.training-card{break-inside:avoid}.training-hero{display:block}.training-hero-visual{display:none}}

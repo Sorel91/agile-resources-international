@@ -46,6 +46,7 @@ function ari_photo_slots(): array {
         'about_vision' => ['page' => 'À propos', 'label' => 'Illustration Notre Vision', 'default' => '/assets/about-vision.webp'],
         'president_portrait' => ['page' => 'Le mot du président', 'label' => 'Portrait d’Alpha Touré', 'default' => '/assets/alpha-toure-president.webp'],
         'director_portrait' => ['page' => 'Le mot du directeur général', 'label' => 'Portrait de Youssouf Camara', 'default' => '/assets/youssouf-camara-dg.webp'],
+        'training_hero' => ['page' => 'Formations', 'label' => 'Illustration du catalogue', 'default' => '/assets/formation-leadership.webp'],
         'enterprise_hero' => ['page' => 'Entreprises', 'label' => 'Grande image de couverture', 'default' => '/assets/enterprise-hero.jpg'],
         'enterprise_card_1' => ['page' => 'Entreprises', 'label' => 'Carte Recherche exécutive', 'default' => '/assets/solution-enterprises.webp'],
         'enterprise_card_2' => ['page' => 'Entreprises', 'label' => 'Carte Réseau d’excellence', 'default' => '/assets/solution-candidates.webp'],
