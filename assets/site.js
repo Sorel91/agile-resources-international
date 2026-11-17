@@ -104,7 +104,7 @@ const home = () => `
     </section>
 
     <section class="section home-leadership" aria-labelledby="home-leadership-title">
-      <h2 id="home-leadership-title">${isEnglish ? 'ARI Leadership' : 'La direction d’ARI'}</h2>
+      <h2 id="home-leadership-title">${isEnglish ? 'Agile Resources Leadership' : 'La direction d’Agile Resources'}</h2>
       <div class="home-leadership-grid">
         <article class="home-leader">
           <img class="home-president-photo" src="${A}alpha-toure-president.webp" alt="" width="832" height="1210" loading="lazy" decoding="async">
