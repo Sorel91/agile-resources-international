@@ -103,6 +103,30 @@ const home = () => `
       <img src="${A}mine.webp" alt="Site minier vu du ciel" fetchpriority="high" decoding="async">
     </section>
 
+    <section class="section home-leadership" aria-labelledby="home-leadership-title">
+      <h2 id="home-leadership-title">${isEnglish ? 'The people behind ARI' : 'Les visages d’ARI'}</h2>
+      <div class="home-leadership-grid">
+        <article class="home-leader">
+          <img class="home-president-photo" src="${A}alpha-toure-president.webp" alt="" width="832" height="1210" loading="lazy" decoding="async">
+          <div class="home-leader-copy">
+            <h3>Alpha Touré</h3>
+            <p class="home-leader-role">${isEnglish ? 'President' : 'Président'}</p>
+            <p>${isEnglish ? '“ARI will be the ideal partner to support your company’s growth and performance.”' : '« ARI sera le partenaire idéal pour soutenir la croissance et la performance de votre entreprise. »'}</p>
+            <a href="${localPath('/mot-du-president')}">${isEnglish ? 'Read the President’s message' : 'Lire le mot du président'} <span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+        <article class="home-leader">
+          <img class="home-director-photo" src="${A}youssouf-camara-dg.webp" alt="" width="824" height="1024" loading="lazy" decoding="async">
+          <div class="home-leader-copy">
+            <h3>Youssouf Camara</h3>
+            <p class="home-leader-role">${isEnglish ? 'Managing Director' : 'Directeur général'}</p>
+            <p>${isEnglish ? '“Our commitment is clear: to create tangible value within your organisation.”' : '« Notre engagement est clair : créer une valeur tangible au sein de votre organisation. »'}</p>
+            <a href="${localPath('/mot-du-directeur-general')}">${isEnglish ? 'Read the Managing Director’s message' : 'Lire le mot du directeur général'} <span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <section class="section solutions" id="solutions">
       <p class="eyebrow">Notre Expertise</p>
       <h2>Solutions sur mesure</h2>
@@ -475,6 +499,8 @@ const pageImageSlots = {
   },
   "/": {
     ".home-hero > img": "home_hero",
+    ".home-president-photo": "president_portrait",
+    ".home-director-photo": "director_portrait",
     ".solution-grid article:nth-child(1) .card-media > img": "home_enterprises",
     ".solution-grid article:nth-child(2) .card-media > img": "home_candidates",
     ".solution-grid article:nth-child(3) .card-media > img": "home_advice",
