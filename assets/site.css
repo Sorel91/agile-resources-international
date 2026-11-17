@@ -243,3 +243,14 @@ html,body{max-width:100%;overflow-x:clip}
   .candidate-collage img{width:100%}
   .candidate-network>img{object-position:46% 50%}
 }
+
+/* Accès directs et secteur prioritaire. */
+.home-primary-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.home-primary-actions .button{margin:0}
+.home-primary-actions .home-cv-link{background:#fff;color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.home-primary-actions .home-cv-link:hover,.home-primary-actions .home-cv-link:focus-visible{background:var(--mist);color:var(--navy)}
+.domain-grid .domain-priority{grid-column:1/-1;min-height:0;border:1px solid #c8ae72}
+.domain-priority p{max-width:76ch}
+@media(max-width:480px){.home-primary-actions .button{width:100%;padding-inline:16px}.domain-grid .domain-priority h3{margin:16px 0 12px}}
+
+.contact-launch .contact-direct a{color:inherit;text-underline-offset:3px;overflow-wrap:anywhere}

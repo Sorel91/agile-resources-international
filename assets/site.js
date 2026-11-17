@@ -61,11 +61,11 @@ const footer = () => `
     <div class="footer-intro">
       <span class="footer-rule"></span>
       <a class="footer-brand" href="${localPath("/")}">Agile Resources<br>International (ARI)</a>
-      <p>${isEnglish ? "Your trusted partner for efficient, agile<br>and international talent sourcing." : "Votre partenaire de confiance pour un sourcing<br>efficace, agile et international."}</p>
+      <p>${isEnglish ? "Your trusted partner for efficient, agile <br>and international talent sourcing." : "Votre partenaire de confiance pour un sourcing <br>efficace, agile et international."}</p>
     </div>
     <div>
       <h4>${isEnglish ? "NAVIGATION" : "NAVIGATION"}</h4>
-      ${navItems.slice(0, 6).map(([href, label]) => `<a href="${localPath(href)}">${label.toUpperCase()}</a>`).join("")}
+      ${navItems.slice(0, 6).map(([href, label]) => `<a href="${localPath(href)}">${label.toUpperCase()}</a>`).join("\n")}
       <a href="${localPath('/services')}">${isEnglish ? 'OUR SERVICES' : 'NOS SERVICES'}</a>
       <a href="${localPath('/mot-du-president')}">${isEnglish ? 'A WORD FROM THE PRESIDENT' : 'LE MOT DU PRÉSIDENT'}</a>
       <a href="${localPath('/mot-du-directeur-general')}">${isEnglish ? 'A WORD FROM THE MANAGING DIRECTOR' : 'LE MOT DU DIRECTEUR GÉNÉRAL'}</a>
@@ -73,7 +73,7 @@ const footer = () => `
     <div>
       <h4>${isEnglish ? "CONTACT US" : "NOUS CONTACTER"}</h4>
       <a class="footer-contact-link" href="${localPath("/contact")}">contact@agileresources-intl.com</a>
-      <p>Paris · New York · Abidjan<br>${isEnglish ? "HR support 24/7" : "Accompagnement RH 24/7"}</p>
+      <p>${isEnglish ? "Côte d’Ivoire · West Africa · International" : "Côte d’Ivoire · Afrique de l’Ouest · International"}</p>
     </div>
     <div class="footer-bottom">
       <small>© 2026 Agile Resources International (ARI)</small>
@@ -98,7 +98,7 @@ const home = () => `
         <h1>Acquisition <br>stratégique de <br>talents <br>internationaux</h1>
         <span class="title-rule"></span>
         <p>Agile Resources International met à votre disposition un réseau mondial de professionnels hautement qualifiés. Nous accompagnons les organisations exigeantes dans l’identification, l’évaluation et le recrutement de profils stratégiques, avec une approche agile, discrète et orientée résultats.</p>
-        <a class="button" href="#solutions">Découvrir nos solutions</a>
+        <div class="home-primary-actions"><a class="button" href="${localPath('/contact')}?type=entreprise#contact-form">${isEnglish ? 'Discuss a search mandate' : 'Confier un mandat'}</a> <a class="button home-cv-link" href="${localPath('/candidats')}#candidature">${isEnglish ? 'Submit my CV' : 'Déposer mon CV'}</a></div>
       </div>
       <img src="${A}mine.webp" alt="Site minier vu du ciel" fetchpriority="high" decoding="async">
     </section>
@@ -112,7 +112,7 @@ const home = () => `
         <article>
           <div class="card-media"><span><img src="${A}icon-enterprises.png" alt="" loading="lazy"></span><img src="${A}solution-enterprises.webp" alt="Mine et industrie" loading="lazy" decoding="async"></div>
           <h3>Entreprises</h3>
-          <p>Nous accompagnons les entreprises dans la recherche, la sélection et le recrutement de profils qualifiés, de spécialistes et de dirigeants. Grâce à une approche personnalisée, nous identifions les compétences les plus adaptées à vos objectifs et vous aidons à constituer des équipes performantes, en France comme à l’international.</p>
+          <p>Nous accompagnons les entreprises dans la recherche, la sélection et le recrutement de profils qualifiés, de spécialistes et de dirigeants. Grâce à une approche personnalisée, nous identifions les compétences les plus adaptées à vos objectifs et vous aidons à constituer des équipes performantes, en Côte d’Ivoire, en Afrique de l’Ouest et à l’international.</p>
         </article>
         <article>
           <div class="card-media"><span><img src="${A}icon-candidates.png" alt="" loading="lazy"></span><img src="${A}solution-candidates.webp" alt="Professionnelle préparant sa carrière" loading="lazy" decoding="async"></div>
@@ -139,10 +139,6 @@ const industries = () => `
         <span class="title-rule"></span>
         <p>Pour répondre aux exigences des industries de pointe, nous mobilisons des consultants experts, capables d’identifier les compétences techniques les plus rares et de sécuriser vos recrutements stratégiques à l’échelle internationale.</p>
         <a class="button" href="#domains">Consulter nos secteurs</a>
-        <div class="stats">
-          <div><strong>15</strong><span>Secteurs d’excellence</span></div>
-          <div><strong>100%</strong><span>Talents qualifiés</span></div>
-        </div>
         <img class="africa-map" src="${A}africa-map.png" alt="Carte de l’Afrique" loading="lazy" decoding="async">
       </div>
     </section>
@@ -150,6 +146,7 @@ const industries = () => `
       <p class="eyebrow">Nos Domaines</p>
       <span class="small-rule"></span>
       <div class="domain-grid">
+        <article class="domain-priority"><span class="domain-icon"><img src="${A}icon-industry.png" alt=""></span><h3>${isEnglish ? 'Mining, Oil &amp; Energy' : 'Mines, Pétrole &amp; Énergie'}</h3><p>${isEnglish ? 'Geologists, mining engineers, HSE and maintenance specialists, and site finance and HR professionals.' : 'Géologues, ingénieurs mines, spécialistes HSE et maintenance, profils finance et RH de site.'}</p><p>${isEnglish ? 'We take local content objectives into account by identifying skills available locally and mobilising international expertise when needed.' : 'Nous tenons compte des objectifs de contenu local en identifiant les compétences disponibles sur place et en mobilisant une expertise internationale selon les besoins.'}</p></article>
         <article><span class="domain-icon"><img src="${A}icon-technology.png" alt=""></span><h3>Technologie &amp; Digital</h3><p>Identification d’ingénieurs cloud, d’architectes de données et d’experts en cybersécurité pour renforcer vos infrastructures critiques.</p></article>
         <article><span class="domain-icon"><img src="${A}icon-industry.png" alt=""></span><h3>Ingénierie &amp; Industrie</h3><p>Recrutement de profils spécialisés en automatisation, robotique et gestion de projets industriels à l’échelle internationale.</p></article>
         <article><span class="domain-icon"><img src="${A}icon-finance.png" alt=""></span><h3>Finance &amp; Conseil</h3><p>Identification de cadres dirigeants et de spécialistes en gestion des risques pour sécuriser vos opérations financières à l’échelle mondiale.</p></article>
@@ -158,7 +155,7 @@ const industries = () => `
     </section>
     <img class="full-photo" src="${A}quarry.webp" alt="Carrière minière" loading="lazy" decoding="async">
   </main>
-  ${cta({text:"Prenez contact avec nos bureaux de Paris ou de Genève pour analyser vos enjeux de recrutement et concevoir une stratégie de sourcing sur mesure adaptée à votre industrie."})}`;
+  ${cta({text:"Échangez avec notre équipe pour définir vos besoins de recrutement et trouver les profils adaptés à votre secteur."})}`;
 
 const about = () => `
   <main>
@@ -191,7 +188,7 @@ const about = () => `
       <p class="vision-text">Des solutions stratégiques en ressources humaines, en formation et en opérations pour soutenir une croissance durable dans les secteurs minier, technologique et des services en Afrique.</p>
     </section>
   </main>
-  ${cta({text:"Prenez contact avec nos bureaux de Paris ou de Genève pour analyser vos enjeux de recrutement et concevoir une stratégie de sourcing sur mesure adaptée à votre industrie."})}`;
+  ${cta({text:"Échangez avec notre équipe pour définir vos besoins de recrutement et trouver les profils adaptés à votre secteur."})}`;
 
 const president = () => {
   const paragraphs = isEnglish ? [
@@ -359,6 +356,7 @@ const services = () => {
     ["04","Conseil RH","Optimisation des processus de recrutement et accompagnement organisationnel."],
     ["05","Formation","Programmes ciblés pour développer durablement les compétences opérationnelles."],
     ["06","Solutions opérationnelles","Renforts et dispositifs sur mesure pour soutenir les projets de croissance."],
+    ["07",isEnglish ? "HR Outsourcing" : "Externalisation RH",isEnglish ? "Support with personnel administration, tailored to your organisation and the scope agreed with ARI." : "Appui à la gestion administrative du personnel, adapté à votre organisation et au périmètre défini avec ARI."],
   ];
   return `<main>${detailHero(isEnglish ? "Our Services" : "Nos services", "Des expertises adaptées à chaque secteur", "Découvrez nos solutions de recrutement, de mobilité internationale, de conseil RH et d’accompagnement opérationnel.", "catalogue-hero")}<section class="section rich-page"><p class="eyebrow">Nos services</p><h2>Une réponse adaptée à chaque ambition</h2><span class="title-rule"></span><div class="catalogue-grid">${services.map(([n,t,d])=>`<article><b>${n}</b><h3>${t}</h3><p>${d}</p></article>`).join("")}</div></section></main>${cta({title:"Construisons votre solution", text:"Sélectionnez les expertises qui répondent à vos enjeux et échangez avec un consultant ARI.", button:"Demander une proposition"})}`;
 };
@@ -391,6 +389,7 @@ const contact = () => {
 
     <section class="contact-launch">
       <div class="contact-launch-copy">
+        <p class="contact-direct"><a href="mailto:contact@agileresources-intl.com">contact@agileresources-intl.com</a></p>
         <h2>Lancer Vos<br>Recherches</h2>
         <p>Notre équipe s’engage à analyser votre besoin de recrutement ou votre profil sous 24 heures ouvrées. Remplissez ce formulaire pour être mis en relation directe avec un consultant expert de votre secteur d’activité.</p>
       </div>
