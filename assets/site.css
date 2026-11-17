@@ -274,3 +274,6 @@ html,body{max-width:100%;overflow-x:clip}
 .home-leader-copy a{margin-top:auto;padding-top:8px;color:var(--navy);font-weight:700;text-underline-offset:4px}
 @media(max-width:850px){.home-leadership-grid{grid-template-columns:minmax(0,1fr);gap:14px}}
 @media(max-width:420px){.home-leader{grid-template-columns:minmax(85px,29%) minmax(0,1fr)}.home-leader-copy{padding:12px}.home-leader-copy p{font-size:15px}}
+
+/* Garde le menu sur une ligne près du seuil mobile. */
+@media(min-width:1101px) and (max-width:1250px){.site-header{gap:12px}.header-logo img{width:205px}.main-nav{gap:12px}}

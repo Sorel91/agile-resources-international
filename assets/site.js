@@ -16,6 +16,7 @@ const navItems = isEnglish ? [
   ["/entreprises", "For Companies"],
   ["/candidats", "For Candidates"],
   ["/catalogue", "Training"],
+  ["/services", "Our Services"],
   ["/a-propos", "About Us"],
   ["/contact", "Contact Us"],
 ] : [
@@ -24,6 +25,7 @@ const navItems = isEnglish ? [
   ["/entreprises", "Espace Entreprises"],
   ["/candidats", "Espace Candidats"],
   ["/catalogue", "Formations"],
+  ["/services", "Nos services"],
   ["/a-propos", "À propos"],
   ["/contact", "Nous contacter"],
 ];
@@ -65,8 +67,7 @@ const footer = () => `
     </div>
     <div>
       <h4>${isEnglish ? "NAVIGATION" : "NAVIGATION"}</h4>
-      ${navItems.slice(0, 6).map(([href, label]) => `<a href="${localPath(href)}">${label.toUpperCase()}</a>`).join("\n")}
-      <a href="${localPath('/services')}">${isEnglish ? 'OUR SERVICES' : 'NOS SERVICES'}</a>
+      ${navItems.filter(([href]) => href !== "/contact").map(([href, label]) => `<a href="${localPath(href)}">${label.toUpperCase()}</a>`).join("\n")}
       <a href="${localPath('/mot-du-president')}">${isEnglish ? 'A WORD FROM THE PRESIDENT' : 'LE MOT DU PRÉSIDENT'}</a>
       <a href="${localPath('/mot-du-directeur-general')}">${isEnglish ? 'A WORD FROM THE MANAGING DIRECTOR' : 'LE MOT DU DIRECTEUR GÉNÉRAL'}</a>
     </div>
