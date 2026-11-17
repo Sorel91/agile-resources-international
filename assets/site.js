@@ -108,7 +108,7 @@ const home = () => `
       <h2 id="home-leadership-title">${isEnglish ? 'Agile Resources Leadership' : 'La direction d’Agile Resources'}</h2>
       <div class="home-leadership-grid">
         <article class="home-leader">
-          <img class="home-president-photo" src="${A}alpha-toure-president.webp" alt="" width="832" height="1210" loading="lazy" decoding="async">
+          <img class="home-president-photo" src="${A}alpha-toure-president.webp" alt="" width="832" height="1210" loading="eager" decoding="async">
           <div class="home-leader-copy">
             <h3>Alpha Touré</h3>
             <p class="home-leader-role">${isEnglish ? 'President' : 'Président'}</p>
@@ -117,7 +117,7 @@ const home = () => `
           </div>
         </article>
         <article class="home-leader">
-          <img class="home-director-photo" src="${A}youssouf-camara-dg.webp" alt="" width="824" height="1024" loading="lazy" decoding="async">
+          <img class="home-director-photo" src="${A}youssouf-camara-dg.webp" alt="" width="824" height="1024" loading="eager" decoding="async">
           <div class="home-leader-copy">
             <h3>Youssouf Camara</h3>
             <p class="home-leader-role">${isEnglish ? 'Managing Director' : 'Directeur général'}</p>
