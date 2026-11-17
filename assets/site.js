@@ -13,19 +13,19 @@ const localPath = (target) => {
 const navItems = isEnglish ? [
   ["/", "Home"],
   ["/industries", "Industries"],
+  ["/services", "Our Services"],
   ["/entreprises", "For Companies"],
   ["/candidats", "For Candidates"],
   ["/catalogue", "Training"],
-  ["/services", "Our Services"],
   ["/a-propos", "About Us"],
   ["/contact", "Contact Us"],
 ] : [
   ["/", "Accueil"],
   ["/industries", "Les Industries"],
+  ["/services", "Nos services"],
   ["/entreprises", "Espace Entreprises"],
   ["/candidats", "Espace Candidats"],
   ["/catalogue", "Formations"],
-  ["/services", "Nos services"],
   ["/a-propos", "À propos"],
   ["/contact", "Nous contacter"],
 ];
