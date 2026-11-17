@@ -23,7 +23,7 @@ window.ARI_TRANSLATIONS_EN = {
   "Consulter nos secteurs": "Explore our sectors",
   "Secteurs d’excellence": "Sectors of excellence",
   "Talents qualifiés": "Qualified talent",
-  "Nos Domaines": "Our Sectors",
+  "Nos secteurs": "Our Sectors",
   "Technologie & Digital": "Technology & Digital",
   "Identification d’ingénieurs cloud, d’architectes de données et d’experts en cybersécurité pour renforcer vos infrastructures critiques.": "Identifying cloud engineers, data architects and cybersecurity experts to strengthen your critical infrastructure.",
   "Ingénierie": "Engineering",

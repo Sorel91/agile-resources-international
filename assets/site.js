@@ -168,7 +168,7 @@ const industries = () => `
       </div>
     </section>
     <section class="section domains" id="domains">
-      <p class="eyebrow">Nos Domaines</p>
+      <p class="eyebrow">Nos secteurs</p>
       <span class="small-rule"></span>
       <div class="domain-grid">
         <article><span class="domain-icon"><img src="${A}icon-industry.png" alt=""></span><h3>${isEnglish ? 'Mining, Oil &amp; Energy' : 'Mines, Pétrole &amp; Énergie'}</h3><p>${isEnglish ? 'Geologists, mining engineers, HSE and maintenance specialists, and site finance and HR professionals. We prioritise local skills in line with local content objectives.' : 'Géologues, ingénieurs mines, spécialistes HSE et maintenance, profils finance et RH de site. Nous privilégions les compétences locales selon les objectifs de contenu local.'}</p></article>
