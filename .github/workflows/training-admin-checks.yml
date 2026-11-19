@@ -1,0 +1,57 @@
+name: Training administration checks
+on:
+  push:
+    branches: ["prepare/training-registration-admin"]
+  pull_request:
+    paths:
+      - "admin/**"
+      - "tests/training-integration.php"
+      - ".github/workflows/training-admin-checks.yml"
+permissions:
+  contents: read
+jobs:
+  php-mysql:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: disposable-test-password
+          MYSQL_DATABASE: ari_test_training
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -pdisposable-test-password"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PHP and MySQL driver
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y php-cli php-mysql
+      - name: Check PHP syntax
+        run: |
+          php -l admin/bootstrap.php
+          php -l admin/index.php
+          php -l admin/training-store.php
+          php -l admin/formations.php
+          php -l tests/training-integration.php
+      - name: Test registration administration
+        env:
+          ARI_TEST_DB_HOST: 127.0.0.1
+          ARI_TEST_DB_NAME: ari_test_training
+          ARI_TEST_DB_USER: root
+          ARI_TEST_DB_PASSWORD: disposable-test-password
+        run: php tests/training-integration.php
+      - name: Test unauthenticated access
+        run: |
+          php -S 127.0.0.1:8080 -t . > /tmp/ari-php-server.log 2>&1 &
+          for attempt in 1 2 3 4 5; do
+            if curl -s -o /dev/null http://127.0.0.1:8080/admin/; then break; fi
+            sleep 1
+          done
+          for path in "/admin/formations.php" "/admin/formations.php?export=csv" "/admin/formations.php?cv=1"; do
+            code="$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:8080$path")"
+            test "$code" = 303
+          done

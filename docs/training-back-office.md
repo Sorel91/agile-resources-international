@@ -1,68 +1,71 @@
-# Back-office des inscriptions — préparation du 19 novembre 2026
+# Gestion des inscriptions aux formations
 
-## Périmètre
-Module PHP/MySQL dans l’administration existante, accessible à /admin/formations.php après connexion.
-La préparation ne modifie pas l’accueil et n’ouvre aucun formulaire public.
+## Accès
+Entrée unique : /admin/, avec le mot de passe de l’administration actuelle.
+Le lien « Inscriptions aux formations » ouvre /admin/formations.php.
+Les listes, exports et CV exigent la session administrateur ; aucun nouvel identifiant n’est nécessaire.
+Le parcours de récupération du mot de passe existant est conservé.
 
-Fonctions : liste et recherche des participants, filtres par statut, compteur sur 30 places, confirmation/liste d’attente/annulation,
-téléchargement privé des CV PDF, suppression des inscriptions et CV, export CSV UTF-8 pour Excel.
-Les données sont vides à l’installation. Aucun participant ou témoignage fictif n’est créé.
+## Fonctions
+- Liste et recherche par nom, e-mail ou téléphone.
+- Statuts manuels : À traiter, Confirmé, Annulé ; filtrage par statut.
+- Compteurs : total des inscriptions, dossiers à traiter, participants confirmés.
+- CV PDF : téléchargement protégé et suppression avec la fiche.
+- Export CSV UTF-8 des résultats filtrés pour Excel.
+- Modification de la date, heure (Abidjan), durée, lieu et organisation des thèmes.
+- Aucun plafond, aucune liste d’attente et aucune promotion automatiques.
+  La mention publique « 30 places » est purement informative. La 31e confirmation est autorisée.
 
-Les thèmes proposés restent à valider :
+## Base et stockage
+Utilise PHP/PDO et une base MySQL/MariaDB sur le forfait Hostinger existant.
+Vérifier les quotas disponibles dans hPanel. Créer une base et son utilisateur dédié.
+Après déploiement, ouvrir la rubrique et renseigner les identifiants MySQL dans le formulaire administrateur.
+Celui-ci teste la connexion et prépare deux tables InnoDB préfixées ari_training_.
+La configuration est conservée dans ARI_PRIVATE_DIR/training-database.php, hors public_html et hors Git.
+Le compte doit disposer des droits nécessaires pour créer les tables/index et lire/écrire les tables.
+
+Les CV seront conservés dans ARI_PRIVATE_DIR/training-cvs, hors du répertoire public.
+Le helper d’envoi prévoit des PDF de 5 Mio maximum, contrôlés côté serveur et renommés aléatoirement.
+Les fichiers sont téléchargés uniquement après contrôle de session, sous un nom neutre.
+Sauvegarder la base et le dossier privé. Ne jamais mettre de véritables identifiants ou CV dans le dépôt.
+Aucun participant fictif n’est ajouté en production.
+
+## Session
+Date préremplie : 21 novembre 2026. Horaires, durée et lieu restent à confirmer.
+Les trois thèmes proposés sont :
 - Développer son réseau professionnel.
 - Valoriser son CV, son profil LinkedIn et son pitch.
 - Préparer et réussir son entretien d’embauche.
+Le choix formation unique ou ateliers reste modifiable dans l’administration.
 
-Date préremplie : 21 novembre 2026. Heure, durée, lieu et organisation des thèmes restent modifiables.
-La capacité de 30 est provisoirement commune à la session ; si elle concerne chaque atelier, adapter le modèle avant ouverture.
-Annuler libère une place ; la promotion depuis la liste d’attente est manuelle.
+## Ce qui reste hors de cette préparation
+Le formulaire public de l’accueil n’est pas connecté.
+Lors du raccordement, prévoir validation serveur, anti-spam/limitation de débit, dédoublonnage event_id/email,
+enregistrement du statut initial pending, nettoyage du CV en cas d’échec, consentement versionné et horodaté.
+Ne faire aucun contrôle de capacité. Ne jamais lire les inscriptions ou les CV depuis une API publique.
+Valider la mention d’information et la conservation ; distinguer un éventuel usage recrutement futur.
+Aucun e-mail ou message WhatsApp automatique n’est prévu.
+L’URL du QR code reste celle de l’accueil.
 
-## Hébergement et raccordement
-Vérifier les quotas de bases et de stockage du forfait Hostinger existant.
-Dans hPanel, créer une base MySQL/MariaDB et son utilisateur dédié.
-Après déploiement validé, ouvrir /admin/formations.php, renseigner l’hôte, le nom de la base, l’utilisateur et le mot de passe.
-Le formulaire authentifié teste la connexion, crée deux tables InnoDB préfixées ari_training_, puis conserve la configuration
-dans ARI_PRIVATE_DIR/training-database.php (hors public_html, non versionné).
-Le compte MySQL doit pouvoir créer les tables et index ainsi que lire/écrire les deux tables.
-Aucun identifiant réel ne doit être ajouté au dépôt.
+## Vérification
+Le workflow .github/workflows/training-admin-checks.yml vérifie la syntaxe PHP,
+les opérations MySQL et le refus d’accès non authentifié (page, CSV, CV) sur une base jetable.
+Le résultat du workflow, et non sa seule présence, détermine si ces tests ont passé.
+Le test d’intégration vérifie explicitement qu’un 31e participant peut être confirmé.
 
-Les CV seront stockés dans ARI_PRIVATE_DIR/training-cvs, hors public_html et hors Git.
-Ils ne sont servis que par la route administrateur authentifiée, en téléchargement avec nom neutre.
-Le helper d’envoi prévoit uniquement des PDF de 5 Mio maximum, contrôlés côté serveur, nommés aléatoirement.
-L’upload public sera raccordé dans une étape ultérieure. Prévoir les sauvegardes de la base ET du dossier privé.
-
-## Étape suivante : formulaire public sur l’accueil
-Conserver l’URL du QR code existant. Ajouter le bandeau et l’inscription depuis l’accueil.
-Avant ouverture :
-1. Valider horaires, durée, lieu, intitulés, formation unique ou ateliers, portée de la capacité.
-2. Raccorder un endpoint de soumission avec validation, limitation de débit et protection antispam.
-3. Faire l’allocation confirmé/liste d’attente dans une transaction : verrouiller la ligne événement FOR UPDATE,
-   vérifier registration_open, compter les confirmés puis insérer. Toutes les écritures doivent respecter le même verrou.
-   Garder l’unicité event_id/email et nettoyer le CV si l’insertion échoue.
-4. Valider la mention d’information et la durée de conservation ; enregistrer version et date du consentement.
-   L’usage recrutement futur doit être présenté séparément de l’inscription à la formation.
-5. Tester les CV, les doublons, les accès non authentifiés, les envois simultanés à la 30e place et la confirmation à l’écran.
-6. Ouvrir registration_open seulement quand le raccordement public est complet.
-Pas de confirmation e-mail ou WhatsApp automatique dans cette préparation.
-
-## Validation
-L’environnement d’exécution PHP et MySQL n’était pas disponible lors de la préparation.
-Les fichiers ont été relus, mais ni lint PHP, ni tests d’exécution, ni rendu navigateur n’ont encore été exécutés.
-Ne pas fusionner la branche avant les vérifications suivantes :
-
+Pour exécution manuelle :
 - php -l admin/training-store.php
 - php -l admin/formations.php
 - php -l admin/index.php
 - php -l tests/training-integration.php
-- Créer une base MySQL jetable dont le nom commence par ari_test_.
+- Créer une base jetable dont le nom commence par ari_test_.
 - Fournir ARI_TEST_DB_HOST, ARI_TEST_DB_PORT, ARI_TEST_DB_NAME, ARI_TEST_DB_USER, ARI_TEST_DB_PASSWORD.
-- Exécuter php tests/training-integration.php. Le script supprime/recrée uniquement les deux tables du module
-  dans cette base de test, puis les supprime en fin d’exécution. Ne jamais utiliser une base de production.
-- Vérifier la connexion existante, le setup, l’export filtré, les CV et la vue mobile sur un environnement de test.
-- Le test couvre le plafond, la libération d’une place, la promotion, les doublons et les recherches ;
-  compléter par un test de concurrence avant d’exposer un endpoint public.
+- php tests/training-integration.php
+
+Le script recrée et supprime les deux tables du module dans cette base : ne pas utiliser la production.
+Compléter par une vérification visuelle mobile et un test du raccordement réel sur Hostinger.
+Les données de l’ancienne branche n’ont jamais été déployées : aucune migration de capacité n’est requise.
 
 ## Retour arrière
-La branche de préparation reste séparée de main.
-Si le module est ensuite déployé, retirer son lien et ses fichiers n’efface ni les données MySQL ni les CV.
-La suppression des données stockées est une opération distincte à effectuer uniquement sur demande.
+Revenir au commit précédent retire la rubrique sans effacer les tables ni les CV privés.
+La suppression de ces données est une opération distincte à effectuer uniquement sur demande.

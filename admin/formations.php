@@ -14,7 +14,7 @@ if (!ari_is_authenticated()) {
     header('Location: /admin/', true, 303);
     exit;
 }
-$labels = ['confirmed' => 'Confirmé', 'waitlist' => 'Liste d’attente', 'cancelled' => 'Annulé'];
+$labels = ['confirmed' => 'Confirmé', 'pending' => 'À traiter', 'cancelled' => 'Annulé'];
 $error = '';
 $notice = (string)($_SESSION['training_notice'] ?? '');
 unset($_SESSION['training_notice']);
@@ -76,7 +76,7 @@ try {
                 if ($id === false) { throw new InvalidArgumentException('Inscription invalide.'); }
                 if ($action === 'status') {
                     ari_training_set_status($db, $id, (string)($_POST['new_status'] ?? ''));
-                    $_SESSION['training_notice'] = 'Statut mis à jour. Les places libérées ne sont pas réattribuées automatiquement.';
+                    $_SESSION['training_notice'] = 'Statut mis à jour.';
                 } else {
                     if (($_POST['confirm_delete'] ?? '') !== 'yes') {
                         throw new InvalidArgumentException('Cochez la confirmation pour supprimer l’inscription et son CV.');
@@ -140,7 +140,7 @@ try {
 
 $event = null;
 $rows = [];
-$counts = ['confirmed' => 0, 'waitlist' => 0, 'cancelled' => 0];
+$counts = ['confirmed' => 0, 'pending' => 0, 'cancelled' => 0];
 if ($db && $configured && $error === '') {
     try {
         $event = $db->query('SELECT * FROM ari_training_events WHERE id = 1')->fetch();
@@ -168,7 +168,7 @@ $e = 'ari_escape';
 <main class="shell">
 <div class="intro"><div><h1>Formation gratuite</h1><p>Les participants, leurs coordonnées et leurs CV au même endroit.</p></div>
 <?php if ($event): ?><a class="button secondary" href="?<?= $e(http_build_query(['export' => 'csv', 'q' => $search, 'status' => $status])) ?>">Exporter pour Excel (CSV)</a><?php endif; ?></div>
-<p class="help">Préparation en cours : le formulaire public n’est pas encore ouvert. Les 30 places concernent provisoirement l’ensemble de la session ; ce point reste à confirmer.</p>
+<p class="help">Le formulaire public n’est pas encore raccordé. Les inscriptions ne sont soumises à aucun plafond : la mention « 30 places » affichée aux visiteurs est purement informative.</p>
 <?php if ($notice): ?><p class="notice" role="status"><?= $e($notice) ?></p><?php endif; ?>
 <?php if ($error): ?><p class="notice error" role="alert"><?= $e($error) ?></p><?php endif; ?>
 
@@ -185,9 +185,9 @@ $e = 'ari_escape';
 </div><button class="button">Connecter et préparer les tables</button></form></section>
 <?php elseif ($event): ?>
 <div class="training-stats" aria-label="Suivi des inscriptions">
-<article class="panel"><strong><?= (int)$counts['confirmed'] ?> / <?= (int)$event['capacity'] ?></strong><span>Participants confirmés</span></article>
-<article class="panel"><strong><?= max(0, (int)$event['capacity'] - $counts['confirmed']) ?></strong><span>Places restantes</span></article>
-<article class="panel"><strong><?= (int)$counts['waitlist'] ?></strong><span>En liste d’attente</span></article>
+<article class="panel"><strong><?= array_sum($counts) ?></strong><span>Inscriptions reçues</span></article>
+<article class="panel"><strong><?= (int)$counts['pending'] ?></strong><span>À traiter</span></article>
+<article class="panel"><strong><?= (int)$counts['confirmed'] ?></strong><span>Participants confirmés</span></article>
 </div>
 
 <details class="panel"><summary>Informations pratiques et thématiques</summary>
@@ -201,7 +201,7 @@ $e = 'ari_escape';
 <?php foreach (['pending' => 'À confirmer', 'single' => 'Une formation avec les trois thèmes', 'workshops' => 'Des ateliers au choix'] as $key => $label): ?><option value="<?= $key ?>" <?= $event['format_mode'] === $key ? 'selected' : '' ?>><?= $e($label) ?></option><?php endforeach; ?>
 </select></p></div>
 <ul><?php foreach (ari_training_topics() as $topic): ?><li><?= $e($topic) ?></li><?php endforeach; ?></ul>
-<p>Capacité : 30 personnes pour la session. Les inscriptions restent fermées tant que le formulaire public n’est pas raccordé.</p>
+<p>La mention publique « 30 places » ne limite ni les inscriptions ni les confirmations. Le formulaire public sera raccordé séparément.</p>
 <button class="button">Enregistrer les informations</button></form></details>
 
 <section class="panel"><h2>Participants</h2>
@@ -226,7 +226,7 @@ $e = 'ari_escape';
 <form method="post"><input type="hidden" name="action" value="delete"><input type="hidden" name="id" value="<?= (int)$row['id'] ?>"><input type="hidden" name="csrf" value="<?= $e(ari_csrf_token()) ?>">
 <label><input type="checkbox" name="confirm_delete" value="yes" required> Supprimer définitivement cette inscription et son CV.</label><button class="button">Supprimer</button></form></details>
 </td></tr><?php endforeach; ?></tbody></table></div><?php endif; ?>
-<p class="muted">L’annulation libère une place. La confirmation d’une personne en liste d’attente reste manuelle.</p>
+<p class="muted">Les statuts « À traiter », « Confirmé » et « Annulé » sont gérés manuellement. Aucun quota ni classement automatique n’est appliqué.</p>
 </section>
 <?php endif; ?>
 </main></body></html>

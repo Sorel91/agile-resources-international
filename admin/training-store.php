@@ -41,7 +41,6 @@ function ari_training_install(PDO $db): void {
         duration_minutes SMALLINT UNSIGNED NULL,
         location VARCHAR(500) NOT NULL DEFAULT '',
         format_mode VARCHAR(16) NOT NULL DEFAULT 'pending',
-        capacity SMALLINT UNSIGNED NOT NULL DEFAULT 30,
         registration_open TINYINT NOT NULL DEFAULT 0
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
     $db->exec("CREATE TABLE IF NOT EXISTS ari_training_registrations (
@@ -63,7 +62,7 @@ function ari_training_install(PDO $db): void {
             REFERENCES ari_training_events (id)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
     $q = $db->prepare("INSERT IGNORE INTO ari_training_events
-        (id, title, event_date, capacity) VALUES (1, ?, '2026-11-21', 30)");
+        (id, title, event_date) VALUES (1, ?, '2026-11-21')");
     $q->execute(['Ateliers carrière — Agile Resources']);
 }
 
@@ -128,31 +127,19 @@ function ari_training_store_cv(array $upload): ?string {
     return $name;
 }
 
-/** Shared capacity lock: every writer must lock the event before registration rows. */
+/** Administrative status only; the public mention of 30 places imposes no database limit. */
 function ari_training_set_status(PDO $db, int $id, string $status): void {
-    if (!in_array($status, ['confirmed', 'waitlist', 'cancelled'], true)) {
+    if (!in_array($status, ['confirmed', 'pending', 'cancelled'], true)) {
         throw new InvalidArgumentException('Statut invalide.');
     }
-    $db->beginTransaction();
-    try {
-        $event = $db->query('SELECT * FROM ari_training_events WHERE id = 1 FOR UPDATE')->fetch();
-        if (!$event) { throw new RuntimeException('Formation introuvable.'); }
-        $q = $db->prepare('SELECT id, status FROM ari_training_registrations WHERE id = ? AND event_id = 1 FOR UPDATE');
-        $q->execute([$id]);
-        $row = $q->fetch();
-        if (!$row) { throw new InvalidArgumentException('Inscription introuvable.'); }
-        if ($status === 'confirmed' && $row['status'] !== 'confirmed') {
-            $count = (int)$db->query("SELECT COUNT(*) FROM ari_training_registrations WHERE event_id = 1 AND status = 'confirmed'")->fetchColumn();
-            if ($count >= (int)$event['capacity']) {
-                throw new InvalidArgumentException('Les 30 places sont prises. Conservez cette personne en liste d’attente.');
-            }
+    $q = $db->prepare('UPDATE ari_training_registrations SET status = ? WHERE id = ? AND event_id = 1');
+    $q->execute([$status, $id]);
+    if ($q->rowCount() === 0) {
+        $exists = $db->prepare('SELECT id FROM ari_training_registrations WHERE id = ? AND event_id = 1');
+        $exists->execute([$id]);
+        if (!$exists->fetchColumn()) {
+            throw new InvalidArgumentException('Inscription introuvable.');
         }
-        $q = $db->prepare('UPDATE ari_training_registrations SET status = ? WHERE id = ? AND event_id = 1');
-        $q->execute([$status, $id]);
-        $db->commit();
-    } catch (Throwable $e) {
-        if ($db->inTransaction()) { $db->rollBack(); }
-        throw $e;
     }
 }
 
@@ -188,7 +175,7 @@ function ari_training_rows(PDO $db, string $search, string $status): array {
         $term = '%' . $search . '%';
         $args = [$term, $term, $term];
     }
-    if (in_array($status, ['confirmed', 'waitlist', 'cancelled'], true)) {
+    if (in_array($status, ['confirmed', 'pending', 'cancelled'], true)) {
         $sql .= ' AND status = ?';
         $args[] = $status;
     }
