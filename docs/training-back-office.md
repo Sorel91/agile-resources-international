@@ -41,7 +41,7 @@ Le choix formation unique ou ateliers reste modifiable dans l’administration.
 ## Ce qui reste hors de cette préparation
 Le formulaire public de l’accueil n’est pas connecté.
 Lors du raccordement, prévoir validation serveur, anti-spam/limitation de débit, dédoublonnage event_id/email,
-enregistrement du statut initial pending, nettoyage du CV en cas d’échec, consentement versionné et horodaté.
+utilisation du writer interne ari_training_register (statut initial pending, dédoublonnage, consentement horodaté et nettoyage du CV en cas d’échec).
 Ne faire aucun contrôle de capacité. Ne jamais lire les inscriptions ou les CV depuis une API publique.
 Valider la mention d’information et la conservation ; distinguer un éventuel usage recrutement futur.
 Aucun e-mail ou message WhatsApp automatique n’est prévu.

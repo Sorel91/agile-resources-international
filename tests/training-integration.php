@@ -52,6 +52,16 @@ try {
     check(ari_training_csv_cell('Normal name') === 'Normal name', 'Normal export value');
     ari_training_delete($db, $additional);
     check(count(ari_training_rows($db, 'additional@example.invalid', '')) === 0, 'Participant deletion');
+    $data = ['full_name' => 'New registrant', 'email' => 'new@example.invalid',
+        'phone' => '+2250000000000', 'situation' => 'Salarié', 'topics' => ['network'], 'consent' => true];
+    $newId = ari_training_register($db, $data, 'test-v1');
+    check($newId > 0, 'Internal form connector writer');
+    check(count(ari_training_rows($db, 'new@example.invalid', 'pending')) === 1, 'New records are pending');
+    $data['consent'] = false;
+    $denied = false;
+    try { ari_training_register($db, $data, 'test-v1'); }
+    catch (InvalidArgumentException $e) { $denied = true; }
+    check($denied, 'Consent required');
     echo "Training integration checks passed.\n";
 } finally {
     if ($db->inTransaction()) { $db->rollBack(); }

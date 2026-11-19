@@ -127,6 +127,53 @@ function ari_training_store_cv(array $upload): ?string {
     return $name;
 }
 
+/**
+ * Internal registration writer for the future form connector.
+ * The caller must handle CSRF/anti-spam and supply the published notice version.
+ */
+function ari_training_register(PDO $db, array $input, string $consentVersion, ?array $upload = null): int {
+    $name = trim((string)($input['full_name'] ?? ''));
+    $email = strtolower(trim((string)($input['email'] ?? '')));
+    $phone = trim((string)($input['phone'] ?? ''));
+    $situation = trim((string)($input['situation'] ?? ''));
+    $topics = $input['topics'] ?? [];
+    if (strlen($name) < 2 || strlen($name) > 160
+        || !filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 254
+        || !preg_match('/^[+0-9(). \\-]{5,40}$/D', $phone)
+        || strlen($situation) > 100
+        || !is_array($topics) || !$topics || count($topics) > count(ari_training_topics())
+        || ($input['consent'] ?? false) !== true
+        || $consentVersion === '' || strlen($consentVersion) > 64) {
+        throw new InvalidArgumentException('Vérifiez les coordonnées, les thèmes et le consentement.');
+    }
+    foreach ($topics as $topic) {
+        if (!is_string($topic) || !isset(ari_training_topics()[$topic])) {
+            throw new InvalidArgumentException('Thème de formation invalide.');
+        }
+    }
+    $cv = $upload === null ? null : ari_training_store_cv($upload);
+    try {
+        $q = $db->prepare("INSERT INTO ari_training_registrations
+            (event_id, full_name, email, phone, situation, topics_json, status, cv_file, consent_version, consent_at, created_at)
+            VALUES (1, ?, ?, ?, ?, ?, 'pending', ?, ?, UTC_TIMESTAMP(), UTC_TIMESTAMP())");
+        $q->execute([$name, $email, $phone, $situation,
+            json_encode(array_values(array_unique($topics)), JSON_THROW_ON_ERROR),
+            $cv, $consentVersion]);
+        return (int)$db->lastInsertId();
+    } catch (Throwable $e) {
+        if ($cv !== null) {
+            $path = ari_training_cv_path($cv);
+            if (is_file($path) && !unlink($path)) {
+                error_log('ARI training: failed to remove unlinked CV');
+            }
+        }
+        if ($e instanceof PDOException && $e->getCode() === '23000') {
+            throw new InvalidArgumentException('Une inscription existe déjà pour cet e-mail.');
+        }
+        throw $e;
+    }
+}
+
 /** Administrative status only; the public mention of 30 places imposes no database limit. */
 function ari_training_set_status(PDO $db, int $id, string $status): void {
     if (!in_array($status, ['confirmed', 'pending', 'cancelled'], true)) {
