@@ -1,0 +1,25 @@
+.training-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.training-stats .panel{display:flex;flex-direction:column;gap:8px}
+.training-stats strong{font-size:2rem;color:#1d2d53}
+.training-filters{display:flex;flex-wrap:wrap;align-items:end;gap:16px;margin-bottom:24px}
+.training-filters .field{flex:1 1 220px;margin:0}
+.training-filters .button{min-height:44px}
+.training-table-wrap{overflow:auto}
+.training-table{width:100%;border-collapse:collapse;text-align:left;font-size:1rem}
+.training-table caption{text-align:left;padding:12px 0}
+.training-table th{background:#1d2d53;color:white}
+.training-table th,.training-table td{padding:16px;border-bottom:1px solid #dce2ec;vertical-align:top}
+.training-table td{min-width:140px;overflow-wrap:anywhere}
+.training-table td:last-child{min-width:240px}
+.training-table td p{margin:0 0 8px}
+.training-row-form{display:grid;gap:8px}
+.training-row-form label{font-size:.875rem}
+.training-row-form select{min-height:44px}
+.training-delete{margin-top:16px}
+.training-delete summary{color:#8d2931}
+.training-delete form{display:grid;gap:12px;padding-top:12px}
+.training-delete input{width:20px;height:20px;vertical-align:middle}
+.training-empty{padding:32px 0;color:#49566e}
+details.panel>summary{font-weight:700;font-size:1.125rem;cursor:pointer;padding:4px 0}
+details.panel[open]>summary{margin-bottom:20px}
+@media(max-width:650px){.training-stats{grid-template-columns:1fr}.topbar{flex-wrap:wrap}.topbar nav{flex-wrap:wrap;gap:12px}.training-filters{align-items:stretch}.training-table th,.training-table td{padding:12px}}

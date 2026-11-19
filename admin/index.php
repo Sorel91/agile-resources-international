@@ -274,7 +274,7 @@ foreach ($photoSlots as $slot => $meta) {
   <header class="topbar">
     <img src="/assets/logo-ari.webp" alt="ARI">
     <strong>Administration du site</strong>
-    <nav><a href="/" target="_blank" rel="noopener">Voir le site</a><a href="/admin/logout.php">Déconnexion</a></nav>
+    <nav><a href="/admin/formations.php">Inscriptions aux formations</a><a href="/" target="_blank" rel="noopener">Voir le site</a><a href="/admin/logout.php">Déconnexion</a></nav>
   </header>
   <main class="shell">
     <div class="intro"><div><h1>Personnalisation du site</h1><p>Modifiez les polices, les tailles et les photos sans toucher au code.</p></div><a class="button secondary" href="/" target="_blank" rel="noopener">Ouvrir le site</a></div>
