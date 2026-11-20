@@ -12,7 +12,7 @@ declare i integer; current_status text; before_count bigint;
 begin
  for i in 1..36 loop
    insert into public.ari_training_registrations(event_id,email) values(1,'test-'||i||'@example.invalid') returning status into current_status;
-   if current_status <> case when i<=35 then 'pending' else 'waitlist' end then raise exception 'Incorrect threshold at %',i; end if;
+   if current_status <> (case when i<=35 then 'pending' else 'waitlist' end) then raise exception 'Incorrect threshold at %',i; end if;
  end loop;
  select registration_count into before_count from public.ari_training_events where id=1;
  begin
