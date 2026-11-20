@@ -26,7 +26,7 @@ function load(route){
  const prototype=window.HTMLElement.prototype;
  Object.defineProperty(prototype,'elements',{configurable:true,get(){return Object.fromEntries([...this.querySelectorAll('[name]')].map(x=>[x.name,x]));}});
  prototype.reportValidity=()=>true;
- vm.runInContext(fs.readFileSync(root+'/assets/workshop-registration.js','utf8'),context);
+ vm.runInContext(fs.readFileSync(root+'/assets/workshop-registration-v2.js','utf8'),context);
  const click=s=>{const el=document.querySelector(s);assert(el,s);el.dispatchEvent(new window.Event('click',{bubbles:true}));};
  return {window,document,click,posts:()=>posts};
 }

@@ -10,7 +10,7 @@ on:
       - "training-public-key.php"
       - "training-registration.php"
       - "assets/site.js"
-      - "assets/workshop-registration.*"
+      - "assets/workshop-registration*"
       - "index.html"
       - ".github/workflows/training-admin-checks.yml"
 permissions:
@@ -43,7 +43,7 @@ jobs:
       - name: Check public JavaScript
         run: |
           node --check assets/site.js
-          node --check assets/workshop-registration.js
+          node --check assets/workshop-registration-v2.js
       - name: Test public registration interactions
         run: |
           npm ci --prefix tests --ignore-scripts
