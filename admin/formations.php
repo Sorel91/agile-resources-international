@@ -134,7 +134,7 @@ $e = 'ari_escape';
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>Inscriptions aux formations — ARI</title>
-<link rel="stylesheet" href="/admin/admin.css?v=20260827-23">
+<link rel="stylesheet" href="/admin/admin.css?v=20261120-2">
 <link rel="stylesheet" href="/admin/formations.css?v=20261119">
 </head>
 <body>

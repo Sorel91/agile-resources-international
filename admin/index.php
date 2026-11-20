@@ -99,7 +99,7 @@ if (!ari_is_authenticated()):
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
   <title>Administration — ARI</title>
-  <link rel="stylesheet" href="/admin/admin.css?v=20260827-23">
+  <link rel="stylesheet" href="/admin/admin.css?v=20261120-2">
 </head>
 <body class="login-shell">
   <main class="login-card">
@@ -268,13 +268,13 @@ foreach ($photoSlots as $slot => $meta) {
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
   <title>Administration — ARI</title>
-  <link rel="stylesheet" href="/admin/admin.css?v=20260827-23">
+  <link rel="stylesheet" href="/admin/admin.css?v=20261120-2">
 </head>
 <body>
   <header class="topbar">
     <img src="/assets/logo-ari.webp" alt="ARI">
     <strong>Administration du site</strong>
-    <nav><a href="/admin/formations.php">Inscriptions aux formations</a><a href="/" target="_blank" rel="noopener">Voir le site</a><a href="/admin/logout.php">Déconnexion</a></nav>
+    <nav><a class="admin-training-link" href="/admin/formations.php">Inscriptions aux formations</a><a href="/" target="_blank" rel="noopener">Voir le site</a><a href="/admin/logout.php">Déconnexion</a></nav>
   </header>
   <main class="shell">
     <div class="intro"><div><h1>Personnalisation du site</h1><p>Modifiez les polices, les tailles et les photos sans toucher au code.</p></div><a class="button secondary" href="/" target="_blank" rel="noopener">Ouvrir le site</a></div>
