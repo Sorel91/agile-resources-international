@@ -12,6 +12,12 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') {
 }
 try {
     $key = ari_training_signing_key();
+    if (($_GET['check'] ?? '') === '1') {
+        require_once __DIR__ . '/admin/training-store.php';
+        $result = ari_training_db()->request(['action' => 'health']);
+        echo json_encode(['ready' => ($result['ok'] ?? false) === true], JSON_THROW_ON_ERROR);
+        exit;
+    }
     // Public key only. This endpoint never signs requests or exposes the private key.
     echo json_encode(['key_id' => $key['key_id'], 'public_key' => $key['public_key']], JSON_THROW_ON_ERROR);
 } catch (Throwable $e) {

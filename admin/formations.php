@@ -19,7 +19,7 @@ $error = '';
 $notice = (string)($_SESSION['training_notice'] ?? '');
 unset($_SESSION['training_notice']);
 $db = null;
-$configured = is_file(ari_training_config_path());
+$configured = true;
 $search = substr(trim((string)($_GET['q'] ?? '')), 0, 160);
 $status = (string)($_GET['status'] ?? '');
 if (!isset($labels[$status])) { $status = ''; }
@@ -30,29 +30,7 @@ try {
             throw new InvalidArgumentException('La session a expiré. Rechargez la page.');
         }
         $action = (string)($_POST['action'] ?? '');
-        if ($action === 'configure') {
-            if ($configured) {
-                throw new InvalidArgumentException('Une configuration existe déjà. Modifiez-la dans le stockage privé sur Hostinger.');
-            }
-            $config = [
-                'host' => trim((string)($_POST['db_host'] ?? '')),
-                'port' => 3306,
-                'name' => trim((string)($_POST['db_name'] ?? '')),
-                'user' => trim((string)($_POST['db_user'] ?? '')),
-                'password' => (string)($_POST['db_password'] ?? ''),
-            ];
-            if ($config['user'] === '' || $config['password'] === '') {
-                throw new InvalidArgumentException('Renseignez l’utilisateur et le mot de passe de la base.');
-            }
-            $db = ari_training_db($config);
-            ari_training_install($db);
-            ari_training_cv_dir();
-            if (!ari_atomic_write(ari_training_config_path(), "<?php\nreturn " . var_export($config, true) . ";\n")) {
-                throw new RuntimeException('Impossible de conserver la configuration privée.');
-            }
-            chmod(ari_training_config_path(), 0600);
-            $_SESSION['training_notice'] = 'Base connectée. Les inscriptions publiques restent fermées.';
-        } else {
+        {
             $db = ari_training_db();
             if ($action === 'save_event') {
                 $date = (string)($_POST['event_date'] ?? '');
@@ -68,8 +46,8 @@ try {
                     || !in_array($mode, ['pending', 'single', 'workshops'], true)) {
                     throw new InvalidArgumentException('Vérifiez les informations de la formation.');
                 }
-                $q = $db->prepare('UPDATE ari_training_events SET event_date = ?, start_time = ?, duration_minutes = ?, location = ?, format_mode = ? WHERE id = 1');
-                $q->execute([$date, $time, $duration === '' ? null : (int)$duration, $location, $mode]);
+                $db->request(['action' => 'event', 'event_date' => $date, 'start_time' => $time,
+                    'duration_minutes' => $duration === '' ? null : (int)$duration, 'location' => $location, 'format_mode' => $mode]);
                 $_SESSION['training_notice'] = 'Informations pratiques enregistrées.';
             } elseif ($action === 'status' || $action === 'delete') {
                 $id = filter_var($_POST['id'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
@@ -96,17 +74,15 @@ try {
         $db = ari_training_db();
         if (isset($_GET['cv'])) {
             $id = filter_var($_GET['cv'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
-            $q = $db->prepare('SELECT cv_file FROM ari_training_registrations WHERE id = ? AND event_id = 1');
-            $q->execute([$id === false ? 0 : $id]);
-            $file = $q->fetchColumn();
-            if (!$file || !is_file(ari_training_cv_path($file))) {
+            if ($id === false) {
                 http_response_code(404);
                 exit('CV introuvable.');
             }
+            $bytes = ari_training_cv_bytes($db, $id);
             header('Content-Type: application/pdf');
-            header('Content-Disposition: attachment; filename="cv-participant-' . (int)$id . '.pdf"');
-            header('Content-Length: ' . filesize(ari_training_cv_path($file)));
-            readfile(ari_training_cv_path($file));
+            header('Content-Disposition: attachment; filename="cv-participant-' . $id . '.pdf"');
+            header('Content-Length: ' . strlen($bytes));
+            echo $bytes;
             exit;
         }
         if (($_GET['export'] ?? '') === 'csv') {
@@ -135,7 +111,7 @@ try {
     $error = $e->getMessage();
 } catch (Throwable $e) {
     error_log('ARI training administration: ' . get_class($e));
-    $error = 'Connexion ou opération impossible. Vérifiez la configuration privée, les droits MySQL et le stockage sur Hostinger.';
+    $error = 'Le service des inscriptions est momentanément indisponible. Réessayez dans quelques instants.';
 }
 
 $event = null;
@@ -143,13 +119,12 @@ $rows = [];
 $counts = ['confirmed' => 0, 'pending' => 0, 'cancelled' => 0];
 if ($db && $configured && $error === '') {
     try {
-        $event = $db->query('SELECT * FROM ari_training_events WHERE id = 1')->fetch();
-        foreach ($db->query('SELECT status, COUNT(*) AS total FROM ari_training_registrations WHERE event_id = 1 GROUP BY status') as $count) {
-            if (isset($counts[$count['status']])) { $counts[$count['status']] = (int)$count['total']; }
-        }
+        $summary = $db->request(['action' => 'summary']);
+        $event = $summary['event'];
+        $counts = $summary['counts'];
         $rows = ari_training_rows($db, $search, $status);
     } catch (Throwable $e) {
-        $error = 'Les données de formation ne sont pas disponibles. Vérifiez les tables MySQL.';
+        $error = 'Les inscriptions sont temporairement indisponibles. Veuillez réessayer.';
     }
 }
 $e = 'ari_escape';
@@ -168,22 +143,11 @@ $e = 'ari_escape';
 <main class="shell">
 <div class="intro"><div><h1>Formation gratuite</h1><p>Les participants, leurs coordonnées et leurs CV au même endroit.</p></div>
 <?php if ($event): ?><a class="button secondary" href="?<?= $e(http_build_query(['export' => 'csv', 'q' => $search, 'status' => $status])) ?>">Exporter pour Excel (CSV)</a><?php endif; ?></div>
-<p class="help">Le formulaire public n’est pas encore raccordé. Les inscriptions ne sont soumises à aucun plafond : la mention « 30 places » affichée aux visiteurs est purement informative.</p>
+<p class="help">Le formulaire public n’est pas encore raccordé. Les inscriptions sont conservées dans Supabase et ne sont soumises à aucun plafond.</p>
 <?php if ($notice): ?><p class="notice" role="status"><?= $e($notice) ?></p><?php endif; ?>
 <?php if ($error): ?><p class="notice error" role="alert"><?= $e($error) ?></p><?php endif; ?>
 
-<?php if (!$configured): ?>
-<section class="panel"><h2>Connecter la base Hostinger</h2>
-<p>Créez une base MySQL et un utilisateur dans hPanel, puis renseignez leurs identifiants ici. Ils seront conservés uniquement dans le stockage privé du serveur.</p>
-<form method="post" autocomplete="off">
-<input type="hidden" name="csrf" value="<?= $e(ari_csrf_token()) ?>"><input type="hidden" name="action" value="configure">
-<div class="grid">
-<p class="field"><label for="db_host">Hôte MySQL</label><input id="db_host" name="db_host" value="localhost" required maxlength="253"></p>
-<p class="field"><label for="db_name">Nom de la base</label><input id="db_name" name="db_name" required maxlength="64"></p>
-<p class="field"><label for="db_user">Utilisateur MySQL</label><input id="db_user" name="db_user" required maxlength="100" autocomplete="off"></p>
-<p class="field"><label for="db_password">Mot de passe MySQL</label><input id="db_password" name="db_password" type="password" required autocomplete="new-password"></p>
-</div><button class="button">Connecter et préparer les tables</button></form></section>
-<?php elseif ($event): ?>
+<?php if ($event): ?>
 <div class="training-stats" aria-label="Suivi des inscriptions">
 <article class="panel"><strong><?= array_sum($counts) ?></strong><span>Inscriptions reçues</span></article>
 <article class="panel"><strong><?= (int)$counts['pending'] ?></strong><span>À traiter</span></article>
