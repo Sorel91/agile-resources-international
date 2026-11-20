@@ -91,14 +91,14 @@ try {
             header('Content-Disposition: attachment; filename="inscriptions-formation.csv"');
             $out = fopen('php://output', 'wb');
             fwrite($out, "\xEF\xBB\xBF");
-            fputcsv($out, ['N°', 'Nom', 'E-mail', 'Téléphone', 'Situation', 'Thèmes', 'Statut', 'CV fourni', 'Inscription UTC', 'Consentement UTC', 'Version du consentement'], ';', '"', '');
+            fputcsv($out, ['N°', 'Nom', 'Prénom', 'E-mail', 'Ville', 'Pays de résidence', 'Domaine d’éducation', 'Thèmes', 'Statut', 'CV fourni', 'Inscription UTC', 'Consentement UTC', 'Version du consentement'], ';', '"', '');
             foreach ($rows as $row) {
                 $topics = json_decode($row['topics_json'], true);
                 $topicLabels = [];
                 foreach (is_array($topics) ? $topics : [] as $topic) {
                     $topicLabels[] = ari_training_topics()[$topic] ?? (string)$topic;
                 }
-                $cells = [(string)$row['id'], $row['full_name'], $row['email'], $row['phone'], $row['situation'],
+                $cells = [(string)$row['id'], (string)($row['last_name'] ?? ''), (string)($row['first_name'] ?? ''), $row['email'], (string)($row['city'] ?? ''), (string)($row['residence_country'] ?? ''), (string)($row['education_domain'] ?? ''),
                     implode(' / ', $topicLabels), $labels[$row['status']] ?? $row['status'], $row['cv_file'] ? 'Oui' : 'Non',
                     $row['created_at'], $row['consent_at'], $row['consent_version']];
                 fputcsv($out, array_map('ari_training_csv_cell', $cells), ';', '"', '');
@@ -143,7 +143,7 @@ $e = 'ari_escape';
 <main class="shell">
 <div class="intro"><div><h1>Formation gratuite</h1><p>Les participants, leurs coordonnées et leurs CV au même endroit.</p></div>
 <?php if ($event): ?><a class="button secondary" href="?<?= $e(http_build_query(['export' => 'csv', 'q' => $search, 'status' => $status])) ?>">Exporter pour Excel (CSV)</a><?php endif; ?></div>
-<p class="help">Le formulaire public n’est pas encore raccordé. Les inscriptions sont conservées dans Supabase et ne sont soumises à aucun plafond.</p>
+<p class="help">Les inscriptions du formulaire d’accueil sont enregistrées ici. La mention publique « 30 places » est informative ; les statuts sont gérés manuellement.</p>
 <?php if ($notice): ?><p class="notice" role="status"><?= $e($notice) ?></p><?php endif; ?>
 <?php if ($error): ?><p class="notice error" role="alert"><?= $e($error) ?></p><?php endif; ?>
 
@@ -165,22 +165,22 @@ $e = 'ari_escape';
 <?php foreach (['pending' => 'À confirmer', 'single' => 'Une formation avec les trois thèmes', 'workshops' => 'Des ateliers au choix'] as $key => $label): ?><option value="<?= $key ?>" <?= $event['format_mode'] === $key ? 'selected' : '' ?>><?= $e($label) ?></option><?php endforeach; ?>
 </select></p></div>
 <ul><?php foreach (ari_training_topics() as $topic): ?><li><?= $e($topic) ?></li><?php endforeach; ?></ul>
-<p>La mention publique « 30 places » ne limite ni les inscriptions ni les confirmations. Le formulaire public sera raccordé séparément.</p>
+<p>La mention publique « 30 places » ne limite ni les inscriptions ni les confirmations.</p>
 <button class="button">Enregistrer les informations</button></form></details>
 
 <section class="panel"><h2>Participants</h2>
 <form method="get" class="training-filters">
-<p class="field"><label for="q">Rechercher un nom, un e-mail ou un téléphone</label><input id="q" name="q" value="<?= $e($search) ?>" maxlength="160"></p>
+<p class="field"><label for="q">Rechercher un nom, un e-mail, une ville ou un domaine</label><input id="q" name="q" value="<?= $e($search) ?>" maxlength="160"></p>
 <p class="field"><label for="status">Statut</label><select id="status" name="status"><option value="">Tous les statuts</option>
 <?php foreach ($labels as $key => $label): ?><option value="<?= $key ?>" <?= $status === $key ? 'selected' : '' ?>><?= $e($label) ?></option><?php endforeach; ?></select></p>
 <button class="button">Filtrer</button><a href="/admin/formations.php">Réinitialiser</a></form>
 
 <?php if (!$rows): ?><p class="training-empty">Aucune inscription<?= ($search !== '' || $status !== '') ? ' pour ces filtres' : ' pour le moment' ?>.</p>
 <?php else: ?><div class="training-table-wrap"><table class="training-table"><caption><?= count($rows) ?> inscription(s) affichée(s)</caption>
-<thead><tr><th>Participant</th><th>Coordonnées</th><th>Thèmes</th><th>CV</th><th>Statut et actions</th></tr></thead>
+<thead><tr><th>Participant</th><th>Résidence et formation</th><th>Thèmes</th><th>CV</th><th>Statut et actions</th></tr></thead>
 <tbody><?php foreach ($rows as $row): ?><tr>
-<td><strong><?= $e($row['full_name']) ?></strong><br><?= $e($row['situation']) ?><br><small>Inscription : <?= $e($row['created_at']) ?> UTC</small></td>
-<td><?= $e($row['email']) ?><br><?= $e($row['phone']) ?></td>
+<td><strong><?= $e($row['full_name']) ?></strong><br><?= $e($row['email']) ?><br><small>Inscription : <?= $e($row['created_at']) ?> UTC</small></td>
+<td><?= $e((string)($row['city'] ?? '')) ?><br><?= $e((string)($row['residence_country'] ?? '')) ?><br><strong><?= $e((string)($row['education_domain'] ?? '')) ?></strong></td>
 <td><?php $topics = json_decode($row['topics_json'], true); foreach (is_array($topics) ? $topics : [] as $topic): ?><p><?= $e(ari_training_topics()[$topic] ?? (string)$topic) ?></p><?php endforeach; ?></td>
 <td><?php if ($row['cv_file']): ?><a href="?cv=<?= (int)$row['id'] ?>">Télécharger le CV (PDF)</a><?php else: ?>Non fourni<?php endif; ?></td>
 <td><form method="post" class="training-row-form"><input type="hidden" name="action" value="status"><input type="hidden" name="id" value="<?= (int)$row['id'] ?>"><input type="hidden" name="csrf" value="<?= $e(ari_csrf_token()) ?>">

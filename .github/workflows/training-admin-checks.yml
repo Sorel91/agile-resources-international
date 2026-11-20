@@ -8,6 +8,10 @@ on:
       - "supabase/**"
       - "tests/**"
       - "training-public-key.php"
+      - "training-registration.php"
+      - "assets/site.js"
+      - "assets/workshop-registration.*"
+      - "index.html"
       - ".github/workflows/training-admin-checks.yml"
 permissions:
   contents: read
@@ -29,11 +33,21 @@ jobs:
           php -l admin/index.php
           php -l admin/training-signing.php
           php -l training-public-key.php
+          php -l training-registration.php
+          php -l admin/training-public.php
           php -l admin/training-store.php
           php -l admin/formations.php
           php -l tests/training-integration.php
       - name: Test private client and signatures
         run: php tests/training-integration.php
+      - name: Check public JavaScript
+        run: |
+          node --check assets/site.js
+          node --check assets/workshop-registration.js
+      - name: Test public registration interactions
+        run: |
+          npm ci --prefix tests --ignore-scripts
+          node tests/training-form-dom.cjs
       - name: Test Supabase handler
         run: node --experimental-strip-types tests/training-supabase.mts
       - name: Test unauthenticated access
@@ -47,3 +61,5 @@ jobs:
             code="$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:8080$path")"
             test "$code" = 303
           done
+          code="$(curl -s -o /dev/null -w '%{http_code}' -X POST http://127.0.0.1:8080/training-registration.php)"
+          test "$code" = 403

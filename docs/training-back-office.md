@@ -5,7 +5,7 @@ Le projet « Agile Resource » est dans Delectio, forfait Free, région Paris (e
 Référence publique : urorvrgyxjbtivirtbpm.
 L'administration existante reste à /admin/, avec son mot de passe actuel.
 Le menu « Inscriptions aux formations » ouvre la rubrique. Aucun paramètre MySQL n'est demandé.
-Le formulaire public de l'accueil reste volontairement déconnecté.
+Le formulaire public de l’accueil est connecté à /training-registration.php. Le QR code existant continue à ouvrir l’accueil.
 
 ## Données et sécurité
 - Tables ari_training_events / ari_training_registrations protégées par RLS, sans accès anon/authenticated.
@@ -40,11 +40,16 @@ Le workflow training-admin-checks exécute :
 Le test de liaison en production ne lit ni ne crée aucune inscription.
 Les fichiers de test refusent l'exécution PHP depuis le web.
 
-## Raccordement public restant
-Brancher le formulaire d'accueil à ari_training_register, depuis une route PHP de soumission dédiée avec validation, anti-spam, limitation de débit,
-mention d'information validée et version de consentement fournie par le serveur.
-Le writer ne doit jamais être appelé directement depuis le navigateur avec des privilèges de gestion.
-Distinguer l'inscription à la formation d'un éventuel accord pour un usage de recrutement futur.
+## Formulaire public
+L’accueil FR/EN affiche un appel à l’inscription et les trois thèmes. Le formulaire s’ouvre sans quitter la page.
+Champs obligatoires : nom, prénom, e-mail, ville, pays de résidence, domaine d’éducation.
+CV PDF facultatif, 5 Mio maximum. Aucun numéro de téléphone n’est demandé.
+Les champs supplémentaires sont conservés en base, affichés dans l’administration et ajoutés à l’export.
+Le serveur impose un jeton anti-CSRF avec session distincte de l’admin, un contrôle d’origine, un champ anti-robot,
+un délai minimum et des limites de tentatives par session et par empreinte IP. L’IP brute n’est pas conservée en base.
+La limite IP est partagée entre instances et laisse passer les inscriptions d’un groupe utilisant le même réseau.
+La mention « 30 places disponibles uniquement » reste informative, conformément au cadrage, sans plafond en base.
+L’accusé de réception est affiché à l’écran ; aucun e-mail automatique n’est envoyé.
 
 ## Exploitation
 Le forfait Free a ses quotas et peut mettre en pause un projet inactif. Ne pas promettre une disponibilité permanente.

@@ -108,7 +108,11 @@ function ari_training_register(AriTrainingStore $store, array $input, string $co
     }
     $result = $store->request([
         'action' => 'register',
-        'full_name' => (string)($input['full_name'] ?? ''),
+        'first_name' => (string)($input['first_name'] ?? ''),
+        'last_name' => (string)($input['last_name'] ?? ''),
+        'city' => (string)($input['city'] ?? ''),
+        'residence_country' => (string)($input['residence_country'] ?? ''),
+        'education_domain' => (string)($input['education_domain'] ?? ''),
         'email' => (string)($input['email'] ?? ''),
         'phone' => (string)($input['phone'] ?? ''),
         'situation' => (string)($input['situation'] ?? ''),

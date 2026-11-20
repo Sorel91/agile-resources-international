@@ -31,9 +31,10 @@ const mock: typeof fetch = async (input: any, options: any) => {
     if(method==="PATCH") {Object.assign(event,body); return new Response(null,{status:204});}
     return json([event]);
   }
+  if(path.endsWith("/rpc/ari_training_rate_limit")) return json(true);
   if(path.endsWith("/rpc/ari_training_search")) {
     const q=body.p_query.toLowerCase();
-    return json(registrations.filter(r=>(!body.p_status || r.status===body.p_status) && [r.full_name,r.email,r.phone].join(" ").toLowerCase().includes(q)).slice(body.p_offset,body.p_offset+500));
+    return json(registrations.filter(r=>(!body.p_status || r.status===body.p_status) && [r.full_name,r.email,r.phone,r.city,r.residence_country,r.education_domain].join(" ").toLowerCase().includes(q)).slice(body.p_offset,body.p_offset+500));
   }
   if(path.endsWith("/ari_training_registrations")) {
     if(method==="HEAD") {
@@ -84,12 +85,17 @@ const tampered=await signed({action:"health"}); tampered.body='{"action":"summar
 assert.equal((await handler(new Request("https://test",tampered))).status,401);
 enabled=false; await call({action:"health"},401); enabled=true;
 await call({action:"unknown"},400);
-const base={action:"register",full_name:"Participant",email:"",phone:"+2250000000000",situation:"Salarié",topics:["network"],consent:true,consent_version:"test-v1"};
+assert.equal((await call({action:"info"})).event_date,"2026-11-21");
+assert.equal((await call({action:"rate",fingerprint:"a".repeat(64)})).allowed,true);
+await call({action:"rate",fingerprint:"bad"},400);
+const base={action:"register",first_name:"Participant",last_name:"Test",city:"Abidjan",residence_country:"Côte d’Ivoire",education_domain:"Ingénierie",email:"",phone:"+2250000000000",situation:"Salarié",topics:["network"],consent:true,consent_version:"test-v1"};
 for(let i=0;i<31;i++){
   const r=await call({...base,email:"participant"+i+"@example.invalid"});
   await call({action:"status",id:r.id,status:"confirmed"});
 }
 assert.equal((await call({action:"summary"})).counts.confirmed,31);
+assert.equal((await call({action:"list",q:"Ingénierie",status:"confirmed",offset:0})).length,31);
+await call({...base,email:"incomplete@example.invalid",city:""},400);
 await call({...base,email:"bad@example.invalid",consent:false},400);
 await call({...base,email:"bad@example.invalid",topics:["unknown"]},400);
 await call({action:"status",id:1,status:"waitlist"},400);

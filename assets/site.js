@@ -93,6 +93,23 @@ const cta = ({title = isEnglish ? "Ready to secure the right talent?" : "Prêt �
 
 const home = () => `
   <main>
+    <section class="workshop-banner" aria-labelledby="workshop-banner-title">
+      <div class="workshop-banner-copy">
+        <p class="workshop-kicker">${isEnglish ? 'Free career workshop' : 'Formation carrière gratuite'} <span aria-hidden="true">·</span> <time datetime="2026-11-21">${isEnglish ? 'Saturday 21 November' : 'Samedi 21 novembre'}</time></p>
+        <h2 id="workshop-banner-title">${isEnglish ? 'Prepare for your next opportunity.' : 'Préparez votre prochaine opportunité.'}</h2>
+        <ul class="workshop-topics">
+          <li>${isEnglish ? 'Build your professional network.' : 'Développer son réseau professionnel.'}</li>
+          <li>${isEnglish ? 'Strengthen your CV, LinkedIn profile and pitch.' : 'Valoriser son CV, son profil LinkedIn et son pitch.'}</li>
+          <li>${isEnglish ? 'Prepare for and succeed in job interviews.' : 'Préparer et réussir son entretien d’embauche.'}</li>
+        </ul>
+      </div>
+      <div class="workshop-banner-action">
+        <span class="workshop-places">${isEnglish ? 'Only 30 places available' : '30 places disponibles uniquement'}</span>
+        <button class="button" type="button" data-registration-open>${isEnglish ? 'Register for free' : 'Je m’inscris gratuitement'}</button>
+        <span class="workshop-small">${isEnglish ? 'Registration takes just a few minutes.' : 'Inscription en quelques minutes.'}</span>
+      </div>
+    </section>
+
     <section class="home-hero two-columns">
       <div>
         <p class="eyebrow">Agile Resources International</p>

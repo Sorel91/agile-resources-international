@@ -3,6 +3,7 @@ declare(strict_types=1);
 if (PHP_SAPI !== 'cli') { http_response_code(404); exit; }
 define('ARI_PRIVATE_DIR', sys_get_temp_dir() . '/ari-training-tests-' . bin2hex(random_bytes(8)));
 require __DIR__ . '/../admin/training-store.php';
+require __DIR__ . '/../admin/training-public.php';
 function check(bool $ok, string $label): void {
     if (!$ok) { throw new RuntimeException($label); }
 }
@@ -50,7 +51,23 @@ try {
     check(ari_training_csv_cell('=1+1') === "'=1+1",'CSV formula neutralized');
     check(ari_training_csv_cell('+2250000000000') === "'+2250000000000",'Phone remains text');
     check(ari_training_upload_data(['error'=>UPLOAD_ERR_NO_FILE]) === null,'CV optional');
-    echo "PHP Supabase client checks passed.\n";
+    $input = ['first_name'=>'Élodie', 'last_name'=>'Koné', 'email'=>'TEST@example.invalid',
+        'city'=>'Abidjan','residence_country'=>'Côte d’Ivoire','education_domain'=>'Ressources humaines','consent'=>'1'];
+    $validated = ari_training_public_fields($input);
+    check($validated['email'] === 'test@example.invalid', 'Email normalization');
+    check(count($validated['topics']) === 3, 'All three advertised themes');
+    foreach (['first_name','last_name','city','residence_country','education_domain','email','consent'] as $field) {
+        $bad = $input;
+        $bad[$field] = '';
+        $rejected = false;
+        try { ari_training_public_fields($bad); } catch (InvalidArgumentException $e) { $rejected = true; }
+        check($rejected, 'Required field: ' . $field);
+    }
+    $bad = $input; $bad['city'] = ['unexpected'];
+    $rejected = false;
+    try { ari_training_public_fields($bad); } catch (InvalidArgumentException $e) { $rejected = true; }
+    check($rejected, 'Array injection refused');
+    echo "PHP Supabase client and public form checks passed.\n";
 } finally {
     foreach (glob(ARI_PRIVATE_DIR . '/*') ?: [] as $file) { unlink($file); }
     if (is_dir(ARI_PRIVATE_DIR)) { rmdir(ARI_PRIVATE_DIR); }

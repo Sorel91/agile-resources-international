@@ -104,6 +104,17 @@ export function createHandler(options: Options): (req: Request) => Promise<Respo
       let data: unknown;
       switch (input.action) {
         case "health": data = { ok: true }; break;
+        case "info": {
+          const event = (await db("ari_training_events?id=eq.1&select=title,event_date,start_time,duration_minutes,location,format_mode"))[0];
+          if (!event) throw new Failure(503, "Formation indisponible.");
+          data = event; break;
+        }
+        case "rate": {
+          const fingerprint = text(input.fingerprint, 64);
+          if (!/^[a-f0-9]{64}$/.test(fingerprint)) throw new Failure(400, "Requête invalide.");
+          data = { allowed: await db("rpc/ari_training_rate_limit", "POST", { p_fingerprint: fingerprint }) };
+          break;
+        }
         case "summary": {
           const event = (await db("ari_training_events?id=eq.1&select=*"))[0];
           if (!event) throw new Failure(503, "Formation indisponible.");
@@ -163,13 +174,19 @@ export function createHandler(options: Options): (req: Request) => Promise<Respo
           data = { ok: true }; break;
         }
         case "register": {
-          const name = text(input.full_name, 160);
+          const firstName = text(input.first_name, 80);
+          const lastName = text(input.last_name, 80);
+          const city = text(input.city, 120);
+          const country = text(input.residence_country, 100);
+          const education = text(input.education_domain, 180);
+          if (!firstName || !lastName || !city || !country || !education) throw new Failure(400, "Veuillez compléter tous les champs obligatoires.");
+          const name = firstName + " " + lastName;
           const email = text(input.email, 254).toLowerCase();
-          const phone = text(input.phone, 40);
+          const phone = text(input.phone ?? "", 40);
           const situation = text(input.situation ?? "", 100);
           const consent = text(input.consent_version, 64);
           if (name.length < 2 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-            || !/^[+0-9(). -]{5,40}$/.test(phone) || input.consent !== true || !consent
+            || (phone !== "" && !/^[+0-9(). -]{5,40}$/.test(phone)) || input.consent !== true || !consent
             || !Array.isArray(input.topics) || input.topics.length < 1 || input.topics.length > 3
             || !input.topics.every(t => typeof t === "string" && topics.includes(t))) throw new Failure(400, "Inscription invalide.");
           let cv: string | null = null;
@@ -185,7 +202,7 @@ export function createHandler(options: Options): (req: Request) => Promise<Respo
           }
           try {
             const rows = await db("ari_training_registrations", "POST", {
-              event_id: 1, full_name: name, email, phone, situation, topics_json: [...new Set(input.topics)],
+              event_id: 1, full_name: name, first_name: firstName, last_name: lastName, city, residence_country: country, education_domain: education, email, phone, situation, topics_json: [...new Set(input.topics)],
               status: "pending", cv_file: cv, consent_version: consent
             }, { Prefer: "return=representation" });
             data = { id: rows[0].id };
