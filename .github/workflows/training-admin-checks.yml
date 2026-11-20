@@ -32,6 +32,8 @@ jobs:
           sudo apt-get install -y php-cli php-mysql
       - name: Check PHP syntax
         run: |
+          php -l admin/training-signing.php
+          php -l training-public-key.php
           php -l admin/bootstrap.php
           php -l admin/index.php
           php -l admin/training-store.php
