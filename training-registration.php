@@ -50,6 +50,7 @@ try {
         reply(429, ['message'=>$en ? 'Please wait a moment before submitting.' : 'Veuillez patienter quelques secondes avant de valider.']);
     }
     $fields = ari_training_public_fields($_POST);
+    $upload = ari_training_require_cv(isset($_FILES['cv']) && is_array($_FILES['cv']) ? $_FILES['cv'] : null);
     $attempts = (array)($_SESSION['training_attempts'] ?? []);
     $attempts = array_values(array_filter($attempts, static fn($at) => (int)$at > time()-600));
     if (count($attempts) >= 6) {
@@ -69,8 +70,7 @@ try {
     if (($rate['allowed'] ?? false) !== true) {
         reply(429, ['message'=>$en ? 'Too many attempts. Please try again later.' : 'Trop de tentatives. Réessayez un peu plus tard.']);
     }
-    $upload = isset($_FILES['cv']) && is_array($_FILES['cv']) ? $_FILES['cv'] : null;
-    ari_training_register($store, $fields, 'training-registration-2026-11-20-v1', $upload);
+    ari_training_register($store, $fields, 'training-registration-2026-11-20-v2', $upload);
     $_SESSION['training_csrf'] = bin2hex(random_bytes(32));
     reply(200, ['ok'=>true,'message'=>$en
         ? 'Your registration has been received. The team will contact you by email with the practical details.'
@@ -79,6 +79,7 @@ try {
     $message = $e->getMessage();
     if ($en) {
         $messages = [
+            'Veuillez joindre votre CV au format PDF.'=>'Please attach your CV as a PDF.',
             'Une inscription existe déjà pour cet e-mail.'=>'This email address is already registered.',
             'Veuillez compléter tous les champs obligatoires.'=>'Please complete all required fields.',
             'Veuillez vérifier les champs obligatoires.'=>'Please check the required fields.',

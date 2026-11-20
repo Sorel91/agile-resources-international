@@ -43,7 +43,7 @@ Les fichiers de test refusent l'exécution PHP depuis le web.
 ## Formulaire public
 L’accueil FR/EN affiche un appel à l’inscription et les trois thèmes. Le formulaire s’ouvre sans quitter la page.
 Champs obligatoires : nom, prénom, e-mail, ville, pays de résidence, domaine d’éducation.
-CV PDF facultatif, 5 Mio maximum. Aucun numéro de téléphone n’est demandé.
+CV PDF obligatoire, 5 Mio maximum. Aucun numéro de téléphone n’est demandé.
 Les champs supplémentaires sont conservés en base, affichés dans l’administration et ajoutés à l’export.
 Le serveur impose un jeton anti-CSRF avec session distincte de l’admin, un contrôle d’origine, un champ anti-robot,
 un délai minimum et des limites de tentatives par session et par empreinte IP. L’IP brute n’est pas conservée en base.

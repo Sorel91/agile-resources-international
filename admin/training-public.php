@@ -24,3 +24,10 @@ function ari_training_public_fields(array $input): array {
     $result['topics'] = ['network','profile','interview'];
     return $result;
 }
+
+function ari_training_require_cv(?array $upload): array {
+    if ($upload === null || (int)($upload['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
+        throw new InvalidArgumentException('Veuillez joindre votre CV au format PDF.');
+    }
+    return $upload;
+}

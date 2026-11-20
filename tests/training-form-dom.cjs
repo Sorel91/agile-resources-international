@@ -45,12 +45,16 @@ function load(route){
  assert(!form.elements.phone,'No unrequested phone field');
  assert.equal(form.elements.csrf.value,'test-token');
  assert(form.elements.cv.getAttribute('accept').includes('pdf'));
- assert.equal(form.elements.cv.hasAttribute('required'),false);
+ assert.equal(form.elements.cv.hasAttribute('required'),true);
  Object.defineProperty(form.elements.cv,'files',{configurable:true,value:[{name:'large.pdf',size:6*1024*1024}]});
  form.dispatchEvent(new app.window.Event('submit',{cancelable:true}));await tick();
  assert.equal(app.posts(),0);
  assert(d.querySelector('.registration-feedback').textContent.includes('5 Mo'));
  Object.defineProperty(form.elements.cv,'files',{configurable:true,value:[]});
+ form.dispatchEvent(new app.window.Event('submit',{cancelable:true}));await tick();await tick();
+ assert.equal(app.posts(),0);
+ assert(d.querySelector('.registration-feedback').textContent.includes('joindre votre CV'));
+ Object.defineProperty(form.elements.cv,'files',{configurable:true,value:[{name:'cv.pdf',size:1000}]});
  form.dispatchEvent(new app.window.Event('submit',{cancelable:true}));await tick();await tick();
  assert.equal(app.posts(),1);assert.equal(form.hidden,true);assert.equal(d.querySelector('.registration-success').hidden,false);
  app.click('[data-registration-done]');assert.equal(d.querySelector('dialog').hasAttribute('open'),false);
@@ -60,5 +64,5 @@ function load(route){
  assert(d.querySelector('#registration-title').textContent.includes('free workshop'));
  assert.equal(d.querySelector('.registration-dialog form').elements.lang.value,'en');
  app=load('/candidats');assert.equal(app.document.querySelector('dialog.registration-dialog'),null);
- console.log('Public form DOM checks passed: FR/EN CTA, required fields, optional CV, size errors, confirmation and dialog closure.');
+ console.log('Public form DOM checks passed: FR/EN CTA, required fields, required CV, size errors, confirmation and dialog closure.');
 })().catch(error=>{console.error(error);process.exit(1)});

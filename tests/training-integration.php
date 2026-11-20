@@ -67,6 +67,13 @@ try {
     $rejected = false;
     try { ari_training_public_fields($bad); } catch (InvalidArgumentException $e) { $rejected = true; }
     check($rejected, 'Array injection refused');
+    foreach ([null,['error'=>UPLOAD_ERR_NO_FILE]] as $missingCV) {
+        $rejected = false;
+        try { ari_training_require_cv($missingCV); } catch (InvalidArgumentException $e) { $rejected = true; }
+        check($rejected, 'Public registration refuses a missing CV');
+    }
+    check(ari_training_require_cv(['error'=>UPLOAD_ERR_OK,'tmp_name'=>'test-upload'])['error'] === UPLOAD_ERR_OK,
+        'Present CV is passed to the existing PDF validator');
     echo "PHP Supabase client and public form checks passed.\n";
 } finally {
     foreach (glob(ARI_PRIVATE_DIR . '/*') ?: [] as $file) { unlink($file); }

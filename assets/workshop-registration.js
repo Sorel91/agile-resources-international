@@ -36,12 +36,12 @@
         <label>${t("Pays de résidence *", "Country of residence *")}<input name="residence_country" autocomplete="country-name" maxlength="100" required></label>
         <label class="registration-wide">${t("Domaine d’éducation / de formation *", "Field of education / study *")}
           <input name="education_domain" maxlength="180" placeholder="${t("Ex. : finance, ingénierie, ressources humaines…", "E.g. finance, engineering, human resources…")}" required></label>
-        <label class="registration-wide">${t("Déposer mon CV (facultatif)", "Upload my CV (optional)")}
-          <input type="file" name="cv" accept=".pdf,application/pdf" aria-describedby="registration-cv-help">
+        <label class="registration-wide">${t("Déposer mon CV *", "Upload my CV *")}
+          <input type="file" name="cv" accept=".pdf,application/pdf" aria-describedby="registration-cv-help" required>
           <small id="registration-cv-help">${t("PDF uniquement · 5 Mo maximum.", "PDF only · maximum 5 MB.")}</small></label>
       </div>
       <label class="registration-consent"><input type="checkbox" name="consent" value="1" required>
-        <span>${t("J’accepte que mes informations et mon CV éventuel soient utilisés par Agile Resources pour gérer mon inscription et l’organisation de cette formation.", "I agree that Agile Resources may use my details and optional CV to manage my registration and organise this workshop.")}</span></label>
+        <span>${t("J’accepte que mes informations et mon CV soient utilisés par Agile Resources pour gérer mon inscription et l’organisation de cette formation.", "I agree that Agile Resources may use my details and CV to manage my registration and organise this workshop.")}</span></label>
       <p class="registration-privacy">${t("Vos informations ne sont pas publiées sur le site. Pour toute question : ", "Your details are not published on the website. Questions: ")}<a href="mailto:contact@agileresources-intl.com">contact@agileresources-intl.com</a>.</p>
       <button class="button registration-submit" type="submit" disabled>${t("Valider mon inscription gratuite", "Submit my free registration")}</button>
     </form>
@@ -106,6 +106,9 @@
     event.preventDefault();
     if (busy || submitted || !loaded || !form.reportValidity()) return;
     const file = form.elements.cv.files?.[0];
+    if (!file) {
+      showError(t("Veuillez joindre votre CV au format PDF.", "Please attach your CV as a PDF.")); return;
+    }
     if (file && (file.size > 5 * 1024 * 1024 || !/\.pdf$/i.test(file.name))) {
       showError(t("Le CV doit être un PDF de 5 Mo maximum.", "Your CV must be a PDF no larger than 5 MB.")); return;
     }
