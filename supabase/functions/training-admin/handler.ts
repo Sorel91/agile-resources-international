@@ -2,7 +2,7 @@ type Options = { url: string; secret: string; fetch?: typeof fetch; now?: () => 
 class Failure extends Error { status: number; constructor(status: number, message: string) { super(message); this.status = status; } }
 const encoder = new TextEncoder();
 const hex = (bytes: ArrayBuffer) => Array.from(new Uint8Array(bytes), x => x.toString(16).padStart(2, "0")).join("");
-const statusValues = ["pending", "confirmed", "cancelled"];
+const statusValues = ["pending", "confirmed", "cancelled", "waitlist"];
 const topics = ["network", "profile", "interview"];
 function text(x: unknown, max: number): string {
   if (typeof x !== "string" || x.length > max) throw new Failure(400, "Valeur invalide.");
@@ -157,7 +157,8 @@ export function createHandler(options: Options): (req: Request) => Promise<Respo
           if (!statusValues.includes(status)) throw new Failure(400, "Statut invalide.");
           const row = await one(input.id);
           await api("/rest/v1/ari_training_registrations?id=eq." + row.id + "&event_id=eq.1", "PATCH", { status });
-          data = { ok: true }; break;
+          data = { ok: true, notify: row.status !== status && (status === "waitlist" || (row.status === "waitlist" && status === "confirmed")),
+            status, email: row.email, full_name: row.full_name }; break;
         }
         case "cv": {
           const row = await one(input.id);
@@ -205,7 +206,7 @@ export function createHandler(options: Options): (req: Request) => Promise<Respo
               event_id: 1, full_name: name, first_name: firstName, last_name: lastName, city, residence_country: country, education_domain: education, email, phone, situation, topics_json: [...new Set(input.topics)],
               status: "pending", cv_file: cv, consent_version: consent
             }, { Prefer: "return=representation" });
-            data = { id: rows[0].id };
+            data = { id: rows[0].id, status: rows[0].status };
           } catch (e) { if (cv) await removeCV(cv); throw e; }
           break;
         }

@@ -2,6 +2,7 @@
 declare(strict_types=1);
 require __DIR__ . '/bootstrap.php';
 require __DIR__ . '/training-store.php';
+require __DIR__ . '/training-notifications.php';
 
 header('Cache-Control: no-store, private');
 header('X-Content-Type-Options: nosniff');
@@ -14,7 +15,7 @@ if (!ari_is_authenticated()) {
     header('Location: /admin/', true, 303);
     exit;
 }
-$labels = ['confirmed' => 'Confirmé', 'pending' => 'À traiter', 'cancelled' => 'Annulé'];
+$labels = ['confirmed' => 'Confirmé', 'pending' => 'À traiter', 'cancelled' => 'Annulé', 'waitlist' => 'Liste d’attente'];
 $error = '';
 $notice = (string)($_SESSION['training_notice'] ?? '');
 unset($_SESSION['training_notice']);
@@ -53,8 +54,12 @@ try {
                 $id = filter_var($_POST['id'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
                 if ($id === false) { throw new InvalidArgumentException('Inscription invalide.'); }
                 if ($action === 'status') {
-                    ari_training_set_status($db, $id, (string)($_POST['new_status'] ?? ''));
+                    $result = ari_training_set_status($db, $id, (string)($_POST['new_status'] ?? ''));
                     $_SESSION['training_notice'] = 'Statut mis à jour.';
+                    if (!empty($result['notify'])) {
+                        $sent = ari_training_status_email((string)$result['email'], (string)$result['full_name'], (string)$result['status']);
+                        $_SESSION['training_notice'] .= $sent ? ' Notification envoyée par e-mail.' : ' L’e-mail n’a pas pu être envoyé : contactez la personne directement.';
+                    }
                 } else {
                     if (($_POST['confirm_delete'] ?? '') !== 'yes') {
                         throw new InvalidArgumentException('Cochez la confirmation pour supprimer l’inscription et son CV.');
@@ -116,7 +121,7 @@ try {
 
 $event = null;
 $rows = [];
-$counts = ['confirmed' => 0, 'pending' => 0, 'cancelled' => 0];
+$counts = ['confirmed' => 0, 'pending' => 0, 'cancelled' => 0, 'waitlist' => 0];
 if ($db && $configured && $error === '') {
     try {
         $summary = $db->request(['action' => 'summary']);
@@ -143,7 +148,7 @@ $e = 'ari_escape';
 <main class="shell">
 <div class="intro"><div><h1>Formation gratuite</h1><p>Les participants, leurs coordonnées et leurs CV au même endroit.</p></div>
 <?php if ($event): ?><a class="button secondary" href="?<?= $e(http_build_query(['export' => 'csv', 'q' => $search, 'status' => $status])) ?>">Exporter pour Excel (CSV)</a><?php endif; ?></div>
-<p class="help">Les inscriptions du formulaire d’accueil sont enregistrées ici. La mention publique « 30 places » est informative ; les statuts sont gérés manuellement.</p>
+<p class="help">Les inscriptions du formulaire d’accueil sont enregistrées ici. À partir de la 36e candidature, les nouvelles inscriptions passent automatiquement en liste d’attente.</p>
 <?php if ($notice): ?><p class="notice" role="status"><?= $e($notice) ?></p><?php endif; ?>
 <?php if ($error): ?><p class="notice error" role="alert"><?= $e($error) ?></p><?php endif; ?>
 
@@ -165,9 +170,10 @@ $e = 'ari_escape';
 <?php foreach (['pending' => 'À confirmer', 'single' => 'Une formation avec les trois thèmes', 'workshops' => 'Des ateliers au choix'] as $key => $label): ?><option value="<?= $key ?>" <?= $event['format_mode'] === $key ? 'selected' : '' ?>><?= $e($label) ?></option><?php endforeach; ?>
 </select></p></div>
 <ul><?php foreach (ari_training_topics() as $topic): ?><li><?= $e($topic) ?></li><?php endforeach; ?></ul>
-<p>La mention publique « 30 places » ne limite ni les inscriptions ni les confirmations.</p>
+<p>Les 35 premières candidatures sont à traiter. Les suivantes sont placées en liste d’attente. Les confirmations sont gérées manuellement.</p>
 <button class="button">Enregistrer les informations</button></form></details>
 
+<p class="notice"><strong><?= (int)$counts['waitlist'] ?></strong> candidature(s) sur liste d’attente.</p>
 <section class="panel"><h2>Participants</h2>
 <form method="get" class="training-filters">
 <p class="field"><label for="q">Rechercher un nom, un e-mail, une ville ou un domaine</label><input id="q" name="q" value="<?= $e($search) ?>" maxlength="160"></p>
@@ -190,7 +196,7 @@ $e = 'ari_escape';
 <form method="post"><input type="hidden" name="action" value="delete"><input type="hidden" name="id" value="<?= (int)$row['id'] ?>"><input type="hidden" name="csrf" value="<?= $e(ari_csrf_token()) ?>">
 <label><input type="checkbox" name="confirm_delete" value="yes" required> Supprimer définitivement cette inscription et son CV.</label><button class="button">Supprimer</button></form></details>
 </td></tr><?php endforeach; ?></tbody></table></div><?php endif; ?>
-<p class="muted">Les statuts « À traiter », « Confirmé » et « Annulé » sont gérés manuellement. Aucun quota ni classement automatique n’est appliqué.</p>
+<p class="muted">Les personnes sur liste d’attente sont prévenues à l’écran et par e-mail. Confirmez manuellement une candidature lorsqu’une place se libère ; un e-mail est alors envoyé.</p>
 </section>
 <?php endif; ?>
 </main></body></html>

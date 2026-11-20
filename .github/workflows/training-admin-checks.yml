@@ -18,6 +18,18 @@ permissions:
 jobs:
   php-supabase:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: disposable-test
+          POSTGRES_DB: ari_waitlist_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -26,7 +38,7 @@ jobs:
       - name: Install PHP
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y php-cli php-curl
+          sudo apt-get install -y php-cli php-curl postgresql-client
       - name: Check PHP syntax
         run: |
           php -l admin/bootstrap.php
@@ -35,6 +47,7 @@ jobs:
           php -l training-public-key.php
           php -l training-registration.php
           php -l admin/training-public.php
+          php -l admin/training-notifications.php
           php -l admin/training-store.php
           php -l admin/formations.php
           php -l tests/training-integration.php
@@ -43,11 +56,15 @@ jobs:
       - name: Check public JavaScript
         run: |
           node --check assets/site.js
-          node --check assets/workshop-registration-v2.js
+          node --check assets/workshop-registration-v3.js
       - name: Test public registration interactions
         run: |
           npm ci --prefix tests --ignore-scripts
           node tests/training-form-dom.cjs
+      - name: Test database waiting-list threshold
+        env:
+          PGPASSWORD: disposable-test
+        run: psql -h 127.0.0.1 -U postgres -d ari_waitlist_test -f tests/training-waitlist.sql
       - name: Test Supabase handler
         run: node --experimental-strip-types tests/training-supabase.mts
       - name: Test unauthenticated access

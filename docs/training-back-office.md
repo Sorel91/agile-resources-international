@@ -21,8 +21,8 @@ Le formulaire public de l’accueil est connecté à /training-registration.php.
 
 ## Fonctions
 Liste et recherche, filtres, statuts manuels À traiter / Confirmé / Annulé, CV, suppression et CSV UTF-8 pour Excel.
-Les listes et exports récupèrent toutes les pages de 500 lignes, sans plafond de participants.
-La mention « 30 places » est informative. Aucune liste d'attente automatique.
+Les listes et exports récupèrent toutes les pages de 500 lignes, sans blocage des candidatures.
+La mention « 30 places » reste publique. À partir de la 36e candidature, le statut initial est automatiquement « Liste d’attente ».
 Date initiale 21 novembre 2026 ; heure d'Abidjan, durée, lieu, thèmes et organisation restent à confirmer/modifier.
 
 ## Authentification et déploiement
@@ -48,7 +48,7 @@ Les champs supplémentaires sont conservés en base, affichés dans l’administ
 Le serveur impose un jeton anti-CSRF avec session distincte de l’admin, un contrôle d’origine, un champ anti-robot,
 un délai minimum et des limites de tentatives par session et par empreinte IP. L’IP brute n’est pas conservée en base.
 La limite IP est partagée entre instances et laisse passer les inscriptions d’un groupe utilisant le même réseau.
-La mention « 30 places disponibles uniquement » reste informative, conformément au cadrage, sans plafond en base.
+La mention « 30 places disponibles uniquement » reste informative, conformément au cadrage, avec mise en liste d’attente dès la 36e candidature.
 L’accusé de réception est affiché à l’écran ; aucun e-mail automatique n’est envoyé.
 
 ## Exploitation
@@ -60,3 +60,14 @@ Aucun mécanisme de maintien artificiel en activité ni abonnement payant n'est 
 Le commit avant la bascule conserve l'ancien back-office MySQL.
 Revenir au code précédent n'efface pas la base Supabase et ne rétablit pas à lui seul une base MySQL.
 La suppression des données est une opération distincte.
+
+## Liste d’attente à partir de la 36e candidature
+Le compteur total de candidatures est incrémenté atomiquement sur la ligne de session, dans la transaction d’insertion.
+Une candidature échouée ou un doublon ne consomme pas de rang. Les annulations et suppressions ne réinitialisent pas le compteur.
+Les 35 premières sont À traiter ; les suivantes sont sur Liste d’attente. Aucune candidature n’est refusée.
+Les dossiers existants ne sont pas reclassés rétroactivement.
+La réponse publique contient le statut attribué ; le message à l’écran indique explicitement la liste d’attente.
+Un e-mail texte est transmis par PHP mail sur Hostinger aux personnes mises en attente, sans CV joint.
+La confirmation manuelle d’une candidature précédemment en attente déclenche un e-mail de confirmation.
+Le code contrôle le résultat de remise au serveur mail ; la réception en boîte ne peut pas être garantie ni vérifiée par cette remise.
+Les essais automatisés utilisent un transport mail simulé : aucun e-mail de test n’est envoyé à de vrais candidats.

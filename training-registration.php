@@ -21,6 +21,7 @@ session_start();
 require __DIR__ . '/admin/bootstrap.php';
 require __DIR__ . '/admin/training-store.php';
 require __DIR__ . '/admin/training-public.php';
+require __DIR__ . '/admin/training-notifications.php';
 $lang = (($_POST['lang'] ?? $_GET['lang'] ?? '') === 'en') ? 'en' : 'fr';
 $en = $lang === 'en';
 
@@ -70,9 +71,17 @@ try {
     if (($rate['allowed'] ?? false) !== true) {
         reply(429, ['message'=>$en ? 'Too many attempts. Please try again later.' : 'Trop de tentatives. Réessayez un peu plus tard.']);
     }
-    ari_training_register($store, $fields, 'training-registration-2026-11-20-v2', $upload);
+    $registration = ari_training_register($store, $fields, 'training-registration-2026-11-20-v2', $upload);
+    if ($registration['status'] === 'waitlist') {
+        $sent = ari_training_status_email($fields['email'], $fields['first_name'] . ' ' . $fields['last_name'], 'waitlist', $lang);
+        if (!$sent) { error_log('ARI waiting list notification could not be handed to mail transport.'); }
+        $_SESSION['training_csrf'] = bin2hex(random_bytes(32));
+        reply(200, ['ok'=>true,'status'=>'waitlist','message'=>$en
+            ? 'Your registration has been received. You are on the waiting list. We will contact you if a place becomes available.'
+            : 'Votre candidature a bien été reçue. Vous êtes sur liste d’attente. Nous vous recontacterons si une place se libère.']);
+    }
     $_SESSION['training_csrf'] = bin2hex(random_bytes(32));
-    reply(200, ['ok'=>true,'message'=>$en
+    reply(200, ['ok'=>true,'status'=>'pending','message'=>$en
         ? 'Your registration has been received. The team will contact you by email with the practical details.'
         : 'Votre inscription a bien été reçue. L’équipe vous communiquera les informations pratiques par e-mail.']);
 } catch (InvalidArgumentException $e) {

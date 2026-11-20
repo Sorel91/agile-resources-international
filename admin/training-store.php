@@ -56,11 +56,11 @@ function ari_training_topics(): array {
     ];
 }
 
-function ari_training_set_status(AriTrainingStore $store, int $id, string $status): void {
-    if ($id < 1 || !in_array($status, ['pending', 'confirmed', 'cancelled'], true)) {
+function ari_training_set_status(AriTrainingStore $store, int $id, string $status): array {
+    if ($id < 1 || !in_array($status, ['pending', 'confirmed', 'cancelled', 'waitlist'], true)) {
         throw new InvalidArgumentException('Statut ou inscription invalide.');
     }
-    $store->request(['action' => 'status', 'id' => $id, 'status' => $status]);
+    return $store->request(['action' => 'status', 'id' => $id, 'status' => $status]);
 }
 
 function ari_training_delete(AriTrainingStore $store, int $id): void {
@@ -102,7 +102,7 @@ function ari_training_upload_data(array $upload): ?string {
     return base64_encode($bytes);
 }
 
-function ari_training_register(AriTrainingStore $store, array $input, string $consentVersion, ?array $upload = null): int {
+function ari_training_register(AriTrainingStore $store, array $input, string $consentVersion, ?array $upload = null): array {
     if (($input['consent'] ?? false) !== true || $consentVersion === '' || strlen($consentVersion) > 64) {
         throw new InvalidArgumentException('Le consentement est requis.');
     }
@@ -120,7 +120,7 @@ function ari_training_register(AriTrainingStore $store, array $input, string $co
         'consent' => true, 'consent_version' => $consentVersion,
         'cv_base64' => $upload === null ? null : ari_training_upload_data($upload),
     ]);
-    return (int)$result['id'];
+    return ['id'=>(int)$result['id'], 'status'=>(string)($result['status'] ?? 'pending')];
 }
 
 function ari_training_cv_bytes(AriTrainingStore $store, int $id): string {

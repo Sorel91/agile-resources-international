@@ -46,7 +46,7 @@ const mock: typeof fetch = async (input: any, options: any) => {
     if(method==="GET") return json(row?[row]:[]);
     if(method==="POST") {
       if(registrations.some(r=>r.email===body.email)) return json({},409);
-      const result={...body,id:nextId++,created_at:"2026-11-20T10:00:00Z",consent_at:"2026-11-20T10:00:00Z"};
+      const result={...body,status:nextId > 35 ? 'waitlist' : 'pending',id:nextId++,created_at:"2026-11-20T10:00:00Z",consent_at:"2026-11-20T10:00:00Z"};
       registrations.push(result); return json([result],201);
     }
     if(method==="PATCH") {if(row) Object.assign(row,body); return new Response(null,{status:204});}
@@ -98,7 +98,7 @@ assert.equal((await call({action:"list",q:"Ingénierie",status:"confirmed",offse
 await call({...base,email:"incomplete@example.invalid",city:""},400);
 await call({...base,email:"bad@example.invalid",consent:false},400);
 await call({...base,email:"bad@example.invalid",topics:["unknown"]},400);
-await call({action:"status",id:1,status:"waitlist"},400);
+await call({action:"status",id:1,status:"unexpected"},400);
 await call({action:"status",id:1,status:"cancelled"});
 assert.equal((await call({action:"summary"})).counts.cancelled,1);
 await call({action:"status",id:1,status:"confirmed"});
@@ -118,4 +118,10 @@ await call({action:"cv",id:record.id},404);
 await call({action:"event",event_date:"2026-11-21",start_time:"09:00",duration_minutes:120,location:"Abidjan",format_mode:"single"});
 assert.equal(event.start_time,"09:00");
 await call({action:"event",event_date:"2026-02-30",start_time:"",duration_minutes:null,location:"",format_mode:"pending"},400);
+while(nextId<=35) await call({...base,email:"fill"+nextId+"@example.invalid"});
+const queued=await call({...base,email:"waiting@example.invalid"});
+assert.equal(queued.status,"waitlist");
+assert.equal((await call({action:"list",q:"waiting@example.invalid",status:"waitlist",offset:0})).length,1);
+const promoted=await call({action:"status",id:queued.id,status:"confirmed"});
+assert.equal(promoted.notify,true);
 console.log("Supabase handler checks passed: signatures, replay, expiry, revocation, CRUD, >30 confirmations, CSV source search, CV isolation/cleanup, session parameters.");

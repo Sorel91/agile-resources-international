@@ -17,7 +17,7 @@ function load(route){
  };
  let posts=0;
  const fetch=async (url,options={})=>{
-   if(options.method==='POST'){posts++;return {ok:true,json:async()=>({ok:true})};}
+   if(options.method==='POST'){posts++;return {ok:true,json:async()=>({ok:true,status:'waitlist',message:'Votre candidature est sur liste d’attente.'})};}
    return {ok:true,json:async()=>({csrf:'test-token',event:{event_date:'2026-11-21',start_time:'',location:''}})};
  };
  class FormData {constructor(form){this.values=Object.fromEntries([...form.querySelectorAll('[name]')].map(x=>[x.name,x.value]));}}
@@ -26,7 +26,7 @@ function load(route){
  const prototype=window.HTMLElement.prototype;
  Object.defineProperty(prototype,'elements',{configurable:true,get(){return Object.fromEntries([...this.querySelectorAll('[name]')].map(x=>[x.name,x]));}});
  prototype.reportValidity=()=>true;
- vm.runInContext(fs.readFileSync(root+'/assets/workshop-registration-v2.js','utf8'),context);
+ vm.runInContext(fs.readFileSync(root+'/assets/workshop-registration-v3.js','utf8'),context);
  const click=s=>{const el=document.querySelector(s);assert(el,s);el.dispatchEvent(new window.Event('click',{bubbles:true}));};
  return {window,document,click,posts:()=>posts};
 }
@@ -56,7 +56,7 @@ function load(route){
  assert(d.querySelector('.registration-feedback').textContent.includes('joindre votre CV'));
  Object.defineProperty(form.elements.cv,'files',{configurable:true,value:[{name:'cv.pdf',size:1000}]});
  form.dispatchEvent(new app.window.Event('submit',{cancelable:true}));await tick();await tick();
- assert.equal(app.posts(),1);assert.equal(form.hidden,true);assert.equal(d.querySelector('.registration-success').hidden,false);
+ assert.equal(app.posts(),1);assert(d.querySelector('.registration-success h3').textContent.includes('liste d’attente'));assert.equal(form.hidden,true);assert.equal(d.querySelector('.registration-success').hidden,false);
  app.click('[data-registration-done]');assert.equal(d.querySelector('dialog').hasAttribute('open'),false);
  app=load('/en');d=app.document;
  assert(d.querySelector('[data-registration-open]').textContent.includes('Register'));
