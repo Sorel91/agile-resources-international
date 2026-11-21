@@ -95,7 +95,7 @@ const home = () => `
   <main>
     <section class="workshop-banner" aria-labelledby="workshop-banner-title">
       <div class="workshop-banner-copy">
-        <p class="workshop-kicker">${isEnglish ? 'Free career workshop' : 'Formation carrière gratuite'} <span aria-hidden="true">·</span> <time datetime="2026-11-21">${isEnglish ? 'Saturday 21 November' : 'Samedi 21 novembre'}</time></p>
+        <p class="workshop-kicker">${isEnglish ? 'Free career workshop' : 'Formation carrière gratuite'} <span aria-hidden="true">·</span> <time datetime="2026-11-28">${isEnglish ? 'Saturday 28 November' : 'Samedi 28 novembre'}</time></p>
         <h2 id="workshop-banner-title">${isEnglish ? 'Prepare for your next opportunity.' : 'Préparez votre prochaine opportunité.'}</h2>
         <ul class="workshop-topics">
           <li>${isEnglish ? 'Build your professional network.' : 'Développer son réseau professionnel.'}</li>

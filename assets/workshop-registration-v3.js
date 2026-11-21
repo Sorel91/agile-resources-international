@@ -12,7 +12,7 @@
       <h2 id="registration-title">${t("Inscription à la formation gratuite", "Register for the free workshop")}</h2></div>
       <button type="button" class="registration-close" aria-label="${t("Fermer le formulaire", "Close registration")}">×</button>
     </div>
-    <p class="registration-date">${t("Samedi 21 novembre 2026", "Saturday 21 November 2026")}</p>
+    <p class="registration-date">${t("Samedi 28 novembre 2026", "Saturday 28 November 2026")}</p>
     <div class="registration-programme"><strong>${t("Au programme", "Programme")}</strong>
       <ul>
         <li>${t("Développer son réseau professionnel.", "Build your professional network.")}</li>
