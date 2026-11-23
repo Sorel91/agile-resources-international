@@ -47,10 +47,11 @@ const header = (path) => `
     <button class="menu-button" type="button" aria-label="${isEnglish ? "Open menu" : "Ouvrir le menu"}" aria-expanded="false" aria-controls="main-navigation">☰</button>
     <nav class="main-nav" id="main-navigation" aria-label="${isEnglish ? "Main navigation" : "Navigation principale"}">
       ${navItems.map(([href, label]) => href === "/a-propos" ? `
-        <details class="about-navigation${[href, '/mot-du-president', '/mot-du-directeur-general'].includes(path) ? ' active' : ''}">
+        <details class="about-navigation${[href, '/mot-du-president', '/mot-du-directeur-general', '/sirexe-2026'].includes(path) ? ' active' : ''}">
           <summary>${label}<span aria-hidden="true">⌄</span></summary>
           <div class="about-submenu">
             <a href="${localPath(href)}"${path === href ? ' aria-current="page"' : ''}>${isEnglish ? 'About ARI' : 'Présentation d’ARI'}</a>
+            <a href="${localPath('/sirexe-2026')}"${path === '/sirexe-2026' ? ' aria-current="page"' : ''}>${isEnglish ? 'ARI at SIREXE 2026' : 'ARI au SIREXE 2026'}</a>
             <a href="${localPath('/mot-du-president')}"${path === '/mot-du-president' ? ' aria-current="page"' : ''}>${isEnglish ? 'A word from the President' : 'Le mot du président'}</a>
             <a href="${localPath('/mot-du-directeur-general')}"${path === '/mot-du-directeur-general' ? ' aria-current="page"' : ''}>${isEnglish ? 'A word from the Managing Director' : 'Le mot du directeur général'}</a>
           </div>
@@ -68,6 +69,7 @@ const footer = () => `
     <div>
       <h4>${isEnglish ? "NAVIGATION" : "NAVIGATION"}</h4>
       ${navItems.filter(([href]) => href !== "/contact").map(([href, label]) => `<a href="${localPath(href)}">${label.toUpperCase()}</a>`).join("\n")}
+      <a href="${localPath('/sirexe-2026')}">${isEnglish ? 'ARI AT SIREXE 2026' : 'ARI AU SIREXE 2026'}</a>
       <a href="${localPath('/mot-du-president')}">${isEnglish ? 'A WORD FROM THE PRESIDENT' : 'LE MOT DU PRÉSIDENT'}</a>
       <a href="${localPath('/mot-du-directeur-general')}">${isEnglish ? 'A WORD FROM THE MANAGING DIRECTOR' : 'LE MOT DU DIRECTEUR GÉNÉRAL'}</a>
     </div>
@@ -121,6 +123,31 @@ const home = () => `
       <img src="${A}mine.webp" alt="Site minier vu du ciel" fetchpriority="high" decoding="async">
     </section>
 
+    <section class="section solutions" id="solutions">
+      <p class="eyebrow">Notre Expertise</p>
+      <h2>Solutions sur mesure</h2>
+      <span class="title-rule"></span>
+      <p>Nous concevons des solutions adaptées à vos enjeux afin d’optimiser la gestion de votre capital humain, de sécuriser la mobilité internationale et de favoriser l’intégration durable de vos collaborateurs.</p>
+      <div class="solution-grid">
+        <article>
+          <div class="card-media"><span><img src="${A}icon-enterprises.png" alt="" loading="lazy"></span><img src="${A}solution-enterprises.webp" alt="Mine et industrie" loading="lazy" decoding="async"></div>
+          <h3>Entreprises</h3>
+          <p>Nous accompagnons les entreprises dans la recherche, la sélection et le recrutement de profils qualifiés, de spécialistes et de dirigeants. Grâce à une approche personnalisée, nous identifions les compétences les plus adaptées à vos objectifs et vous aidons à constituer des équipes performantes, en Côte d’Ivoire, en Afrique de l’Ouest et à l’international.</p>
+        </article>
+        <article>
+          <div class="card-media"><span><img src="${A}icon-candidates.png" alt="" loading="lazy"></span><img src="${A}solution-candidates.webp" alt="Professionnelle préparant sa carrière" loading="lazy" decoding="async"></div>
+          <h3>Candidats</h3>
+          <p>Nous accompagnons les professionnels dans leur évolution en leur donnant accès à des opportunités de carrière correspondant à leurs compétences et à leurs ambitions. De la préparation de leur candidature à leur intégration, nous assurons un suivi personnalisé à chaque étape de leur parcours.</p>
+        </article>
+        <article>
+          <div class="card-media"><span><img src="${A}icon-advice.png" alt="" loading="lazy"></span><img src="${A}solution-advice.webp" alt="Consultants en réunion" loading="lazy" decoding="async"></div>
+          <h3>Conseil</h3>
+          <p>Nous conseillons les entreprises dans leurs projets de recrutement, de mobilité internationale et de développement organisationnel. Notre accompagnement permet de sécuriser vos recrutements, d’optimiser vos processus et de mettre en place des solutions durables favorisant votre croissance.</p>
+        </article>
+      </div>
+    </section>
+    ${window.ARISirexe.home(isEnglish, localPath)}
+
     <section class="section home-leadership" aria-labelledby="home-leadership-title">
       <h2 id="home-leadership-title">${isEnglish ? 'Agile Resources Leadership' : 'La direction d’Agile Resources'}</h2>
       <div class="home-leadership-grid">
@@ -145,29 +172,6 @@ const home = () => `
       </div>
     </section>
 
-    <section class="section solutions" id="solutions">
-      <p class="eyebrow">Notre Expertise</p>
-      <h2>Solutions sur mesure</h2>
-      <span class="title-rule"></span>
-      <p>Nous concevons des solutions adaptées à vos enjeux afin d’optimiser la gestion de votre capital humain, de sécuriser la mobilité internationale et de favoriser l’intégration durable de vos collaborateurs.</p>
-      <div class="solution-grid">
-        <article>
-          <div class="card-media"><span><img src="${A}icon-enterprises.png" alt="" loading="lazy"></span><img src="${A}solution-enterprises.webp" alt="Mine et industrie" loading="lazy" decoding="async"></div>
-          <h3>Entreprises</h3>
-          <p>Nous accompagnons les entreprises dans la recherche, la sélection et le recrutement de profils qualifiés, de spécialistes et de dirigeants. Grâce à une approche personnalisée, nous identifions les compétences les plus adaptées à vos objectifs et vous aidons à constituer des équipes performantes, en Côte d’Ivoire, en Afrique de l’Ouest et à l’international.</p>
-        </article>
-        <article>
-          <div class="card-media"><span><img src="${A}icon-candidates.png" alt="" loading="lazy"></span><img src="${A}solution-candidates.webp" alt="Professionnelle préparant sa carrière" loading="lazy" decoding="async"></div>
-          <h3>Candidats</h3>
-          <p>Nous accompagnons les professionnels dans leur évolution en leur donnant accès à des opportunités de carrière correspondant à leurs compétences et à leurs ambitions. De la préparation de leur candidature à leur intégration, nous assurons un suivi personnalisé à chaque étape de leur parcours.</p>
-        </article>
-        <article>
-          <div class="card-media"><span><img src="${A}icon-advice.png" alt="" loading="lazy"></span><img src="${A}solution-advice.webp" alt="Consultants en réunion" loading="lazy" decoding="async"></div>
-          <h3>Conseil</h3>
-          <p>Nous conseillons les entreprises dans leurs projets de recrutement, de mobilité internationale et de développement organisationnel. Notre accompagnement permet de sécuriser vos recrutements, d’optimiser vos processus et de mettre en place des solutions durables favorisant votre croissance.</p>
-        </article>
-      </div>
-    </section>
     <img class="full-photo" src="${A}team.webp" alt="Équipe en réunion" loading="lazy" decoding="async">
   </main>
   ${cta({title:"Prêt à optimiser vos équipes ?", text:"Contactez nos consultants pour concevoir une stratégie d’embauche adaptée à vos ambitions professionnelles.", button:"Nous contacter"})}`;
@@ -449,7 +453,7 @@ const contact = () => {
   </main>`;
 };
 
-const pages = {"/":home,"/industries":industries,"/entreprises":enterprises,"/candidats":candidates,"/catalogue":catalogue,"/services":services,"/a-propos":about,"/mot-du-president":president,"/mot-du-directeur-general":managingDirector,"/contact":contact};
+const pages = {"/sirexe-2026":() => window.ARISirexe.page(isEnglish, localPath),"/":home,"/industries":industries,"/entreprises":enterprises,"/candidats":candidates,"/catalogue":catalogue,"/services":services,"/a-propos":about,"/mot-du-president":president,"/mot-du-directeur-general":managingDirector,"/contact":contact};
 const path = cleanPath();
 const trainingSlug = path.startsWith('/catalogue/') ? path.slice('/catalogue/'.length) : null;
 const trainingCourse = (window.ARI_TRAINING_COURSES || []).find(course => course.id === trainingSlug);
@@ -555,6 +559,7 @@ Object.entries(pageImageSlots[path] || {}).forEach(([selector, slot]) => {
 });
 
 window.ARITraining?.init(isEnglish);
+window.ARISirexe.init(isEnglish, path);
 
 const menuButton = document.querySelector(".menu-button");
 const nav = document.querySelector(".main-nav");
