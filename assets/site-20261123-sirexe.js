@@ -104,6 +104,9 @@ const home = () => `
           <li>${isEnglish ? 'Strengthen your CV, LinkedIn profile and pitch.' : 'Valoriser son CV, son profil LinkedIn et son pitch.'}</li>
           <li>${isEnglish ? 'Prepare for and succeed in job interviews.' : 'Préparer et réussir son entretien d’embauche.'}</li>
         </ul>
+        <p class="workshop-location">${isEnglish
+          ? '<strong>Time:</strong> 10:00 a.m. to 2:00 p.m. (Abidjan time)<br><strong>Venue:</strong> <a href="https://ipce-partners.com/" target="_blank" rel="noopener noreferrer">IPCE</a> — Cocody Cité des Arts, Lot 10A – Villa 174 – Rue C30, Impasse des Tapissiers, Abidjan, 01 BP 1203, Côte d’Ivoire.'
+          : '<strong>Horaires :</strong> De 10 h à 14 h (heure d’Abidjan)<br><strong>Lieu :</strong> <a href="https://ipce-partners.com/" target="_blank" rel="noopener noreferrer">IPCE</a> — Cocody Cité des Arts, Lot 10A – Villa 174 – Rue C30, Impasse des Tapissiers, Abidjan, 01 BP 1203, Abidjan, CI.'}</p>
       </div>
       <div class="workshop-banner-action">
         <span class="workshop-places">${isEnglish ? 'Only 30 places available' : '30 places disponibles uniquement'}</span>

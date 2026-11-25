@@ -20,7 +20,8 @@
         <li>${t("Préparer et réussir son entretien d’embauche.", "Prepare for and succeed in job interviews.")}</li>
       </ul>
     </div>
-    <p class="registration-practical">${t("Les horaires et le lieu seront communiqués aux personnes inscrites.", "The time and venue will be shared with registered participants.")}</p>
+    <p class="registration-practical">${t("De 10 h à 14 h (heure d’Abidjan).", "10:00 a.m. to 2:00 p.m. (Abidjan time).")}<br>
+      ${t("Lieu : ", "Venue: ")}<a href="https://ipce-partners.com/" target="_blank" rel="noopener noreferrer">IPCE</a> — ${t("Cocody Cité des Arts, Lot 10A – Villa 174 – Rue C30, Impasse des Tapissiers, Abidjan, 01 BP 1203, Abidjan, CI.", "Cocody Cité des Arts, Lot 10A – Villa 174 – Rue C30, Impasse des Tapissiers, Abidjan, 01 BP 1203, Abidjan, Côte d’Ivoire.")}</p>
     <p class="registration-loading" role="status">${t("Préparation du formulaire…", "Preparing the form…")}</p>
     <div class="registration-feedback" role="alert" hidden></div>
     <button class="registration-retry" type="button" hidden>${t("Réessayer", "Try again")}</button>
@@ -75,11 +76,6 @@
         const date = new Date(event.event_date + "T12:00:00Z");
         dialog.querySelector(".registration-date").textContent = new Intl.DateTimeFormat(en ? "en-GB" : "fr-FR", { dateStyle: "full", timeZone: "Africa/Abidjan" }).format(date);
       }
-      const details = [];
-      if (event.start_time) details.push(event.start_time + t(" (heure d’Abidjan)", " (Abidjan time)"));
-      if (event.duration_minutes) details.push(event.duration_minutes + " min");
-      if (event.location) details.push(event.location);
-      if (details.length) dialog.querySelector(".registration-practical").textContent = details.join(" · ");
       loaded = true; submit.disabled = false;
     } catch (error) {
       showError(error.message || t("Impossible de charger le formulaire. Réessayez.", "Unable to load registration. Please try again."));

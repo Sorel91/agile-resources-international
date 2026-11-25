@@ -7,7 +7,7 @@
 .workshop-banner-action{display:grid;justify-items:center;gap:12px}
 .workshop-places{display:inline-block;border:1px solid #b79b5d;color:#62490d;border-radius:30px;padding:7px 14px;font:700 .875rem Arial,sans-serif}
 .workshop-banner .button{font-family:Arial,sans-serif;font-size:1rem;font-weight:700;padding:16px 24px;min-height:48px}
-.workshop-small{font-size:.875rem;color:#47546d}
+.workshop-small{font-size:.875rem;color:#47546d}.workshop-location{margin:12px 0 0;color:#39445b;font:400 .875rem/1.5 Arial,sans-serif}.workshop-location strong{color:#1d3063}.workshop-location a{color:#1d3063;font-weight:700;text-underline-offset:2px}
 body.registration-open{overflow:hidden}
 .registration-dialog{width:min(720px,calc(100% - 28px));max-height:calc(100dvh - 36px);padding:32px;border:0;border-radius:18px;color:#27334c;background:#fff;box-shadow:0 30px 100px #111b3855;overflow:auto;font-family:Arial,sans-serif}
 .registration-dialog::backdrop{background:rgba(14,25,51,.72)}
