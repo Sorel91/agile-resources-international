@@ -43,3 +43,9 @@ body.registration-open{overflow:hidden}
 .registration-dialog :focus-visible{outline:3px solid #aa7c18;outline-offset:3px}
 @media(max-width:1440px){.workshop-banner{margin-left:24px;margin-right:24px}}
 @media(max-width:650px){.workshop-banner{margin:14px 16px 0;padding:20px;grid-template-columns:1fr;gap:18px;border-radius:12px}.workshop-banner h2{font-size:1.5rem}.workshop-kicker{font-size:.875rem;line-height:1.5}.workshop-topics{font-size:.9375rem}.workshop-banner-action{justify-items:start;gap:10px}.workshop-banner .button{width:100%}.workshop-small{display:none}.registration-dialog{padding:22px 18px;max-height:calc(100dvh - 20px)}.registration-heading h2{font-size:1.35rem}.registration-grid{grid-template-columns:1fr}.registration-wide{grid-column:auto}}
+
+/* Explicit access to the training venue map. */
+.workshop-location a.workshop-map-link,.registration-practical a.workshop-map-link{display:inline-flex;align-items:center;gap:8px;max-width:100%;min-height:44px;margin-top:10px;padding:10px 14px;border:1px solid #1d3063;border-radius:8px;background:#fff;color:#1d3063;font:700 .875rem/1.4 Arial,sans-serif;text-decoration:none}
+.workshop-location a.workshop-map-link:hover,.registration-practical a.workshop-map-link:hover{background:#e4e9f3}
+.workshop-map-link:focus-visible{outline:3px solid #aa7c18;outline-offset:3px}
+.workshop-map-link svg{flex-shrink:0}
