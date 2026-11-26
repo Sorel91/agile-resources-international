@@ -105,8 +105,8 @@ const home = () => `
           <li>${isEnglish ? 'Prepare for and succeed in job interviews.' : 'Préparer et réussir son entretien d’embauche.'}</li>
         </ul>
         <p class="workshop-location">${isEnglish
-          ? '<strong>Time:</strong> 10:00 a.m. to 2:00 p.m. (Abidjan time)<br><strong>Venue:</strong> <a href="https://ipce-partners.com/" target="_blank" rel="noopener noreferrer">IPCE</a> — Cocody Cité des Arts, Lot 10A – Villa 174 – Rue C30, Impasse des Tapissiers, Abidjan, 01 BP 1203, Côte d’Ivoire.'
-          : '<strong>Horaires :</strong> De 10 h à 14 h (heure d’Abidjan)<br><strong>Lieu :</strong> <a href="https://ipce-partners.com/" target="_blank" rel="noopener noreferrer">IPCE</a> — Cocody Cité des Arts, Lot 10A – Villa 174 – Rue C30, Impasse des Tapissiers, Abidjan, 01 BP 1203, Abidjan, CI.'}</p>
+          ? '<strong>Time:</strong> 10:00 a.m. to 2:00 p.m. (Abidjan time)<br><strong>Venue:</strong> <a href="https://www.google.com/maps/search/?api=1&amp;query=IPCE%2C%20Cocody%20Cit%C3%A9%20des%20Arts%2C%20Lot%2010A%2C%20Villa%20174%2C%20Rue%20C30%2C%20Impasse%20des%20Tapissiers%2C%20Abidjan%2C%20C%C3%B4te%20d%E2%80%99Ivoire" target="_blank" rel="noopener noreferrer">IPCE</a> — Cocody Cité des Arts, Lot 10A – Villa 174 – Rue C30, Impasse des Tapissiers, Abidjan, 01 BP 1203, Côte d’Ivoire.'
+          : '<strong>Horaires :</strong> De 10 h à 14 h (heure d’Abidjan)<br><strong>Lieu :</strong> <a href="https://www.google.com/maps/search/?api=1&amp;query=IPCE%2C%20Cocody%20Cit%C3%A9%20des%20Arts%2C%20Lot%2010A%2C%20Villa%20174%2C%20Rue%20C30%2C%20Impasse%20des%20Tapissiers%2C%20Abidjan%2C%20C%C3%B4te%20d%E2%80%99Ivoire" target="_blank" rel="noopener noreferrer">IPCE</a> — Cocody Cité des Arts, Lot 10A – Villa 174 – Rue C30, Impasse des Tapissiers, Abidjan, 01 BP 1203, Abidjan, CI.'}</p>
       </div>
       <div class="workshop-banner-action">
         <span class="workshop-places">${isEnglish ? 'Only 30 places available' : '30 places disponibles uniquement'}</span>
