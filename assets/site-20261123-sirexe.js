@@ -471,7 +471,6 @@ const expertNetwork = () => `
           <img class="expert-card-photo" src="${A}beydi-sangare-expert.webp" alt="${isEnglish ? 'Professional portrait of Beydi Sangaré' : 'Portrait professionnel de Beydi Sangaré'}" width="1254" height="1254" fetchpriority="high">
         </div>
         <div class="expert-card-content">
-          <p class="eyebrow">${isEnglish ? 'Artificial Intelligence & Digital Transformation' : 'Intelligence artificielle & transformation digitale'}</p>
           <h2 id="beydi-name">Beydi Sangaré</h2>
           <p class="expert-role">${isEnglish ? 'AI Expert' : 'Expert en intelligence artificielle'}</p>
           <p>${isEnglish ? 'Beydi supports organisations in AI and Data projects, including a multilingual HR and IT assistant and an AI agent for internal process analysis developed at Eramet.' : 'Beydi accompagne les organisations dans leurs projets IA et Data. Chez Eramet, il a contribué à un assistant RH et IT multilingue et à un agent IA d’analyse des processus internes.'}</p>
