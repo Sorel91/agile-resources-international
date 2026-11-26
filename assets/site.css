@@ -282,3 +282,37 @@ html,body{max-width:100%;overflow-x:clip}
 
 /* Garde le menu sur une ligne près du seuil mobile. */
 @media(min-width:1101px) and (max-width:1250px){.site-header{gap:12px}.header-logo img{width:205px}.main-nav{gap:12px}}
+
+/* Réseau d’experts */
+.expert-network-page{max-width:1320px;margin:0 auto;padding:clamp(42px,7vw,88px) 5vw 72px}
+.expert-network-heading{max-width:850px;margin:0 auto 42px;text-align:center}
+.expert-network-heading h1{font-size:clamp(2.8rem,5vw,4.6rem);margin:12px 0 18px}
+.expert-network-heading>p:last-child{max-width:760px;margin:0 auto;font-size:19px}
+.expert-profile{display:grid;grid-template-columns:minmax(260px, .82fr) minmax(0,1.4fr);gap:clamp(28px,5vw,66px);align-items:start;padding:clamp(22px,4vw,48px);background:var(--mist);border-radius:22px}
+.expert-profile-photo-wrap{position:sticky;top:110px;overflow:hidden;border-radius:16px;background:#e5e7ec}
+.expert-profile-photo{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center 24%}
+.expert-profile-content .eyebrow{margin:0 0 8px;font-size:16px}
+.expert-profile-content h2{font-size:clamp(2.2rem,4vw,3.5rem);margin:0 0 6px}
+.expert-profile-content>p{margin:14px 0;font-size:17px}
+.expert-profile-content .expert-role{margin:0 0 18px;color:#73531a;font-weight:700;font-size:19px}
+.expert-profile-content h3{font-size:1.35rem;margin:24px 0 10px}
+.expertise-list{list-style:none;margin:0 0 26px;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.expertise-list li{position:relative;padding:13px 14px 13px 36px;border-radius:10px;background:#fff;line-height:1.4}
+.expertise-list li:before{content:"✓";position:absolute;left:14px;color:var(--gold);font-weight:800}
+.expert-network-preview{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(220px,.65fr);gap:32px;align-items:center;padding-top:54px;padding-bottom:54px}
+.expert-preview-copy{max-width:740px}
+.expert-preview-copy .eyebrow{margin:0 0 10px}
+.expert-preview-copy h2{font-size:clamp(2.5rem,4vw,3.6rem);margin:0 0 14px}
+.expert-preview-copy p:not(.eyebrow){max-width:670px;margin:0 0 22px}
+.expert-preview-photo-link{display:block;max-width:320px;justify-self:center;overflow:hidden;border-radius:18px}
+.expert-preview-photo-link img{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center 24%}
+@media(max-width:760px){
+  .expert-network-page{padding:34px 20px 52px}
+  .expert-network-heading{margin-bottom:26px}
+  .expert-network-heading>p:last-child{font-size:17px}
+  .expert-profile{grid-template-columns:1fr;padding:20px;gap:24px}
+  .expert-profile-photo-wrap{position:static;max-width:360px;margin:0 auto}
+  .expertise-list{grid-template-columns:1fr}
+  .expert-network-preview{grid-template-columns:1fr;gap:22px;padding-top:38px;padding-bottom:40px}
+  .expert-preview-photo-link{width:min(100%,270px);justify-self:start}
+}
