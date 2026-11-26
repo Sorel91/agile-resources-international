@@ -312,3 +312,17 @@ html,body{max-width:100%;overflow-x:clip}
   .expert-card-photo-wrap,.expert-card-placeholder{height:250px}
   .expert-card-content{padding:22px}
 }
+
+/* Détail extensible des profils d’experts. */
+.expert-card-details{margin-top:20px;border-top:1px solid rgba(29,48,99,.18);padding-top:15px}
+.expert-card-details summary{display:inline-flex;align-items:center;gap:10px;cursor:pointer;color:var(--navy);font-weight:700;font-size:16px;list-style:none;text-decoration:underline;text-underline-offset:4px}
+.expert-card-details summary::-webkit-details-marker{display:none}
+.expert-card-details summary:after{content:"+";display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;font:400 18px/1 Arial,sans-serif;text-decoration:none}
+.expert-card-details[open] summary:after{content:"−"}
+.expert-card-details summary:focus-visible{outline:3px solid var(--gold);outline-offset:4px;border-radius:3px}
+.expert-card-detail-content{padding-top:12px}
+.expert-card-detail-content p{margin:10px 0;font-size:15.5px;line-height:1.55}
+.expert-card-detail-content h3{margin:18px 0 10px;font-size:1.15rem}
+.expert-card-detail-list{display:grid;grid-template-columns:1fr;gap:7px;margin:0;padding-left:20px}
+.expert-card-detail-list li{padding-left:3px;font-size:15px;line-height:1.45}
+.expert-card-contact{display:inline-flex;gap:8px;margin-top:16px;color:var(--navy);font-weight:700;text-underline-offset:4px}

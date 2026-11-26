@@ -474,13 +474,29 @@ const expertNetwork = () => `
           <p class="eyebrow">${isEnglish ? 'Artificial Intelligence & Digital Transformation' : 'Intelligence artificielle & transformation digitale'}</p>
           <h2 id="beydi-name">Beydi Sangaré</h2>
           <p class="expert-role">${isEnglish ? 'AI Expert' : 'Expert en intelligence artificielle'}</p>
-          <p>${isEnglish ? 'Manager and Télécom SudParis graduate, a leading French engineering school, Beydi supports organisations in AI and Data projects. At Eramet, he contributed to a multilingual HR and IT assistant and an AI agent for internal process analysis.' : 'Manager et diplômé de Télécom SudParis, grande école française d’ingénieurs, Beydi accompagne les organisations dans leurs projets IA et Data. Chez Eramet, il a contribué à un assistant RH et IT multilingue ainsi qu’à un agent IA d’analyse des processus internes.'}</p>
+          <p>${isEnglish ? 'Beydi supports organisations in AI and Data projects, including a multilingual HR and IT assistant and an AI agent for internal process analysis developed at Eramet.' : 'Beydi accompagne les organisations dans leurs projets IA et Data. Chez Eramet, il a contribué à un assistant RH et IT multilingue et à un agent IA d’analyse des processus internes.'}</p>
           <ul class="expertise-tags">
             <li>${isEnglish ? 'AI for HR' : 'IA RH'}</li>
             <li>${isEnglish ? 'AI agents' : 'Agents IA'}</li>
             <li>${isEnglish ? 'AI architecture' : 'Architecture IA'}</li>
             <li>${isEnglish ? 'Mining, energy & industry' : 'Mines, énergie & industrie'}</li>
           </ul>
+          <details class="expert-card-details">
+            <summary>${isEnglish ? 'View full profile' : 'Voir le profil complet'}</summary>
+            <div class="expert-card-detail-content">
+              <p>${isEnglish ? 'Manager and graduate of Télécom SudParis, a leading French engineering school, Beydi has over ten years of experience in digital, Data and AI programmes. He helps organisations frame AI initiatives, assess use cases and lead the design of practical solutions.' : 'Manager et diplômé de Télécom SudParis, grande école française d’ingénieurs, Beydi possède plus de dix ans d’expérience dans les programmes digitaux, Data et IA. Il accompagne les organisations dans le cadrage de leurs initiatives IA, l’évaluation des cas d’usage et la conception de solutions concrètes.'}</p>
+              <p>${isEnglish ? 'At Eramet, he contributed to a multilingual HR and IT assistant that helps employees access information, and an AI agent for analysing internal processes. His experience also covers AI architecture, documentary assistants, Data projects and information systems transformation.' : 'Chez Eramet, il a contribué à un assistant RH et IT multilingue facilitant l’accès des collaborateurs à l’information, ainsi qu’à un agent IA d’analyse des processus internes. Son expérience couvre aussi l’architecture IA, les assistants documentaires, les projets Data et la transformation des systèmes d’information.'}</p>
+              <h3>${isEnglish ? 'Areas of expertise' : 'Domaines d’expertise'}</h3>
+              <ul class="expert-card-detail-list">
+                <li>${isEnglish ? 'AI for HR and employee services' : 'IA appliquée aux RH et aux services aux collaborateurs'}</li>
+                <li>${isEnglish ? 'AI agents and documentary assistants' : 'Agents IA et assistants documentaires'}</li>
+                <li>${isEnglish ? 'Process analysis and improvement' : 'Analyse et amélioration des processus'}</li>
+                <li>${isEnglish ? 'AI architecture and use-case framing' : 'Architecture IA et cadrage de cas d’usage'}</li>
+                <li>${isEnglish ? 'AI and Data applications for mining, energy and industry' : 'Applications de l’IA et de la Data pour les secteurs minier, énergétique et industriel'}</li>
+              </ul>
+              <a class="expert-card-contact" href="${localPath('/contact')}">${isEnglish ? 'Discuss a project' : 'Échanger sur un projet'} <span aria-hidden="true">→</span></a>
+            </div>
+          </details>
         </div>
       </article>
       <article class="expert-card expert-card-coming">
