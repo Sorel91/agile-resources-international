@@ -331,6 +331,9 @@ html,body{max-width:100%;overflow-x:clip}
 .expert-card-content{position:relative!important;inset:auto!important;width:100%;margin:0!important}
 .expert-card-content h2{position:static!important;display:block;width:100%;max-width:100%;margin:0 0 4px!important;padding:0;transform:none!important;inset:auto!important;white-space:normal!important;overflow-wrap:anywhere;line-height:1.12}
 
-/* Légère réduction du portrait sur grand écran ; dimension mobile conservée. */
-.expert-card-photo-wrap{height:260px}
-@media(max-width:700px){.expert-card-photo-wrap{height:250px}}
+/* Keep the complete portrait inside its frame and the text in the following block. */
+.expert-card-photo-wrap{height:clamp(300px,38vw,520px);flex:0 0 auto;overflow:hidden}
+.expert-card-photo{display:block;width:auto!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;object-position:center}
+@media(max-width:700px){
+  .expert-card-photo-wrap{height:clamp(300px,78vw,360px);flex-basis:auto}
+}
