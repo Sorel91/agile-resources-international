@@ -177,18 +177,6 @@ const home = () => `
       </div>
     </section>
 
-    <section class="section expert-network-preview" aria-labelledby="expert-preview-title">
-      <div class="expert-preview-copy">
-        <p class="eyebrow">${isEnglish ? 'Our collective expertise' : 'Des expertises complémentaires'}</p>
-        <h2 id="expert-preview-title">${isEnglish ? 'Our Expert Network' : 'Notre réseau d’experts'}</h2>
-        <p>${isEnglish ? 'Meet specialists who help organisations turn their challenges into practical solutions.' : 'Découvrez les spécialistes qui accompagnent les organisations dans la transformation de leurs enjeux en solutions concrètes.'}</p>
-        <a class="button" href="${localPath('/reseau-experts')}">${isEnglish ? 'Meet our experts' : 'Découvrir nos experts'} <span aria-hidden="true">→</span></a>
-      </div>
-      <a class="expert-preview-photo-link" href="${localPath('/reseau-experts')}" aria-label="${isEnglish ? 'Discover our expert network' : 'Découvrir notre réseau d’experts'}">
-        <img src="${A}beydi-sangare-expert.webp" alt="${isEnglish ? 'Beydi Sangaré, AI expert' : 'Beydi Sangaré, expert en intelligence artificielle'}" loading="lazy" decoding="async">
-      </a>
-    </section>
-
     <img class="full-photo" src="${A}team.webp" alt="Équipe en réunion" loading="lazy" decoding="async">
   </main>
   ${cta({title:"Prêt à optimiser vos équipes ?", text:"Contactez nos consultants pour concevoir une stratégie d’embauche adaptée à vos ambitions professionnelles.", button:"Nous contacter"})}`;
@@ -475,28 +463,33 @@ const expertNetwork = () => `
     <section class="expert-network-heading">
       <p class="eyebrow">${isEnglish ? 'People and expertise' : 'Des talents au service de vos projets'}</p>
       <h1>${isEnglish ? 'Our Expert Network' : 'Notre réseau d’experts'}</h1>
-      <p>${isEnglish ? 'A network of experienced professionals bringing together complementary skills to address organisations’ strategic and operational challenges.' : 'Un réseau de professionnels expérimentés qui réunit des compétences complémentaires pour répondre aux enjeux stratégiques et opérationnels des organisations.'}</p>
+      <p>${isEnglish ? 'A growing network of experienced professionals bringing together complementary skills to address organisations’ strategic and operational challenges.' : 'Un réseau en développement de professionnels expérimentés qui réunit des compétences complémentaires pour répondre aux enjeux stratégiques et opérationnels des organisations.'}</p>
     </section>
-    <section class="expert-profile" aria-labelledby="beydi-name">
-      <div class="expert-profile-photo-wrap">
-        <img class="expert-profile-photo" src="${A}beydi-sangare-expert.webp" alt="${isEnglish ? 'Professional portrait of Beydi Sangaré' : 'Portrait professionnel de Beydi Sangaré'}" width="1254" height="1254" fetchpriority="high">
-      </div>
-      <div class="expert-profile-content">
-        <p class="eyebrow">${isEnglish ? 'Artificial Intelligence & Digital Transformation' : 'Intelligence artificielle & transformation digitale'}</p>
-        <h2 id="beydi-name">Beydi Sangaré</h2>
-        <p class="expert-role">${isEnglish ? 'AI Expert' : 'Expert en intelligence artificielle'}</p>
-        <p>${isEnglish ? 'A manager and graduate of Télécom SudParis, a leading French engineering school, Beydi has over ten years of experience supporting digital, Data and AI programmes. He helps organisations frame and lead AI initiatives, from identifying relevant use cases to designing practical solutions. At Eramet, he contributed to two AI agents: a multilingual HR and IT assistant that helps employees access information, and an agent for analysing internal processes.' : 'Manager et diplômé de Télécom SudParis, grande école française d’ingénieurs, Beydi possède plus de dix ans d’expérience dans l’accompagnement de programmes digitaux, Data et IA. Il aide les organisations à cadrer et piloter leurs initiatives d’intelligence artificielle, de l’identification des cas d’usage à la conception de solutions concrètes. Chez Eramet, il a contribué à deux agents IA : un assistant RH et IT multilingue facilitant l’accès des collaborateurs à l’information, et un agent d’analyse des processus internes.'}</p>
-        <p>${isEnglish ? 'His experience also includes AI architecture, documentary assistants, Data projects and information systems transformation. His expertise can support use cases in mining, energy and industrial sectors.' : 'Son expérience couvre également l’architecture IA, les assistants documentaires, les projets Data et la transformation des systèmes d’information. Son expertise peut contribuer à des cas d’usage dans les secteurs minier, énergétique et industriel.'}</p>
-        <h3>${isEnglish ? 'Areas of expertise' : 'Domaines d’expertise'}</h3>
-        <ul class="expertise-list">
-          <li>${isEnglish ? 'AI for HR and employee services' : 'IA appliquée aux RH et aux services aux collaborateurs'}</li>
-          <li>${isEnglish ? 'AI agents and documentary assistants' : 'Agents IA et assistants documentaires'}</li>
-          <li>${isEnglish ? 'Process analysis and improvement' : 'Analyse et amélioration des processus'}</li>
-          <li>${isEnglish ? 'AI architecture and use-case framing' : 'Architecture IA et cadrage de cas d’usage'}</li>
-          <li>${isEnglish ? 'AI and Data applications for mining, energy and industry' : 'Applications de l’IA et de la Data pour les secteurs minier, énergétique et industriel'}</li>
-        </ul>
-        <a class="button" href="${localPath('/contact')}">${isEnglish ? 'Discuss your needs' : 'Échanger sur vos besoins'} <span aria-hidden="true">→</span></a>
-      </div>
+    <section class="expert-network-grid" aria-label="${isEnglish ? 'Experts' : 'Les experts'}">
+      <article class="expert-card" aria-labelledby="beydi-name">
+        <img class="expert-card-photo" src="${A}beydi-sangare-expert.webp" alt="${isEnglish ? 'Professional portrait of Beydi Sangaré' : 'Portrait professionnel de Beydi Sangaré'}" width="1254" height="1254" fetchpriority="high">
+        <div class="expert-card-content">
+          <p class="eyebrow">${isEnglish ? 'Artificial Intelligence & Digital Transformation' : 'Intelligence artificielle & transformation digitale'}</p>
+          <h2 id="beydi-name">Beydi Sangaré</h2>
+          <p class="expert-role">${isEnglish ? 'AI Expert' : 'Expert en intelligence artificielle'}</p>
+          <p>${isEnglish ? 'A manager and graduate of Télécom SudParis, a leading French engineering school, Beydi has over ten years of experience supporting digital, Data and AI programmes. He helps organisations frame and lead AI initiatives, from identifying relevant use cases to designing practical solutions.' : 'Manager et diplômé de Télécom SudParis, grande école française d’ingénieurs, Beydi possède plus de dix ans d’expérience dans l’accompagnement de programmes digitaux, Data et IA. Il aide les organisations à cadrer et piloter leurs initiatives d’intelligence artificielle, de l’identification des cas d’usage à la conception de solutions concrètes.'}</p>
+          <p>${isEnglish ? 'At Eramet, he contributed to two AI agents: a multilingual HR and IT assistant that helps employees access information, and an agent for analysing internal processes. His experience also includes AI architecture, documentary assistants, Data projects and information systems transformation. His expertise can support use cases in mining, energy and industrial sectors.' : 'Chez Eramet, il a contribué à deux agents IA : un assistant RH et IT multilingue facilitant l’accès des collaborateurs à l’information, et un agent d’analyse des processus internes. Son expérience couvre également l’architecture IA, les assistants documentaires, les projets Data et la transformation des systèmes d’information. Son expertise peut contribuer à des cas d’usage dans les secteurs minier, énergétique et industriel.'}</p>
+          <h3>${isEnglish ? 'Areas of expertise' : 'Domaines d’expertise'}</h3>
+          <ul class="expertise-tags">
+            <li>${isEnglish ? 'AI for HR and employee services' : 'IA appliquée aux RH et aux services aux collaborateurs'}</li>
+            <li>${isEnglish ? 'AI agents and documentary assistants' : 'Agents IA et assistants documentaires'}</li>
+            <li>${isEnglish ? 'Process analysis and improvement' : 'Analyse et amélioration des processus'}</li>
+            <li>${isEnglish ? 'AI architecture and use-case framing' : 'Architecture IA et cadrage de cas d’usage'}</li>
+            <li>${isEnglish ? 'AI and Data for mining, energy and industry' : 'IA et Data pour les secteurs minier, énergétique et industriel'}</li>
+          </ul>
+          <a class="button" href="${localPath('/contact')}">${isEnglish ? 'Discuss your needs' : 'Échanger sur vos besoins'} <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+      <aside class="expert-network-more">
+        <span class="expert-network-more-icon" aria-hidden="true">+</span>
+        <h2>${isEnglish ? 'More experts to come' : 'D’autres experts bientôt'}</h2>
+        <p>${isEnglish ? 'This network is designed to grow. New profiles and areas of expertise will be added as they join.' : 'Cette page est conçue pour accueillir plusieurs profils. De nouveaux experts et domaines de compétence viendront enrichir le réseau.'}</p>
+      </aside>
     </section>
   </main>`;
 
