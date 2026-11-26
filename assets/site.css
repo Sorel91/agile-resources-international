@@ -326,3 +326,15 @@ html,body{max-width:100%;overflow-x:clip}
 .expert-card-detail-list{display:grid;grid-template-columns:1fr;gap:7px;margin:0;padding-left:20px}
 .expert-card-detail-list li{padding-left:3px;font-size:15px;line-height:1.45}
 .expert-card-contact{display:inline-flex;gap:8px;margin-top:16px;color:var(--navy);font-weight:700;text-underline-offset:4px}
+
+/* Sépare explicitement le portrait du texte pour éviter tout chevauchement, surtout sur mobile. */
+.expert-card{position:relative;display:flex!important;flex-direction:column!important;align-items:stretch}
+.expert-card-photo-wrap{position:relative!important;display:grid!important;place-items:center!important;width:100%;height:280px;flex:0 0 280px;margin:0;padding:10px;overflow:hidden}
+.expert-card-photo{position:static!important;display:block!important;width:100%!important;height:100%!important;max-height:100%;object-fit:contain!important;object-position:center;transform:none!important}
+.expert-card-content{position:relative!important;inset:auto!important;display:flex;flex-direction:column;align-items:flex-start;width:100%;min-width:0;margin:0!important;padding:clamp(20px,3vw,32px);background:var(--mist);z-index:1}
+.expert-card-content h2{position:static!important;display:block;width:100%;max-width:100%;margin:0 0 4px!important;padding:0;transform:none!important;inset:auto!important;white-space:normal!important;overflow-wrap:anywhere;line-height:1.12}
+@media(max-width:700px){
+  .expert-card-photo-wrap{height:240px;flex-basis:240px}
+  .expert-card-content{padding:20px}
+  .expert-card-content h2{font-size:clamp(1.7rem,7vw,2.2rem)!important}
+}
